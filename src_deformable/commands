@@ -1,0 +1,11 @@
+fasion : baseline
+CUDA_VISIBLE_DEVICES=1 nohup python main.py --l1_penalty_weight 10 --batch_size 4 --data_Dir ../../pose-gan-clean/pose-gan/data/ --number_of_epochs 90 --gen_type baseline --expID baseline_fasion --pose_dim 18 --dataset fasion > logs/baseline_fasion 2>&1 &
+
+fasion : deformable
+CUDA_VISIBLE_DEVICES=1 nohup python main.py --warp_skip mask --l1_penalty_weight 10 --batch_size 2 --data_Dir ../../pose-gan-clean/pose-gan/data/ --number_of_epochs 90 --gen_type baseline --expID deformable_fasion --pose_dim 18 --dataset fasion > logs/deformable_fasion 2>&1 &
+
+fasion : full
+CUDA_VISIBLE_DEVICES=1 nohup python main.py --warp_skip mask --l1_penalty_weight 0.01 --batch_size 2 --data_Dir ../../pose-gan-clean/pose-gan/data/ --number_of_epochs 90 --gen_type baseline --expID deformable_fasion --pose_dim 18 --dataset fasion --nn_loss_area_size 5 --batch_size 2 --content_loss_layer block1_conv2> logs/deformable_fasion 2>&1 &
+
+h36m : deformable
+CUDA_VISIBLE_DEVICES=0 nohup python main.py --warp_skip mask --l1_penalty_weight 10 --batch_size 4 --number_of_epochs 90 --gen_type baseline --expID deformable_h36m > logs/deformable_h36m 2>&1 &

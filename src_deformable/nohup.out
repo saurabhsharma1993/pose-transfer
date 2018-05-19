@@ -1,0 +1,23 @@
+/home/project/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+/home/project/anaconda3/lib/python3.6/importlib/_bootstrap.py:219: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+Statistics for loaded dataset : Human 3.6
+Number of images: 92586
+Number of pairs train: 77412
+Number of pairs test: 12000
+Traceback (most recent call last):
+  File "unitTests.py", line 63, in <module>
+    input, target, warps, masks = disc_iter.next()
+  File "/home/project/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 264, in __next__
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/project/anaconda3/lib/python3.6/site-packages/torch/utils/data/dataloader.py", line 264, in <listcomp>
+    batch = self.collate_fn([self.dataset[i] for i in indices])
+  File "/home/project/saurabh/pose-transfer/src_deformable/datasets/PoseTransfer_Dataset.py", line 127, in __getitem__
+    result.append(self.compute_pose_map(pair, 'to'))
+  File "/home/project/saurabh/pose-transfer/src_deformable/datasets/PoseTransfer_Dataset.py", line 80, in compute_pose_map
+    pose_map = pose_utils.cords_to_map(kp_array, self._image_size)
+  File "/home/project/saurabh/pose-transfer/src_deformable/utils/pose_utils.py", line 85, in cords_to_map
+    result[..., i] = np.exp(-((yy - point[0]) ** 2 + (xx - point[1]) ** 2) / (2 * sigma ** 2))
+KeyboardInterrupt

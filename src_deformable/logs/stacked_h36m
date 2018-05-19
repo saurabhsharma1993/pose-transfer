@@ -1,0 +1,284 @@
+nohup: ignoring input
+Model options . .
+  annotations_file_test: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-test.csv
+  annotations_file_test_paf: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-paf-test0.csv
+  annotations_file_train: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-train.csv
+  annotations_file_train_paf: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-paf-train0.csv
+  batch_size: 4
+  checkpoint_ratio: 5
+  checkpoints_dir: ../exp/stacked_h36m/models
+  compute_h36m_paf_split: 0
+  content_loss_layer: none
+  data_Dir: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/
+  dataset: h36m
+  disc_type: call
+  discriminator_checkpoint: None
+  display_ratio: 50
+  expID: stacked_h36m
+  frame_diff: 10
+  gan_penalty_weight: 1
+  gen_type: stacked
+  generated_images_dir: output/generated_images/h36m-restricted
+  generator_checkpoint: None
+  image_size: (224, 224)
+  images_dir_test: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-dataset/test
+  images_dir_train: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-dataset/train
+  images_for_test: 12000
+  iters_per_epoch: 1000
+  l1_penalty_weight: 10.0
+  learning_rate: 0.0002
+  load_generated_images: 0
+  log_file: output/full/fasion/log
+  lstruct_penalty_weight: 0
+  nn_loss_area_size: 1
+  num_stacks: 4
+  number_of_epochs: 90
+  output_dir: ../exp/stacked_h36m/results
+  pairs_file_test: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test.csv
+  pairs_file_test_interpol: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test-interpol.csv
+  pairs_file_test_iterative: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test-iterative.csv
+  pairs_file_train: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train.csv
+  pairs_file_train_interpol: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train-interpol.csv
+  pairs_file_train_iterative: /home/project/saurabh/pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train-iterative.csv
+  pose_dim: 16
+  pose_estimator: pose_estimator.h5
+  resume: 0
+  saveDir: ../exp/stacked_h36m
+  start_epoch: 0
+  tmp_pose_dir: tmp/h36m/
+  training_ratio: 1
+  tv_penalty_weight: 0
+  use_dropout_test: 0
+  use_input_pose: True
+  warp_agg: max
+  warp_skip: none
+(224, 224)
+Statistics for loaded dataset : Human 3.6
+Number of images: 92586
+Number of pairs train interpol: 73812
+Number of pairs test interpol: 12000
+Statistics for loaded dataset : Human 3.6
+Number of images: 92586
+Number of pairs train interpol: 73812
+Number of pairs test interpol: 12000
+---------- Networks initialized -------------
+Stacked_Generator(
+  (generator): Generator(
+    (encoder): encoder(
+      (net): ModuleList(
+        (0): Conv2d(35, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Block(
+          (net): Sequential(
+            (0): LeakyReLU(0.2)
+            (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+            (2): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (2): Block(
+          (net): Sequential(
+            (0): LeakyReLU(0.2)
+            (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+            (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (3): Block(
+          (net): Sequential(
+            (0): LeakyReLU(0.2)
+            (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+            (2): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (4): Block(
+          (net): Sequential(
+            (0): LeakyReLU(0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+            (2): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (5): Block(
+          (net): Sequential(
+            (0): LeakyReLU(0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+          )
+        )
+      )
+    )
+    (decoder): decoder(
+      (net): ModuleList(
+        (0): Block(
+          (net): Sequential(
+            (0): ReLU()
+            (1): ConvTranspose2d(512, 512, kernel_size=(4, 4), stride=(2, 2))
+            (2): Cropping2D(
+            )
+            (3): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (1): Block(
+          (net): Sequential(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2))
+            (2): Cropping2D(
+            )
+            (3): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (2): Block(
+          (net): Sequential(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2))
+            (2): Cropping2D(
+            )
+            (3): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (3): Block(
+          (net): Sequential(
+            (0): ReLU()
+            (1): ConvTranspose2d(768, 256, kernel_size=(4, 4), stride=(2, 2))
+            (2): Cropping2D(
+            )
+            (3): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (4): Block(
+          (net): Sequential(
+            (0): ReLU()
+            (1): ConvTranspose2d(384, 128, kernel_size=(4, 4), stride=(2, 2))
+            (2): Cropping2D(
+            )
+            (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+          )
+        )
+        (5): ReLU()
+        (6): Conv2d(192, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (7): Tanh()
+      )
+    )
+  )
+)
+Total number of parameters: 36074051
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(38, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): Sequential(
+        (0): LeakyReLU(0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+        (2): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (2): Block(
+      (net): Sequential(
+        (0): LeakyReLU(0.2)
+        (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+        (2): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (3): Block(
+      (net): Sequential(
+        (0): LeakyReLU(0.2)
+        (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+        (2): InstanceNorm2d(512, eps=1e-05, momentum=0.1, affine=False)
+      )
+    )
+    (4): Block(
+      (net): Sequential(
+        (0): LeakyReLU(0.2)
+        (1): Conv2d(512, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+      )
+    )
+    (5): Sigmoid()
+    (6): Flatten(
+    )
+  )
+)
+Total number of parameters: 2800577
+-----------------------------------------------
+Num iterations :  1000
+Epoch : 1 | Progress : 0.00 | Total Loss : 18.9101 | Gen Total Loss : 12.1606, Gen Ad Loss : 3.4772, Gen LL Loss : 0.8683  | Disc Loss : 6.7495 
+Epoch : 1 | Progress : 0.05 | Total Loss : 11.9373 | Gen Total Loss : 6.9733, Gen Ad Loss : 5.3477, Gen LL Loss : 0.1626  | Disc Loss : 4.9640 
+Epoch : 1 | Progress : 0.10 | Total Loss : 12.2555 | Gen Total Loss : 7.6209, Gen Ad Loss : 6.0373, Gen LL Loss : 0.1584  | Disc Loss : 4.6346 
+Epoch : 1 | Progress : 0.15 | Total Loss : 9.0555 | Gen Total Loss : 4.4970, Gen Ad Loss : 3.3680, Gen LL Loss : 0.1129  | Disc Loss : 4.5585 
+Epoch : 1 | Progress : 0.20 | Total Loss : 13.7235 | Gen Total Loss : 6.8361, Gen Ad Loss : 5.3805, Gen LL Loss : 0.1456  | Disc Loss : 6.8874 
+Epoch : 1 | Progress : 0.25 | Total Loss : 8.8966 | Gen Total Loss : 5.2616, Gen Ad Loss : 3.9863, Gen LL Loss : 0.1275  | Disc Loss : 3.6350 
+Epoch : 1 | Progress : 0.30 | Total Loss : 5.9504 | Gen Total Loss : 2.3731, Gen Ad Loss : 1.1964, Gen LL Loss : 0.1177  | Disc Loss : 3.5773 
+Epoch : 1 | Progress : 0.35 | Total Loss : 4.3020 | Gen Total Loss : 1.4862, Gen Ad Loss : 0.4614, Gen LL Loss : 0.1025  | Disc Loss : 2.8158 
+Epoch : 1 | Progress : 0.40 | Total Loss : 2.4928 | Gen Total Loss : 1.3926, Gen Ad Loss : 0.2515, Gen LL Loss : 0.1141  | Disc Loss : 1.1002 
+Epoch : 1 | Progress : 0.45 | Total Loss : 1.5360 | Gen Total Loss : 0.8615, Gen Ad Loss : 0.0592, Gen LL Loss : 0.0802  | Disc Loss : 0.6745 
+Epoch : 1 | Progress : 0.50 | Total Loss : 3.3788 | Gen Total Loss : 1.8013, Gen Ad Loss : 0.0969, Gen LL Loss : 0.1704  | Disc Loss : 1.5775 
+Epoch : 1 | Progress : 0.55 | Total Loss : 1.5639 | Gen Total Loss : 1.1143, Gen Ad Loss : 0.0750, Gen LL Loss : 0.1039  | Disc Loss : 0.4497 
+Epoch : 1 | Progress : 0.60 | Total Loss : 1.1729 | Gen Total Loss : 0.8884, Gen Ad Loss : 0.1369, Gen LL Loss : 0.0752  | Disc Loss : 0.2845 
+Epoch : 1 | Progress : 0.65 | Total Loss : 1.5839 | Gen Total Loss : 1.1697, Gen Ad Loss : 0.0331, Gen LL Loss : 0.1137  | Disc Loss : 0.4142 
+Epoch : 1 | Progress : 0.70 | Total Loss : 0.8749 | Gen Total Loss : 0.8077, Gen Ad Loss : 0.0091, Gen LL Loss : 0.0799  | Disc Loss : 0.0673 
+Epoch : 1 | Progress : 0.75 | Total Loss : 1.2526 | Gen Total Loss : 1.0052, Gen Ad Loss : 0.0192, Gen LL Loss : 0.0986  | Disc Loss : 0.2474 
+Epoch : 1 | Progress : 0.80 | Total Loss : 1.2661 | Gen Total Loss : 0.7676, Gen Ad Loss : 0.0732, Gen LL Loss : 0.0694  | Disc Loss : 0.4985 
+Epoch : 1 | Progress : 0.85 | Total Loss : 1.5073 | Gen Total Loss : 1.1627, Gen Ad Loss : 0.0283, Gen LL Loss : 0.1134  | Disc Loss : 0.3446 
+Epoch : 1 | Progress : 0.90 | Total Loss : 0.9446 | Gen Total Loss : 0.8062, Gen Ad Loss : 0.0129, Gen LL Loss : 0.0793  | Disc Loss : 0.1384 
+Epoch : 1 | Progress : 0.95 | Total Loss : 1.2874 | Gen Total Loss : 0.7679, Gen Ad Loss : 0.0056, Gen LL Loss : 0.0762  | Disc Loss : 0.5194 
+Num iterations :  1000
+Epoch : 2 | Progress : 0.00 | Total Loss : 1.4843 | Gen Total Loss : 1.0507, Gen Ad Loss : 0.0651, Gen LL Loss : 0.0986  | Disc Loss : 0.4336 
+Epoch : 2 | Progress : 0.05 | Total Loss : 1.0480 | Gen Total Loss : 0.8386, Gen Ad Loss : 0.0458, Gen LL Loss : 0.0793  | Disc Loss : 0.2094 
+Epoch : 2 | Progress : 0.10 | Total Loss : 2.5709 | Gen Total Loss : 0.7289, Gen Ad Loss : 0.0105, Gen LL Loss : 0.0718  | Disc Loss : 1.8420 
+Epoch : 2 | Progress : 0.15 | Total Loss : 3.0422 | Gen Total Loss : 0.7417, Gen Ad Loss : 0.0035, Gen LL Loss : 0.0738  | Disc Loss : 2.3005 
+Epoch : 2 | Progress : 0.20 | Total Loss : 2.2180 | Gen Total Loss : 1.2570, Gen Ad Loss : 0.5083, Gen LL Loss : 0.0749  | Disc Loss : 0.9611 
+Epoch : 2 | Progress : 0.25 | Total Loss : 0.9748 | Gen Total Loss : 0.8758, Gen Ad Loss : 0.0061, Gen LL Loss : 0.0870  | Disc Loss : 0.0990 
+Epoch : 2 | Progress : 0.30 | Total Loss : 1.1228 | Gen Total Loss : 0.8190, Gen Ad Loss : 0.0062, Gen LL Loss : 0.0813  | Disc Loss : 0.3038 
+Epoch : 2 | Progress : 0.35 | Total Loss : 2.4141 | Gen Total Loss : 0.8080, Gen Ad Loss : 0.0062, Gen LL Loss : 0.0802  | Disc Loss : 1.6061 
+Epoch : 2 | Progress : 0.40 | Total Loss : 0.7547 | Gen Total Loss : 0.7295, Gen Ad Loss : 0.0051, Gen LL Loss : 0.0724  | Disc Loss : 0.0251 
+Epoch : 2 | Progress : 0.45 | Total Loss : 0.8235 | Gen Total Loss : 0.7530, Gen Ad Loss : 0.0387, Gen LL Loss : 0.0714  | Disc Loss : 0.0706 
+Epoch : 2 | Progress : 0.50 | Total Loss : 3.5272 | Gen Total Loss : 2.8749, Gen Ad Loss : 1.8967, Gen LL Loss : 0.0978  | Disc Loss : 0.6523 
+Epoch : 2 | Progress : 0.55 | Total Loss : 0.9620 | Gen Total Loss : 0.7968, Gen Ad Loss : 0.0256, Gen LL Loss : 0.0771  | Disc Loss : 0.1653 
+Epoch : 2 | Progress : 0.60 | Total Loss : 1.3137 | Gen Total Loss : 1.2351, Gen Ad Loss : 0.0310, Gen LL Loss : 0.1204  | Disc Loss : 0.0786 
+Epoch : 2 | Progress : 0.65 | Total Loss : 0.8242 | Gen Total Loss : 0.8032, Gen Ad Loss : 0.0206, Gen LL Loss : 0.0783  | Disc Loss : 0.0211 
+Epoch : 2 | Progress : 0.70 | Total Loss : 0.8280 | Gen Total Loss : 0.8201, Gen Ad Loss : 0.0103, Gen LL Loss : 0.0810  | Disc Loss : 0.0079 
+Epoch : 2 | Progress : 0.75 | Total Loss : 0.8775 | Gen Total Loss : 0.7674, Gen Ad Loss : 0.0118, Gen LL Loss : 0.0756  | Disc Loss : 0.1101 
+Epoch : 2 | Progress : 0.80 | Total Loss : 7.1969 | Gen Total Loss : 3.3081, Gen Ad Loss : 1.8642, Gen LL Loss : 0.1444  | Disc Loss : 3.8888 
+Epoch : 2 | Progress : 0.85 | Total Loss : 1.1372 | Gen Total Loss : 1.0990, Gen Ad Loss : 0.0075, Gen LL Loss : 0.1091  | Disc Loss : 0.0382 
+Epoch : 2 | Progress : 0.90 | Total Loss : 0.7268 | Gen Total Loss : 0.7057, Gen Ad Loss : 0.0118, Gen LL Loss : 0.0694  | Disc Loss : 0.0211 
+Epoch : 2 | Progress : 0.95 | Total Loss : 1.1254 | Gen Total Loss : 1.1073, Gen Ad Loss : 0.0193, Gen LL Loss : 0.1088  | Disc Loss : 0.0181 
+Num iterations :  1000
+Epoch : 3 | Progress : 0.00 | Total Loss : 1.3318 | Gen Total Loss : 1.2440, Gen Ad Loss : 0.0187, Gen LL Loss : 0.1225  | Disc Loss : 0.0878 
+Epoch : 3 | Progress : 0.05 | Total Loss : 1.1600 | Gen Total Loss : 1.1459, Gen Ad Loss : 0.0087, Gen LL Loss : 0.1137  | Disc Loss : 0.0141 
+Epoch : 3 | Progress : 0.10 | Total Loss : 2.4861 | Gen Total Loss : 0.8578, Gen Ad Loss : 0.0050, Gen LL Loss : 0.0853  | Disc Loss : 1.6284 
+Epoch : 3 | Progress : 0.15 | Total Loss : 3.8010 | Gen Total Loss : 0.7793, Gen Ad Loss : 0.0184, Gen LL Loss : 0.0761  | Disc Loss : 3.0217 
+Epoch : 3 | Progress : 0.20 | Total Loss : 0.9423 | Gen Total Loss : 0.9126, Gen Ad Loss : 0.0056, Gen LL Loss : 0.0907  | Disc Loss : 0.0296 
+Epoch : 3 | Progress : 0.25 | Total Loss : 0.8344 | Gen Total Loss : 0.7902, Gen Ad Loss : 0.0230, Gen LL Loss : 0.0767  | Disc Loss : 0.0442 
+Epoch : 3 | Progress : 0.30 | Total Loss : 1.3896 | Gen Total Loss : 1.2153, Gen Ad Loss : 0.0154, Gen LL Loss : 0.1200  | Disc Loss : 0.1743 
+Epoch : 3 | Progress : 0.35 | Total Loss : 0.8728 | Gen Total Loss : 0.8504, Gen Ad Loss : 0.0326, Gen LL Loss : 0.0818  | Disc Loss : 0.0223 
+Epoch : 3 | Progress : 0.40 | Total Loss : 1.0899 | Gen Total Loss : 0.9900, Gen Ad Loss : 0.0026, Gen LL Loss : 0.0987  | Disc Loss : 0.1000 
+Epoch : 3 | Progress : 0.45 | Total Loss : 2.0673 | Gen Total Loss : 0.9240, Gen Ad Loss : 0.0693, Gen LL Loss : 0.0855  | Disc Loss : 1.1434 
+Epoch : 3 | Progress : 0.50 | Total Loss : 1.4435 | Gen Total Loss : 0.7347, Gen Ad Loss : 0.0053, Gen LL Loss : 0.0729  | Disc Loss : 0.7088 
+Epoch : 3 | Progress : 0.55 | Total Loss : 0.8408 | Gen Total Loss : 0.7474, Gen Ad Loss : 0.0140, Gen LL Loss : 0.0733  | Disc Loss : 0.0933 
+Epoch : 3 | Progress : 0.60 | Total Loss : 0.8268 | Gen Total Loss : 0.7268, Gen Ad Loss : 0.0303, Gen LL Loss : 0.0697  | Disc Loss : 0.1000 
+Epoch : 3 | Progress : 0.65 | Total Loss : 0.8976 | Gen Total Loss : 0.7825, Gen Ad Loss : 0.0105, Gen LL Loss : 0.0772  | Disc Loss : 0.1152 
+Epoch : 3 | Progress : 0.70 | Total Loss : 1.5876 | Gen Total Loss : 1.5605, Gen Ad Loss : 0.0889, Gen LL Loss : 0.1472  | Disc Loss : 0.0271 
+Epoch : 3 | Progress : 0.75 | Total Loss : 0.7207 | Gen Total Loss : 0.6507, Gen Ad Loss : 0.0152, Gen LL Loss : 0.0635  | Disc Loss : 0.0701 
+Epoch : 3 | Progress : 0.80 | Total Loss : 1.6819 | Gen Total Loss : 1.2597, Gen Ad Loss : 0.1053, Gen LL Loss : 0.1154  | Disc Loss : 0.4222 
+Epoch : 3 | Progress : 0.85 | Total Loss : 5.1822 | Gen Total Loss : 0.9331, Gen Ad Loss : 0.0101, Gen LL Loss : 0.0923  | Disc Loss : 4.2491 
+Epoch : 3 | Progress : 0.90 | Total Loss : 1.0875 | Gen Total Loss : 1.0304, Gen Ad Loss : 0.0026, Gen LL Loss : 0.1028  | Disc Loss : 0.0571 
+Epoch : 3 | Progress : 0.95 | Total Loss : 0.8502 | Gen Total Loss : 0.7602, Gen Ad Loss : 0.0140, Gen LL Loss : 0.0746  | Disc Loss : 0.0900 
+Num iterations :  1000
+Epoch : 4 | Progress : 0.00 | Total Loss : 1.7542 | Gen Total Loss : 1.0694, Gen Ad Loss : 0.0063, Gen LL Loss : 0.1063  | Disc Loss : 0.6847 
+Epoch : 4 | Progress : 0.05 | Total Loss : 1.5903 | Gen Total Loss : 0.8047, Gen Ad Loss : 0.0007, Gen LL Loss : 0.0804  | Disc Loss : 0.7856 
+Epoch : 4 | Progress : 0.10 | Total Loss : 1.6881 | Gen Total Loss : 0.9144, Gen Ad Loss : 0.0267, Gen LL Loss : 0.0888  | Disc Loss : 0.7737 
+Epoch : 4 | Progress : 0.15 | Total Loss : 1.6024 | Gen Total Loss : 1.3626, Gen Ad Loss : 0.0062, Gen LL Loss : 0.1356  | Disc Loss : 0.2397 
+Epoch : 4 | Progress : 0.20 | Total Loss : 2.8577 | Gen Total Loss : 0.9400, Gen Ad Loss : 0.0637, Gen LL Loss : 0.0876  | Disc Loss : 1.9177 
+Epoch : 4 | Progress : 0.25 | Total Loss : 1.0296 | Gen Total Loss : 0.7664, Gen Ad Loss : 0.0030, Gen LL Loss : 0.0763  | Disc Loss : 0.2632 
+Epoch : 4 | Progress : 0.30 | Total Loss : 4.9410 | Gen Total Loss : 0.9416, Gen Ad Loss : 0.0065, Gen LL Loss : 0.0935  | Disc Loss : 3.9994 
+Epoch : 4 | Progress : 0.35 | Total Loss : 1.1761 | Gen Total Loss : 1.0097, Gen Ad Loss : 0.0313, Gen LL Loss : 0.0978  | Disc Loss : 0.1663 
+Epoch : 4 | Progress : 0.40 | Total Loss : 2.3001 | Gen Total Loss : 0.9531, Gen Ad Loss : 0.0107, Gen LL Loss : 0.0942  | Disc Loss : 1.3470 
+Epoch : 4 | Progress : 0.45 | Total Loss : 1.0889 | Gen Total Loss : 0.8298, Gen Ad Loss : 0.0123, Gen LL Loss : 0.0818  | Disc Loss : 0.2591 
+Epoch : 4 | Progress : 0.50 | Total Loss : 0.7638 | Gen Total Loss : 0.7562, Gen Ad Loss : 0.0181, Gen LL Loss : 0.0738  | Disc Loss : 0.0076 
+Epoch : 4 | Progress : 0.55 | Total Loss : 1.0126 | Gen Total Loss : 0.7066, Gen Ad Loss : 0.0019, Gen LL Loss : 0.0705  | Disc Loss : 0.3059 
+Epoch : 4 | Progress : 0.60 | Total Loss : 1.1178 | Gen Total Loss : 0.9023, Gen Ad Loss : 0.0113, Gen LL Loss : 0.0891  | Disc Loss : 0.2155 
+Epoch : 4 | Progress : 0.65 | Total Loss : 0.7381 | Gen Total Loss : 0.7214, Gen Ad Loss : 0.0166, Gen LL Loss : 0.0705  | Disc Loss : 0.0167 
+Epoch : 4 | Progress : 0.70 | Total Loss : 1.4603 | Gen Total Loss : 0.8320, Gen Ad Loss : 0.0045, Gen LL Loss : 0.0828  | Disc Loss : 0.6283 
+Epoch : 4 | Progress : 0.75 | Total Loss : 0.8257 | Gen Total Loss : 0.7167, Gen Ad Loss : 0.0068, Gen LL Loss : 0.0710  | Disc Loss : 0.1089 
+Epoch : 4 | Progress : 0.80 | Total Loss : 0.7660 | Gen Total Loss : 0.7560, Gen Ad Loss : 0.0024, Gen LL Loss : 0.0754  | Disc Loss : 0.0101 
+Epoch : 4 | Progress : 0.85 | Total Loss : 1.7684 | Gen Total Loss : 0.8253, Gen Ad Loss : 0.0022, Gen LL Loss : 0.0823  | Disc Loss : 0.9431 
+Epoch : 4 | Progress : 0.90 | Total Loss : 0.6435 | Gen Total Loss : 0.6401, Gen Ad Loss : 0.0098, Gen LL Loss : 0.0630  | Disc Loss : 0.0034 
+Epoch : 4 | Progress : 0.95 | Total Loss : 1.1207 | Gen Total Loss : 1.1069, Gen Ad Loss : 0.0115, Gen LL Loss : 0.1095  | Disc Loss : 0.0138 
