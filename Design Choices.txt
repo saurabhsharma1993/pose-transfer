@@ -1,0 +1,32 @@
+-> Single kind of discriminator . . simplest one
+-> No validation epoch
+-> need to periodically change code base for efficiency and elegance, currently speed s of the essensce
+-> admiration for code recedes in the light of execution of ideas and evaluation of resutls
+   essential to get feedback from running code
+-> training loop needs to cleanly load inputs for gen and disc . . currently exploiting iterators
+    kinda ugly for training ratio, and otherwise
+-> transposeconv not working due to inappropraite padding . . silly dimension mismatch . . look at convolution arithmetic and  other implentation for resolution
+-> taking stacked architecture where each stack has different weights
+-> for human 3.6 interpolations may be taken directly from video frames or vae interpolations
+-> for fasion, interpolations are linear where the missing annotations are synthesized/vanished midway through the interpolation
+
+Changes for stacked/staged arch :
+-> Changed dataset to pass interpol poses as additional input
+-> added stacked gen module in networks
+-> changed pose_gan (gen_update, disc_update, init) for new gan type
+-> changed main training loop to pass interpol pose to gen_update nad disc_update
+
+ToDO
+-> add logging through tensorboard to analyze the losses
+-> model not fitting in memory . . use same stack everywhere ? still not fitting, don't keep interpolated inputs in memory ?
+-> taking long to train . . overfit on small train dataset ?
+-> Add intermediate supervision
+-> add code for nearest neighbour/feature loss, inception score
+-> add code for dsc . . important, else variations in hands arms won't be captured
+-> that should be it for iterative approach idea .. consider different kind of arch ?
+
+Issues
+
+-> deformable skip connections not working in pytorch due to incomplete backprop through affine layer
+   set requires_grad = True for all tensors, inspect computational graph for unit testing
+   Note - Variable is deprecated in Pytorch 0.4.0
