@@ -4,6 +4,8 @@ PyTorch Implementation of Deformable GAN https://arxiv.org/abs/1801.00055
 
 Also check out the original repo in Keras, by AliaksandrSiarohin - https://github.com/AliaksandrSiarohin/pose-gan
 
+![alt text](https://github.com/AliaksandrSiarohin/pose-gan/blob/master/sup-mat/teaser.jpg)
+
 ## Baseline Model ( run in src_baseline )
 
 ### Fasion :
