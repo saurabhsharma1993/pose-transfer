@@ -1,0 +1,730 @@
+nohup: ignoring input
+Model options . .
+  annotations_file_test: ../../pose-gan-clean/pose-gan/data/fasion-annotation-test.csv
+  annotations_file_test_paf: ../../pose-gan-clean/pose-gan/data/fasion-annotation-paf-test0.csv
+  annotations_file_train: ../../pose-gan-clean/pose-gan/data/fasion-annotation-train.csv
+  annotations_file_train_paf: ../../pose-gan-clean/pose-gan/data/fasion-annotation-paf-train0.csv
+  batch_size: 4
+  checkMode: 1
+  checkpoint_ratio: 5
+  checkpoints_dir: ../exp/baseline_fasion_check/models
+  compute_h36m_paf_split: 0
+  content_loss_layer: none
+  data_Dir: ../../pose-gan-clean/pose-gan/data/
+  dataset: fasion
+  disc_type: call
+  discriminator_checkpoint: None
+  display_ratio: 50
+  expID: baseline_fasion_check
+  frame_diff: 10
+  gan_penalty_weight: 1
+  gen_type: baseline
+  generated_images_dir: output/generated_images/fasion-restricted
+  generator_checkpoint: None
+  image_size: (256, 256)
+  images_dir_test: ../../pose-gan-clean/pose-gan/data/fasion-dataset/test
+  images_dir_train: ../../pose-gan-clean/pose-gan/data/fasion-dataset/train
+  images_for_test: 12000
+  images_for_train: 100000
+  iters_per_epoch: 1000
+  l1_penalty_weight: 10.0
+  learning_rate: 0.0002
+  load_generated_images: 0
+  log_file: output/full/fasion/log
+  lstruct_penalty_weight: 0
+  nn_loss_area_size: 1
+  num_stacks: 4
+  number_of_epochs: 90
+  output_dir: ../exp/baseline_fasion_check/results
+  pairs_file_test: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test.csv
+  pairs_file_test_check: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-check.csv
+  pairs_file_test_interpol: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-interpol.csv
+  pairs_file_test_iterative: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-iterative.csv
+  pairs_file_train: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train.csv
+  pairs_file_train_check: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-check.csv
+  pairs_file_train_interpol: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-interpol.csv
+  pairs_file_train_iterative: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-iterative.csv
+  pose_dim: 18
+  pose_estimator: pose_estimator.h5
+  resume: 0
+  saveDir: ../exp/baseline_fasion_check
+  start_epoch: 0
+  tmp_pose_dir: tmp/fasion/
+  training_ratio: 1
+  tv_penalty_weight: 0
+  use_dropout_test: 0
+  use_input_pose: True
+  warp_agg: max
+  warp_skip: none
+(256, 256)
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train : 4000
+Number of pairs test : 4000
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train : 4000
+Number of pairs test : 4000
+---------- Networks initialized -------------
+Generator(
+  (encoder): encoder(
+    (net): ModuleList(
+      (0): Conv2d(39, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): Block(
+        (net): Sequential(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+          (2): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+      )
+      (2): Block(
+        (net): Sequential(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+        )
+      )
+    )
+  )
+  (decoder): decoder(
+    (net): ModuleList(
+      (0): Block(
+        (net): Sequential(
+          (0): ReLU()
+          (1): ConvTranspose2d(256, 256, kernel_size=(4, 4), stride=(2, 2))
+          (2): Cropping2D()
+          (3): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (1): Block(
+        (net): Sequential(
+          (0): ReLU()
+          (1): ConvTranspose2d(384, 128, kernel_size=(4, 4), stride=(2, 2))
+          (2): Cropping2D()
+          (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (2): ReLU()
+      (3): Conv2d(192, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): Tanh()
+    )
+  )
+)
+Total number of parameters: 2518851
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(42, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): Sequential(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+        (2): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+    )
+    (2): Block(
+      (net): Sequential(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(128, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+      )
+    )
+    (3): Sigmoid()
+    (4): Flatten()
+  )
+)
+Total number of parameters: 176321
+-----------------------------------------------
+Num iterations :  1000
+Epoch : 1 | Progress : 0.00 | Total Loss : 12.3301 | Gen Total Loss : 10.8154, Gen Ad Loss : 0.6633, Gen LL Loss : 10.1521  | Disc Total Loss : 1.5147, Disc True Loss : 0.6130, Disc Fake Loss : 0.9017 
+Epoch : 1 | Progress : 0.05 | Total Loss : 4.9208 | Gen Total Loss : 3.7105, Gen Ad Loss : 0.7928, Gen LL Loss : 2.9176  | Disc Total Loss : 1.2103, Disc True Loss : 0.6121, Disc Fake Loss : 0.5983 
+Epoch : 1 | Progress : 0.10 | Total Loss : 4.4838 | Gen Total Loss : 3.2277, Gen Ad Loss : 0.7683, Gen LL Loss : 2.4594  | Disc Total Loss : 1.2561, Disc True Loss : 0.6015, Disc Fake Loss : 0.6546 
+Epoch : 1 | Progress : 0.15 | Total Loss : 4.6698 | Gen Total Loss : 3.3904, Gen Ad Loss : 0.8502, Gen LL Loss : 2.5403  | Disc Total Loss : 1.2793, Disc True Loss : 0.5436, Disc Fake Loss : 0.7357 
+Epoch : 1 | Progress : 0.20 | Total Loss : 4.9755 | Gen Total Loss : 3.7625, Gen Ad Loss : 0.9628, Gen LL Loss : 2.7997  | Disc Total Loss : 1.2131, Disc True Loss : 0.5607, Disc Fake Loss : 0.6523 
+Epoch : 1 | Progress : 0.25 | Total Loss : 4.3169 | Gen Total Loss : 3.3115, Gen Ad Loss : 0.8203, Gen LL Loss : 2.4912  | Disc Total Loss : 1.0054, Disc True Loss : 0.4671, Disc Fake Loss : 0.5383 
+Epoch : 1 | Progress : 0.30 | Total Loss : 4.9245 | Gen Total Loss : 3.5864, Gen Ad Loss : 0.8157, Gen LL Loss : 2.7707  | Disc Total Loss : 1.3381, Disc True Loss : 0.6124, Disc Fake Loss : 0.7257 
+Resetting iterator for loader : train
+Epoch : 1 | Progress : 0.35 | Total Loss : 5.2991 | Gen Total Loss : 3.8625, Gen Ad Loss : 1.1459, Gen LL Loss : 2.7165  | Disc Total Loss : 1.4367, Disc True Loss : 0.7833, Disc Fake Loss : 0.6534 
+Epoch : 1 | Progress : 0.40 | Total Loss : 5.3034 | Gen Total Loss : 4.1182, Gen Ad Loss : 0.9920, Gen LL Loss : 3.1262  | Disc Total Loss : 1.1852, Disc True Loss : 0.6267, Disc Fake Loss : 0.5585 
+Epoch : 1 | Progress : 0.45 | Total Loss : 4.5957 | Gen Total Loss : 3.4024, Gen Ad Loss : 0.8563, Gen LL Loss : 2.5461  | Disc Total Loss : 1.1933, Disc True Loss : 0.5849, Disc Fake Loss : 0.6084 
+Epoch : 1 | Progress : 0.50 | Total Loss : 4.1422 | Gen Total Loss : 2.8191, Gen Ad Loss : 0.9665, Gen LL Loss : 1.8526  | Disc Total Loss : 1.3231, Disc True Loss : 0.6857, Disc Fake Loss : 0.6374 
+Epoch : 1 | Progress : 0.55 | Total Loss : 5.1366 | Gen Total Loss : 3.9993, Gen Ad Loss : 1.0417, Gen LL Loss : 2.9576  | Disc Total Loss : 1.1373, Disc True Loss : 0.6116, Disc Fake Loss : 0.5258 
+Epoch : 1 | Progress : 0.60 | Total Loss : 4.5508 | Gen Total Loss : 3.4058, Gen Ad Loss : 0.9644, Gen LL Loss : 2.4414  | Disc Total Loss : 1.1450, Disc True Loss : 0.5978, Disc Fake Loss : 0.5472 
+Epoch : 1 | Progress : 0.65 | Total Loss : 4.4917 | Gen Total Loss : 3.2357, Gen Ad Loss : 0.8771, Gen LL Loss : 2.3586  | Disc Total Loss : 1.2560, Disc True Loss : 0.6732, Disc Fake Loss : 0.5828 
+Resetting iterator for loader : train
+Epoch : 1 | Progress : 0.70 | Total Loss : 5.8973 | Gen Total Loss : 4.6365, Gen Ad Loss : 0.9078, Gen LL Loss : 3.7287  | Disc Total Loss : 1.2609, Disc True Loss : 0.5309, Disc Fake Loss : 0.7300 
+Epoch : 1 | Progress : 0.75 | Total Loss : 4.8895 | Gen Total Loss : 3.6861, Gen Ad Loss : 0.9580, Gen LL Loss : 2.7281  | Disc Total Loss : 1.2034, Disc True Loss : 0.6293, Disc Fake Loss : 0.5741 
+Epoch : 1 | Progress : 0.80 | Total Loss : 4.3475 | Gen Total Loss : 3.0744, Gen Ad Loss : 0.8370, Gen LL Loss : 2.2374  | Disc Total Loss : 1.2730, Disc True Loss : 0.7147, Disc Fake Loss : 0.5584 
+Epoch : 1 | Progress : 0.85 | Total Loss : 5.0864 | Gen Total Loss : 3.8610, Gen Ad Loss : 0.7650, Gen LL Loss : 3.0960  | Disc Total Loss : 1.2254, Disc True Loss : 0.5528, Disc Fake Loss : 0.6726 
+Epoch : 1 | Progress : 0.90 | Total Loss : 4.5727 | Gen Total Loss : 3.2525, Gen Ad Loss : 1.0184, Gen LL Loss : 2.2341  | Disc Total Loss : 1.3202, Disc True Loss : 0.6893, Disc Fake Loss : 0.6309 
+Epoch : 1 | Progress : 0.95 | Total Loss : 5.4464 | Gen Total Loss : 4.3212, Gen Ad Loss : 0.6851, Gen LL Loss : 3.6361  | Disc Total Loss : 1.1252, Disc True Loss : 0.6074, Disc Fake Loss : 0.5179 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 2 | Progress : 0.00 | Total Loss : 4.2219 | Gen Total Loss : 3.0932, Gen Ad Loss : 0.9922, Gen LL Loss : 2.1011  | Disc Total Loss : 1.1287, Disc True Loss : 0.5966, Disc Fake Loss : 0.5321 
+Epoch : 2 | Progress : 0.05 | Total Loss : 4.8109 | Gen Total Loss : 3.6080, Gen Ad Loss : 1.0078, Gen LL Loss : 2.6002  | Disc Total Loss : 1.2029, Disc True Loss : 0.6572, Disc Fake Loss : 0.5458 
+Epoch : 2 | Progress : 0.10 | Total Loss : 4.2668 | Gen Total Loss : 3.1467, Gen Ad Loss : 0.8724, Gen LL Loss : 2.2743  | Disc Total Loss : 1.1202, Disc True Loss : 0.5441, Disc Fake Loss : 0.5761 
+Epoch : 2 | Progress : 0.15 | Total Loss : 4.1101 | Gen Total Loss : 2.8662, Gen Ad Loss : 0.9647, Gen LL Loss : 1.9015  | Disc Total Loss : 1.2439, Disc True Loss : 0.5863, Disc Fake Loss : 0.6576 
+Epoch : 2 | Progress : 0.20 | Total Loss : 5.3855 | Gen Total Loss : 4.0282, Gen Ad Loss : 1.0367, Gen LL Loss : 2.9915  | Disc Total Loss : 1.3573, Disc True Loss : 0.7301, Disc Fake Loss : 0.6272 
+Epoch : 2 | Progress : 0.25 | Total Loss : 5.2689 | Gen Total Loss : 4.0285, Gen Ad Loss : 0.8655, Gen LL Loss : 3.1630  | Disc Total Loss : 1.2404, Disc True Loss : 0.7084, Disc Fake Loss : 0.5320 
+Epoch : 2 | Progress : 0.30 | Total Loss : 4.7557 | Gen Total Loss : 3.6288, Gen Ad Loss : 1.1644, Gen LL Loss : 2.4644  | Disc Total Loss : 1.1270, Disc True Loss : 0.6226, Disc Fake Loss : 0.5044 
+Resetting iterator for loader : train
+Epoch : 2 | Progress : 0.35 | Total Loss : 4.5608 | Gen Total Loss : 3.2000, Gen Ad Loss : 0.9474, Gen LL Loss : 2.2526  | Disc Total Loss : 1.3609, Disc True Loss : 0.7645, Disc Fake Loss : 0.5964 
+Epoch : 2 | Progress : 0.40 | Total Loss : 4.6149 | Gen Total Loss : 3.5402, Gen Ad Loss : 0.9413, Gen LL Loss : 2.5989  | Disc Total Loss : 1.0746, Disc True Loss : 0.5413, Disc Fake Loss : 0.5334 
+Epoch : 2 | Progress : 0.45 | Total Loss : 5.1217 | Gen Total Loss : 3.7406, Gen Ad Loss : 0.9548, Gen LL Loss : 2.7858  | Disc Total Loss : 1.3811, Disc True Loss : 0.7186, Disc Fake Loss : 0.6625 
+Epoch : 2 | Progress : 0.50 | Total Loss : 5.5485 | Gen Total Loss : 4.2133, Gen Ad Loss : 0.9988, Gen LL Loss : 3.2145  | Disc Total Loss : 1.3352, Disc True Loss : 0.6096, Disc Fake Loss : 0.7256 
+Epoch : 2 | Progress : 0.55 | Total Loss : 4.7561 | Gen Total Loss : 3.6042, Gen Ad Loss : 0.8061, Gen LL Loss : 2.7981  | Disc Total Loss : 1.1519, Disc True Loss : 0.5004, Disc Fake Loss : 0.6515 
+Epoch : 2 | Progress : 0.60 | Total Loss : 4.7341 | Gen Total Loss : 3.2951, Gen Ad Loss : 0.8597, Gen LL Loss : 2.4353  | Disc Total Loss : 1.4390, Disc True Loss : 0.8726, Disc Fake Loss : 0.5664 
+Epoch : 2 | Progress : 0.65 | Total Loss : 4.4232 | Gen Total Loss : 3.1766, Gen Ad Loss : 0.9973, Gen LL Loss : 2.1793  | Disc Total Loss : 1.2466, Disc True Loss : 0.4313, Disc Fake Loss : 0.8154 
+Resetting iterator for loader : train
+Epoch : 2 | Progress : 0.70 | Total Loss : 4.3971 | Gen Total Loss : 3.2415, Gen Ad Loss : 0.9651, Gen LL Loss : 2.2764  | Disc Total Loss : 1.1556, Disc True Loss : 0.4915, Disc Fake Loss : 0.6641 
+Epoch : 2 | Progress : 0.75 | Total Loss : 5.0028 | Gen Total Loss : 3.7737, Gen Ad Loss : 0.9036, Gen LL Loss : 2.8701  | Disc Total Loss : 1.2291, Disc True Loss : 0.5223, Disc Fake Loss : 0.7068 
+Epoch : 2 | Progress : 0.80 | Total Loss : 4.3584 | Gen Total Loss : 3.1899, Gen Ad Loss : 1.0238, Gen LL Loss : 2.1661  | Disc Total Loss : 1.1685, Disc True Loss : 0.5544, Disc Fake Loss : 0.6141 
+Epoch : 2 | Progress : 0.85 | Total Loss : 4.7526 | Gen Total Loss : 3.5011, Gen Ad Loss : 0.7732, Gen LL Loss : 2.7279  | Disc Total Loss : 1.2515, Disc True Loss : 0.6430, Disc Fake Loss : 0.6086 
+Epoch : 2 | Progress : 0.90 | Total Loss : 4.6660 | Gen Total Loss : 3.3117, Gen Ad Loss : 0.8270, Gen LL Loss : 2.4847  | Disc Total Loss : 1.3542, Disc True Loss : 0.6356, Disc Fake Loss : 0.7186 
+Epoch : 2 | Progress : 0.95 | Total Loss : 5.4578 | Gen Total Loss : 4.5776, Gen Ad Loss : 1.0639, Gen LL Loss : 3.5137  | Disc Total Loss : 0.8802, Disc True Loss : 0.3654, Disc Fake Loss : 0.5148 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 3 | Progress : 0.00 | Total Loss : 4.4258 | Gen Total Loss : 3.1495, Gen Ad Loss : 0.9658, Gen LL Loss : 2.1836  | Disc Total Loss : 1.2764, Disc True Loss : 0.6233, Disc Fake Loss : 0.6531 
+Epoch : 3 | Progress : 0.05 | Total Loss : 4.1075 | Gen Total Loss : 2.9527, Gen Ad Loss : 1.0538, Gen LL Loss : 1.8990  | Disc Total Loss : 1.1548, Disc True Loss : 0.4860, Disc Fake Loss : 0.6688 
+Epoch : 3 | Progress : 0.10 | Total Loss : 4.1776 | Gen Total Loss : 2.9864, Gen Ad Loss : 0.9466, Gen LL Loss : 2.0399  | Disc Total Loss : 1.1911, Disc True Loss : 0.6581, Disc Fake Loss : 0.5331 
+Epoch : 3 | Progress : 0.15 | Total Loss : 4.5105 | Gen Total Loss : 3.3452, Gen Ad Loss : 1.0705, Gen LL Loss : 2.2747  | Disc Total Loss : 1.1653, Disc True Loss : 0.5213, Disc Fake Loss : 0.6440 
+Epoch : 3 | Progress : 0.20 | Total Loss : 4.6737 | Gen Total Loss : 3.2315, Gen Ad Loss : 0.8538, Gen LL Loss : 2.3778  | Disc Total Loss : 1.4422, Disc True Loss : 0.7849, Disc Fake Loss : 0.6572 
+Epoch : 3 | Progress : 0.25 | Total Loss : 3.8168 | Gen Total Loss : 2.8467, Gen Ad Loss : 0.8942, Gen LL Loss : 1.9525  | Disc Total Loss : 0.9701, Disc True Loss : 0.4578, Disc Fake Loss : 0.5123 
+Epoch : 3 | Progress : 0.30 | Total Loss : 4.2678 | Gen Total Loss : 3.1183, Gen Ad Loss : 1.0623, Gen LL Loss : 2.0560  | Disc Total Loss : 1.1495, Disc True Loss : 0.6080, Disc Fake Loss : 0.5415 
+Resetting iterator for loader : train
+Epoch : 3 | Progress : 0.35 | Total Loss : 4.9158 | Gen Total Loss : 3.7800, Gen Ad Loss : 1.1364, Gen LL Loss : 2.6435  | Disc Total Loss : 1.1358, Disc True Loss : 0.6341, Disc Fake Loss : 0.5017 
+Epoch : 3 | Progress : 0.40 | Total Loss : 4.6865 | Gen Total Loss : 3.3296, Gen Ad Loss : 0.9019, Gen LL Loss : 2.4277  | Disc Total Loss : 1.3569, Disc True Loss : 0.6303, Disc Fake Loss : 0.7266 
+Epoch : 3 | Progress : 0.45 | Total Loss : 4.0354 | Gen Total Loss : 3.2406, Gen Ad Loss : 1.0429, Gen LL Loss : 2.1976  | Disc Total Loss : 0.7948, Disc True Loss : 0.2471, Disc Fake Loss : 0.5477 
+Epoch : 3 | Progress : 0.50 | Total Loss : 4.3028 | Gen Total Loss : 3.0883, Gen Ad Loss : 1.0893, Gen LL Loss : 1.9990  | Disc Total Loss : 1.2145, Disc True Loss : 0.6120, Disc Fake Loss : 0.6025 
+Epoch : 3 | Progress : 0.55 | Total Loss : 3.9538 | Gen Total Loss : 2.8382, Gen Ad Loss : 0.8965, Gen LL Loss : 1.9418  | Disc Total Loss : 1.1155, Disc True Loss : 0.6198, Disc Fake Loss : 0.4957 
+Epoch : 3 | Progress : 0.60 | Total Loss : 4.5960 | Gen Total Loss : 3.4516, Gen Ad Loss : 0.8708, Gen LL Loss : 2.5808  | Disc Total Loss : 1.1444, Disc True Loss : 0.5903, Disc Fake Loss : 0.5542 
+Epoch : 3 | Progress : 0.65 | Total Loss : 4.1572 | Gen Total Loss : 3.1524, Gen Ad Loss : 1.0080, Gen LL Loss : 2.1444  | Disc Total Loss : 1.0048, Disc True Loss : 0.5280, Disc Fake Loss : 0.4767 
+Resetting iterator for loader : train
+Epoch : 3 | Progress : 0.70 | Total Loss : 4.2421 | Gen Total Loss : 3.1817, Gen Ad Loss : 0.9557, Gen LL Loss : 2.2261  | Disc Total Loss : 1.0604, Disc True Loss : 0.5559, Disc Fake Loss : 0.5045 
+Epoch : 3 | Progress : 0.75 | Total Loss : 4.8247 | Gen Total Loss : 3.5789, Gen Ad Loss : 0.8025, Gen LL Loss : 2.7765  | Disc Total Loss : 1.2458, Disc True Loss : 0.6354, Disc Fake Loss : 0.6103 
+Epoch : 3 | Progress : 0.80 | Total Loss : 5.6194 | Gen Total Loss : 4.1726, Gen Ad Loss : 1.3756, Gen LL Loss : 2.7971  | Disc Total Loss : 1.4468, Disc True Loss : 0.8782, Disc Fake Loss : 0.5686 
+Epoch : 3 | Progress : 0.85 | Total Loss : 4.1197 | Gen Total Loss : 3.0160, Gen Ad Loss : 0.7984, Gen LL Loss : 2.2176  | Disc Total Loss : 1.1037, Disc True Loss : 0.5296, Disc Fake Loss : 0.5740 
+Epoch : 3 | Progress : 0.90 | Total Loss : 5.7459 | Gen Total Loss : 4.3056, Gen Ad Loss : 0.9894, Gen LL Loss : 3.3162  | Disc Total Loss : 1.4403, Disc True Loss : 0.6924, Disc Fake Loss : 0.7479 
+Epoch : 3 | Progress : 0.95 | Total Loss : 4.5468 | Gen Total Loss : 3.4011, Gen Ad Loss : 0.7955, Gen LL Loss : 2.6056  | Disc Total Loss : 1.1457, Disc True Loss : 0.5683, Disc Fake Loss : 0.5773 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 4 | Progress : 0.00 | Total Loss : 3.9252 | Gen Total Loss : 2.7297, Gen Ad Loss : 0.9347, Gen LL Loss : 1.7950  | Disc Total Loss : 1.1955, Disc True Loss : 0.6195, Disc Fake Loss : 0.5760 
+Epoch : 4 | Progress : 0.05 | Total Loss : 5.0342 | Gen Total Loss : 3.9601, Gen Ad Loss : 1.2220, Gen LL Loss : 2.7381  | Disc Total Loss : 1.0741, Disc True Loss : 0.4810, Disc Fake Loss : 0.5931 
+Epoch : 4 | Progress : 0.10 | Total Loss : 4.2733 | Gen Total Loss : 3.1354, Gen Ad Loss : 0.9395, Gen LL Loss : 2.1959  | Disc Total Loss : 1.1379, Disc True Loss : 0.5328, Disc Fake Loss : 0.6051 
+Epoch : 4 | Progress : 0.15 | Total Loss : 4.1967 | Gen Total Loss : 3.0383, Gen Ad Loss : 0.7781, Gen LL Loss : 2.2602  | Disc Total Loss : 1.1584, Disc True Loss : 0.5787, Disc Fake Loss : 0.5797 
+Epoch : 4 | Progress : 0.20 | Total Loss : 4.7584 | Gen Total Loss : 3.5129, Gen Ad Loss : 1.1533, Gen LL Loss : 2.3595  | Disc Total Loss : 1.2456, Disc True Loss : 0.6630, Disc Fake Loss : 0.5826 
+Epoch : 4 | Progress : 0.25 | Total Loss : 5.3221 | Gen Total Loss : 4.1504, Gen Ad Loss : 0.8710, Gen LL Loss : 3.2794  | Disc Total Loss : 1.1717, Disc True Loss : 0.6939, Disc Fake Loss : 0.4777 
+Epoch : 4 | Progress : 0.30 | Total Loss : 4.9497 | Gen Total Loss : 3.5325, Gen Ad Loss : 1.1733, Gen LL Loss : 2.3591  | Disc Total Loss : 1.4173, Disc True Loss : 0.8397, Disc Fake Loss : 0.5775 
+Resetting iterator for loader : train
+Epoch : 4 | Progress : 0.35 | Total Loss : 5.1285 | Gen Total Loss : 4.0425, Gen Ad Loss : 1.0979, Gen LL Loss : 2.9445  | Disc Total Loss : 1.0861, Disc True Loss : 0.4443, Disc Fake Loss : 0.6418 
+Epoch : 4 | Progress : 0.40 | Total Loss : 4.4080 | Gen Total Loss : 3.3877, Gen Ad Loss : 0.9480, Gen LL Loss : 2.4397  | Disc Total Loss : 1.0203, Disc True Loss : 0.4997, Disc Fake Loss : 0.5206 
+Epoch : 4 | Progress : 0.45 | Total Loss : 4.6033 | Gen Total Loss : 3.5074, Gen Ad Loss : 0.9321, Gen LL Loss : 2.5753  | Disc Total Loss : 1.0959, Disc True Loss : 0.5115, Disc Fake Loss : 0.5844 
+Epoch : 4 | Progress : 0.50 | Total Loss : 4.5406 | Gen Total Loss : 3.2866, Gen Ad Loss : 1.1056, Gen LL Loss : 2.1810  | Disc Total Loss : 1.2540, Disc True Loss : 0.6942, Disc Fake Loss : 0.5598 
+Epoch : 4 | Progress : 0.55 | Total Loss : 4.6285 | Gen Total Loss : 3.6009, Gen Ad Loss : 1.1209, Gen LL Loss : 2.4800  | Disc Total Loss : 1.0276, Disc True Loss : 0.6127, Disc Fake Loss : 0.4149 
+Epoch : 4 | Progress : 0.60 | Total Loss : 4.9038 | Gen Total Loss : 3.9035, Gen Ad Loss : 0.7770, Gen LL Loss : 3.1264  | Disc Total Loss : 1.0004, Disc True Loss : 0.4544, Disc Fake Loss : 0.5460 
+Epoch : 4 | Progress : 0.65 | Total Loss : 4.0000 | Gen Total Loss : 2.8803, Gen Ad Loss : 0.9779, Gen LL Loss : 1.9024  | Disc Total Loss : 1.1197, Disc True Loss : 0.5254, Disc Fake Loss : 0.5943 
+Resetting iterator for loader : train
+Epoch : 4 | Progress : 0.70 | Total Loss : 4.1859 | Gen Total Loss : 3.1902, Gen Ad Loss : 1.1759, Gen LL Loss : 2.0144  | Disc Total Loss : 0.9957, Disc True Loss : 0.5993, Disc Fake Loss : 0.3964 
+Epoch : 4 | Progress : 0.75 | Total Loss : 4.2815 | Gen Total Loss : 2.9584, Gen Ad Loss : 0.9973, Gen LL Loss : 1.9612  | Disc Total Loss : 1.3230, Disc True Loss : 0.7078, Disc Fake Loss : 0.6152 
+Epoch : 4 | Progress : 0.80 | Total Loss : 4.2404 | Gen Total Loss : 2.9618, Gen Ad Loss : 0.9773, Gen LL Loss : 1.9845  | Disc Total Loss : 1.2786, Disc True Loss : 0.5985, Disc Fake Loss : 0.6801 
+Epoch : 4 | Progress : 0.85 | Total Loss : 4.7592 | Gen Total Loss : 3.4685, Gen Ad Loss : 0.7664, Gen LL Loss : 2.7020  | Disc Total Loss : 1.2907, Disc True Loss : 0.7990, Disc Fake Loss : 0.4917 
+Epoch : 4 | Progress : 0.90 | Total Loss : 5.3357 | Gen Total Loss : 4.0922, Gen Ad Loss : 0.9448, Gen LL Loss : 3.1474  | Disc Total Loss : 1.2434, Disc True Loss : 0.5342, Disc Fake Loss : 0.7092 
+Epoch : 4 | Progress : 0.95 | Total Loss : 5.0382 | Gen Total Loss : 3.8030, Gen Ad Loss : 1.0246, Gen LL Loss : 2.7785  | Disc Total Loss : 1.2352, Disc True Loss : 0.6649, Disc Fake Loss : 0.5702 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 5 | Progress : 0.00 | Total Loss : 4.0245 | Gen Total Loss : 3.1414, Gen Ad Loss : 0.9145, Gen LL Loss : 2.2268  | Disc Total Loss : 0.8831, Disc True Loss : 0.4387, Disc Fake Loss : 0.4444 
+Epoch : 5 | Progress : 0.05 | Total Loss : 4.1552 | Gen Total Loss : 2.7644, Gen Ad Loss : 0.8816, Gen LL Loss : 1.8827  | Disc Total Loss : 1.3908, Disc True Loss : 0.7797, Disc Fake Loss : 0.6111 
+Epoch : 5 | Progress : 0.10 | Total Loss : 4.2820 | Gen Total Loss : 3.2601, Gen Ad Loss : 1.0334, Gen LL Loss : 2.2267  | Disc Total Loss : 1.0219, Disc True Loss : 0.4206, Disc Fake Loss : 0.6013 
+Epoch : 5 | Progress : 0.15 | Total Loss : 4.4324 | Gen Total Loss : 3.3228, Gen Ad Loss : 0.7062, Gen LL Loss : 2.6165  | Disc Total Loss : 1.1096, Disc True Loss : 0.6276, Disc Fake Loss : 0.4820 
+Epoch : 5 | Progress : 0.20 | Total Loss : 4.8434 | Gen Total Loss : 3.7814, Gen Ad Loss : 0.9755, Gen LL Loss : 2.8060  | Disc Total Loss : 1.0619, Disc True Loss : 0.5579, Disc Fake Loss : 0.5040 
+Epoch : 5 | Progress : 0.25 | Total Loss : 3.8584 | Gen Total Loss : 2.9462, Gen Ad Loss : 0.8121, Gen LL Loss : 2.1341  | Disc Total Loss : 0.9122, Disc True Loss : 0.4553, Disc Fake Loss : 0.4569 
+Epoch : 5 | Progress : 0.30 | Total Loss : 4.1504 | Gen Total Loss : 3.0326, Gen Ad Loss : 1.0193, Gen LL Loss : 2.0133  | Disc Total Loss : 1.1178, Disc True Loss : 0.5984, Disc Fake Loss : 0.5194 
+Resetting iterator for loader : train
+Epoch : 5 | Progress : 0.35 | Total Loss : 5.0262 | Gen Total Loss : 3.9515, Gen Ad Loss : 1.1466, Gen LL Loss : 2.8049  | Disc Total Loss : 1.0747, Disc True Loss : 0.5894, Disc Fake Loss : 0.4853 
+Epoch : 5 | Progress : 0.40 | Total Loss : 3.8813 | Gen Total Loss : 2.8803, Gen Ad Loss : 0.8752, Gen LL Loss : 2.0051  | Disc Total Loss : 1.0010, Disc True Loss : 0.4525, Disc Fake Loss : 0.5485 
+Epoch : 5 | Progress : 0.45 | Total Loss : 4.3032 | Gen Total Loss : 3.1067, Gen Ad Loss : 0.9290, Gen LL Loss : 2.1777  | Disc Total Loss : 1.1966, Disc True Loss : 0.5862, Disc Fake Loss : 0.6104 
+Epoch : 5 | Progress : 0.50 | Total Loss : 4.6437 | Gen Total Loss : 3.6335, Gen Ad Loss : 1.0283, Gen LL Loss : 2.6052  | Disc Total Loss : 1.0103, Disc True Loss : 0.4663, Disc Fake Loss : 0.5440 
+Epoch : 5 | Progress : 0.55 | Total Loss : 4.1296 | Gen Total Loss : 3.0079, Gen Ad Loss : 0.8852, Gen LL Loss : 2.1227  | Disc Total Loss : 1.1216, Disc True Loss : 0.6216, Disc Fake Loss : 0.5000 
+Epoch : 5 | Progress : 0.60 | Total Loss : 4.2611 | Gen Total Loss : 2.9223, Gen Ad Loss : 0.6179, Gen LL Loss : 2.3044  | Disc Total Loss : 1.3388, Disc True Loss : 0.8247, Disc Fake Loss : 0.5141 
+Epoch : 5 | Progress : 0.65 | Total Loss : 5.0014 | Gen Total Loss : 3.7340, Gen Ad Loss : 1.1323, Gen LL Loss : 2.6017  | Disc Total Loss : 1.2675, Disc True Loss : 0.7751, Disc Fake Loss : 0.4924 
+Resetting iterator for loader : train
+Epoch : 5 | Progress : 0.70 | Total Loss : 4.4402 | Gen Total Loss : 3.2080, Gen Ad Loss : 0.8231, Gen LL Loss : 2.3849  | Disc Total Loss : 1.2321, Disc True Loss : 0.6337, Disc Fake Loss : 0.5984 
+Epoch : 5 | Progress : 0.75 | Total Loss : 5.0214 | Gen Total Loss : 3.6925, Gen Ad Loss : 0.9254, Gen LL Loss : 2.7671  | Disc Total Loss : 1.3289, Disc True Loss : 0.7221, Disc Fake Loss : 0.6069 
+Epoch : 5 | Progress : 0.80 | Total Loss : 3.9339 | Gen Total Loss : 2.9946, Gen Ad Loss : 0.9250, Gen LL Loss : 2.0696  | Disc Total Loss : 0.9392, Disc True Loss : 0.4791, Disc Fake Loss : 0.4601 
+Epoch : 5 | Progress : 0.85 | Total Loss : 4.2415 | Gen Total Loss : 3.0474, Gen Ad Loss : 1.2624, Gen LL Loss : 1.7850  | Disc Total Loss : 1.1941, Disc True Loss : 0.5140, Disc Fake Loss : 0.6801 
+Epoch : 5 | Progress : 0.90 | Total Loss : 3.7779 | Gen Total Loss : 2.6914, Gen Ad Loss : 0.9539, Gen LL Loss : 1.7375  | Disc Total Loss : 1.0865, Disc True Loss : 0.6007, Disc Fake Loss : 0.4859 
+Epoch : 5 | Progress : 0.95 | Total Loss : 4.5584 | Gen Total Loss : 3.2065, Gen Ad Loss : 0.6363, Gen LL Loss : 2.5702  | Disc Total Loss : 1.3519, Disc True Loss : 0.6322, Disc Fake Loss : 0.7197 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 6 | Progress : 0.00 | Total Loss : 4.1959 | Gen Total Loss : 3.2294, Gen Ad Loss : 0.9572, Gen LL Loss : 2.2722  | Disc Total Loss : 0.9665, Disc True Loss : 0.3797, Disc Fake Loss : 0.5868 
+Epoch : 6 | Progress : 0.05 | Total Loss : 5.0861 | Gen Total Loss : 4.2561, Gen Ad Loss : 1.0578, Gen LL Loss : 3.1982  | Disc Total Loss : 0.8301, Disc True Loss : 0.4712, Disc Fake Loss : 0.3589 
+Epoch : 6 | Progress : 0.10 | Total Loss : 4.9429 | Gen Total Loss : 3.4459, Gen Ad Loss : 1.0454, Gen LL Loss : 2.4005  | Disc Total Loss : 1.4970, Disc True Loss : 0.9814, Disc Fake Loss : 0.5156 
+Epoch : 6 | Progress : 0.15 | Total Loss : 4.3998 | Gen Total Loss : 3.1565, Gen Ad Loss : 0.7185, Gen LL Loss : 2.4380  | Disc Total Loss : 1.2433, Disc True Loss : 0.7157, Disc Fake Loss : 0.5275 
+Epoch : 6 | Progress : 0.20 | Total Loss : 4.6532 | Gen Total Loss : 3.2563, Gen Ad Loss : 0.8972, Gen LL Loss : 2.3592  | Disc Total Loss : 1.3969, Disc True Loss : 0.6096, Disc Fake Loss : 0.7873 
+Epoch : 6 | Progress : 0.25 | Total Loss : 5.5634 | Gen Total Loss : 4.3043, Gen Ad Loss : 1.3243, Gen LL Loss : 2.9801  | Disc Total Loss : 1.2591, Disc True Loss : 0.6811, Disc Fake Loss : 0.5780 
+Epoch : 6 | Progress : 0.30 | Total Loss : 4.9797 | Gen Total Loss : 3.9170, Gen Ad Loss : 1.1149, Gen LL Loss : 2.8021  | Disc Total Loss : 1.0627, Disc True Loss : 0.5902, Disc Fake Loss : 0.4725 
+Resetting iterator for loader : train
+Epoch : 6 | Progress : 0.35 | Total Loss : 3.9963 | Gen Total Loss : 2.9812, Gen Ad Loss : 1.0155, Gen LL Loss : 1.9657  | Disc Total Loss : 1.0151, Disc True Loss : 0.4896, Disc Fake Loss : 0.5255 
+Epoch : 6 | Progress : 0.40 | Total Loss : 5.1089 | Gen Total Loss : 3.9340, Gen Ad Loss : 1.0386, Gen LL Loss : 2.8953  | Disc Total Loss : 1.1750, Disc True Loss : 0.7184, Disc Fake Loss : 0.4566 
+Epoch : 6 | Progress : 0.45 | Total Loss : 4.2615 | Gen Total Loss : 3.0913, Gen Ad Loss : 0.8616, Gen LL Loss : 2.2297  | Disc Total Loss : 1.1703, Disc True Loss : 0.5679, Disc Fake Loss : 0.6024 
+Epoch : 6 | Progress : 0.50 | Total Loss : 4.3881 | Gen Total Loss : 3.0139, Gen Ad Loss : 0.9107, Gen LL Loss : 2.1032  | Disc Total Loss : 1.3742, Disc True Loss : 0.7828, Disc Fake Loss : 0.5914 
+Epoch : 6 | Progress : 0.55 | Total Loss : 3.9565 | Gen Total Loss : 3.0366, Gen Ad Loss : 0.8378, Gen LL Loss : 2.1988  | Disc Total Loss : 0.9199, Disc True Loss : 0.4376, Disc Fake Loss : 0.4823 
+Epoch : 6 | Progress : 0.60 | Total Loss : 4.4753 | Gen Total Loss : 3.2416, Gen Ad Loss : 0.9936, Gen LL Loss : 2.2480  | Disc Total Loss : 1.2338, Disc True Loss : 0.7125, Disc Fake Loss : 0.5213 
+Epoch : 6 | Progress : 0.65 | Total Loss : 4.3496 | Gen Total Loss : 3.2597, Gen Ad Loss : 1.1619, Gen LL Loss : 2.0977  | Disc Total Loss : 1.0899, Disc True Loss : 0.5617, Disc Fake Loss : 0.5283 
+Resetting iterator for loader : train
+Epoch : 6 | Progress : 0.70 | Total Loss : 4.6070 | Gen Total Loss : 3.3795, Gen Ad Loss : 1.1173, Gen LL Loss : 2.2622  | Disc Total Loss : 1.2275, Disc True Loss : 0.5360, Disc Fake Loss : 0.6915 
+Epoch : 6 | Progress : 0.75 | Total Loss : 4.1966 | Gen Total Loss : 3.0013, Gen Ad Loss : 1.2306, Gen LL Loss : 1.7707  | Disc Total Loss : 1.1953, Disc True Loss : 0.7496, Disc Fake Loss : 0.4457 
+Epoch : 6 | Progress : 0.80 | Total Loss : 5.3612 | Gen Total Loss : 4.0102, Gen Ad Loss : 1.3567, Gen LL Loss : 2.6535  | Disc Total Loss : 1.3510, Disc True Loss : 0.6710, Disc Fake Loss : 0.6799 
+Epoch : 6 | Progress : 0.85 | Total Loss : 4.1119 | Gen Total Loss : 2.5256, Gen Ad Loss : 0.7382, Gen LL Loss : 1.7874  | Disc Total Loss : 1.5863, Disc True Loss : 0.8597, Disc Fake Loss : 0.7266 
+Epoch : 6 | Progress : 0.90 | Total Loss : 4.4911 | Gen Total Loss : 3.4597, Gen Ad Loss : 0.7909, Gen LL Loss : 2.6689  | Disc Total Loss : 1.0313, Disc True Loss : 0.5994, Disc Fake Loss : 0.4320 
+Epoch : 6 | Progress : 0.95 | Total Loss : 3.9033 | Gen Total Loss : 2.9749, Gen Ad Loss : 0.9979, Gen LL Loss : 1.9770  | Disc Total Loss : 0.9284, Disc True Loss : 0.3738, Disc Fake Loss : 0.5546 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 7 | Progress : 0.00 | Total Loss : 4.0712 | Gen Total Loss : 2.8630, Gen Ad Loss : 0.7878, Gen LL Loss : 2.0751  | Disc Total Loss : 1.2083, Disc True Loss : 0.4948, Disc Fake Loss : 0.7135 
+Epoch : 7 | Progress : 0.05 | Total Loss : 5.9673 | Gen Total Loss : 4.8086, Gen Ad Loss : 1.1105, Gen LL Loss : 3.6981  | Disc Total Loss : 1.1587, Disc True Loss : 0.5846, Disc Fake Loss : 0.5741 
+Epoch : 7 | Progress : 0.10 | Total Loss : 4.7377 | Gen Total Loss : 3.7032, Gen Ad Loss : 1.0811, Gen LL Loss : 2.6221  | Disc Total Loss : 1.0345, Disc True Loss : 0.4690, Disc Fake Loss : 0.5656 
+Epoch : 7 | Progress : 0.15 | Total Loss : 4.3283 | Gen Total Loss : 2.9855, Gen Ad Loss : 0.8852, Gen LL Loss : 2.1003  | Disc Total Loss : 1.3428, Disc True Loss : 0.6802, Disc Fake Loss : 0.6626 
+Epoch : 7 | Progress : 0.20 | Total Loss : 4.5033 | Gen Total Loss : 3.2613, Gen Ad Loss : 0.8328, Gen LL Loss : 2.4285  | Disc Total Loss : 1.2420, Disc True Loss : 0.6494, Disc Fake Loss : 0.5926 
+Epoch : 7 | Progress : 0.25 | Total Loss : 4.0829 | Gen Total Loss : 3.0316, Gen Ad Loss : 1.0626, Gen LL Loss : 1.9690  | Disc Total Loss : 1.0513, Disc True Loss : 0.5447, Disc Fake Loss : 0.5066 
+Epoch : 7 | Progress : 0.30 | Total Loss : 4.1854 | Gen Total Loss : 3.0445, Gen Ad Loss : 0.8738, Gen LL Loss : 2.1707  | Disc Total Loss : 1.1409, Disc True Loss : 0.4365, Disc Fake Loss : 0.7044 
+Resetting iterator for loader : train
+Epoch : 7 | Progress : 0.35 | Total Loss : 3.8879 | Gen Total Loss : 2.7860, Gen Ad Loss : 0.7684, Gen LL Loss : 2.0177  | Disc Total Loss : 1.1018, Disc True Loss : 0.5047, Disc Fake Loss : 0.5972 
+Epoch : 7 | Progress : 0.40 | Total Loss : 4.5910 | Gen Total Loss : 3.4691, Gen Ad Loss : 1.3220, Gen LL Loss : 2.1471  | Disc Total Loss : 1.1219, Disc True Loss : 0.5588, Disc Fake Loss : 0.5631 
+Epoch : 7 | Progress : 0.45 | Total Loss : 4.2964 | Gen Total Loss : 3.2377, Gen Ad Loss : 0.9946, Gen LL Loss : 2.2431  | Disc Total Loss : 1.0587, Disc True Loss : 0.4973, Disc Fake Loss : 0.5613 
+Epoch : 7 | Progress : 0.50 | Total Loss : 4.6170 | Gen Total Loss : 3.4707, Gen Ad Loss : 1.0288, Gen LL Loss : 2.4419  | Disc Total Loss : 1.1463, Disc True Loss : 0.5523, Disc Fake Loss : 0.5940 
+Epoch : 7 | Progress : 0.55 | Total Loss : 3.7839 | Gen Total Loss : 2.8667, Gen Ad Loss : 0.8664, Gen LL Loss : 2.0002  | Disc Total Loss : 0.9172, Disc True Loss : 0.4594, Disc Fake Loss : 0.4578 
+Epoch : 7 | Progress : 0.60 | Total Loss : 4.9121 | Gen Total Loss : 3.6668, Gen Ad Loss : 0.9991, Gen LL Loss : 2.6677  | Disc Total Loss : 1.2454, Disc True Loss : 0.8913, Disc Fake Loss : 0.3541 
+Epoch : 7 | Progress : 0.65 | Total Loss : 4.0390 | Gen Total Loss : 2.8848, Gen Ad Loss : 0.9919, Gen LL Loss : 1.8929  | Disc Total Loss : 1.1542, Disc True Loss : 0.6273, Disc Fake Loss : 0.5269 
+Resetting iterator for loader : train
+Epoch : 7 | Progress : 0.70 | Total Loss : 5.1713 | Gen Total Loss : 4.0593, Gen Ad Loss : 0.9873, Gen LL Loss : 3.0721  | Disc Total Loss : 1.1120, Disc True Loss : 0.6073, Disc Fake Loss : 0.5047 
+Epoch : 7 | Progress : 0.75 | Total Loss : 4.6051 | Gen Total Loss : 3.5282, Gen Ad Loss : 1.0519, Gen LL Loss : 2.4763  | Disc Total Loss : 1.0769, Disc True Loss : 0.5811, Disc Fake Loss : 0.4957 
+Epoch : 7 | Progress : 0.80 | Total Loss : 5.8223 | Gen Total Loss : 4.7342, Gen Ad Loss : 1.1891, Gen LL Loss : 3.5452  | Disc Total Loss : 1.0881, Disc True Loss : 0.5292, Disc Fake Loss : 0.5589 
+Epoch : 7 | Progress : 0.85 | Total Loss : 4.1486 | Gen Total Loss : 3.0616, Gen Ad Loss : 0.9478, Gen LL Loss : 2.1138  | Disc Total Loss : 1.0870, Disc True Loss : 0.4452, Disc Fake Loss : 0.6418 
+Epoch : 7 | Progress : 0.90 | Total Loss : 4.8568 | Gen Total Loss : 3.7361, Gen Ad Loss : 0.9976, Gen LL Loss : 2.7385  | Disc Total Loss : 1.1208, Disc True Loss : 0.5212, Disc Fake Loss : 0.5996 
+Epoch : 7 | Progress : 0.95 | Total Loss : 4.3669 | Gen Total Loss : 2.9775, Gen Ad Loss : 0.6506, Gen LL Loss : 2.3269  | Disc Total Loss : 1.3894, Disc True Loss : 0.6787, Disc Fake Loss : 0.7107 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 8 | Progress : 0.00 | Total Loss : 4.6735 | Gen Total Loss : 3.3977, Gen Ad Loss : 0.9059, Gen LL Loss : 2.4918  | Disc Total Loss : 1.2758, Disc True Loss : 0.6358, Disc Fake Loss : 0.6400 
+Epoch : 8 | Progress : 0.05 | Total Loss : 4.2176 | Gen Total Loss : 3.1898, Gen Ad Loss : 0.9533, Gen LL Loss : 2.2365  | Disc Total Loss : 1.0278, Disc True Loss : 0.4956, Disc Fake Loss : 0.5322 
+Epoch : 8 | Progress : 0.10 | Total Loss : 4.2809 | Gen Total Loss : 3.0622, Gen Ad Loss : 0.9460, Gen LL Loss : 2.1162  | Disc Total Loss : 1.2186, Disc True Loss : 0.5658, Disc Fake Loss : 0.6529 
+Epoch : 8 | Progress : 0.15 | Total Loss : 4.7115 | Gen Total Loss : 3.7818, Gen Ad Loss : 0.9528, Gen LL Loss : 2.8291  | Disc Total Loss : 0.9297, Disc True Loss : 0.3952, Disc Fake Loss : 0.5345 
+Epoch : 8 | Progress : 0.20 | Total Loss : 4.3930 | Gen Total Loss : 3.1041, Gen Ad Loss : 0.8741, Gen LL Loss : 2.2300  | Disc Total Loss : 1.2889, Disc True Loss : 0.5684, Disc Fake Loss : 0.7204 
+Epoch : 8 | Progress : 0.25 | Total Loss : 4.2798 | Gen Total Loss : 3.1732, Gen Ad Loss : 0.9876, Gen LL Loss : 2.1856  | Disc Total Loss : 1.1066, Disc True Loss : 0.5025, Disc Fake Loss : 0.6041 
+Epoch : 8 | Progress : 0.30 | Total Loss : 4.6969 | Gen Total Loss : 3.6545, Gen Ad Loss : 1.3535, Gen LL Loss : 2.3009  | Disc Total Loss : 1.0425, Disc True Loss : 0.5426, Disc Fake Loss : 0.4998 
+Resetting iterator for loader : train
+Epoch : 8 | Progress : 0.35 | Total Loss : 4.1925 | Gen Total Loss : 3.0294, Gen Ad Loss : 1.2040, Gen LL Loss : 1.8254  | Disc Total Loss : 1.1631, Disc True Loss : 0.4834, Disc Fake Loss : 0.6796 
+Epoch : 8 | Progress : 0.40 | Total Loss : 4.4514 | Gen Total Loss : 3.3570, Gen Ad Loss : 0.9024, Gen LL Loss : 2.4546  | Disc Total Loss : 1.0944, Disc True Loss : 0.5534, Disc Fake Loss : 0.5410 
+Epoch : 8 | Progress : 0.45 | Total Loss : 4.2135 | Gen Total Loss : 3.1852, Gen Ad Loss : 1.0835, Gen LL Loss : 2.1017  | Disc Total Loss : 1.0284, Disc True Loss : 0.4439, Disc Fake Loss : 0.5845 
+Epoch : 8 | Progress : 0.50 | Total Loss : 4.7215 | Gen Total Loss : 3.4953, Gen Ad Loss : 1.1114, Gen LL Loss : 2.3840  | Disc Total Loss : 1.2261, Disc True Loss : 0.6689, Disc Fake Loss : 0.5572 
+Epoch : 8 | Progress : 0.55 | Total Loss : 5.2019 | Gen Total Loss : 3.9980, Gen Ad Loss : 0.8944, Gen LL Loss : 3.1036  | Disc Total Loss : 1.2040, Disc True Loss : 0.6568, Disc Fake Loss : 0.5471 
+Epoch : 8 | Progress : 0.60 | Total Loss : 4.6043 | Gen Total Loss : 3.5269, Gen Ad Loss : 0.9879, Gen LL Loss : 2.5390  | Disc Total Loss : 1.0774, Disc True Loss : 0.6360, Disc Fake Loss : 0.4414 
+Epoch : 8 | Progress : 0.65 | Total Loss : 4.0057 | Gen Total Loss : 3.1436, Gen Ad Loss : 0.9982, Gen LL Loss : 2.1454  | Disc Total Loss : 0.8620, Disc True Loss : 0.2803, Disc Fake Loss : 0.5817 
+Resetting iterator for loader : train
+Epoch : 8 | Progress : 0.70 | Total Loss : 4.5464 | Gen Total Loss : 3.2688, Gen Ad Loss : 1.0326, Gen LL Loss : 2.2362  | Disc Total Loss : 1.2776, Disc True Loss : 0.6057, Disc Fake Loss : 0.6719 
+Epoch : 8 | Progress : 0.75 | Total Loss : 4.1523 | Gen Total Loss : 3.0652, Gen Ad Loss : 1.0161, Gen LL Loss : 2.0491  | Disc Total Loss : 1.0871, Disc True Loss : 0.5986, Disc Fake Loss : 0.4885 
+Epoch : 8 | Progress : 0.80 | Total Loss : 4.3048 | Gen Total Loss : 3.2025, Gen Ad Loss : 1.1819, Gen LL Loss : 2.0206  | Disc Total Loss : 1.1023, Disc True Loss : 0.6746, Disc Fake Loss : 0.4277 
+Epoch : 8 | Progress : 0.85 | Total Loss : 4.1866 | Gen Total Loss : 3.3267, Gen Ad Loss : 1.0923, Gen LL Loss : 2.2344  | Disc Total Loss : 0.8599, Disc True Loss : 0.3548, Disc Fake Loss : 0.5051 
+Epoch : 8 | Progress : 0.90 | Total Loss : 4.4268 | Gen Total Loss : 3.3341, Gen Ad Loss : 0.8870, Gen LL Loss : 2.4471  | Disc Total Loss : 1.0927, Disc True Loss : 0.5212, Disc Fake Loss : 0.5715 
+Epoch : 8 | Progress : 0.95 | Total Loss : 4.1570 | Gen Total Loss : 3.1979, Gen Ad Loss : 1.0161, Gen LL Loss : 2.1818  | Disc Total Loss : 0.9591, Disc True Loss : 0.4702, Disc Fake Loss : 0.4890 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 9 | Progress : 0.00 | Total Loss : 3.8732 | Gen Total Loss : 2.7189, Gen Ad Loss : 0.9346, Gen LL Loss : 1.7843  | Disc Total Loss : 1.1543, Disc True Loss : 0.7281, Disc Fake Loss : 0.4262 
+Epoch : 9 | Progress : 0.05 | Total Loss : 4.9781 | Gen Total Loss : 3.7278, Gen Ad Loss : 1.2307, Gen LL Loss : 2.4970  | Disc Total Loss : 1.2504, Disc True Loss : 0.5434, Disc Fake Loss : 0.7070 
+Epoch : 9 | Progress : 0.10 | Total Loss : 6.8291 | Gen Total Loss : 5.8598, Gen Ad Loss : 1.0708, Gen LL Loss : 4.7889  | Disc Total Loss : 0.9693, Disc True Loss : 0.4966, Disc Fake Loss : 0.4728 
+Epoch : 9 | Progress : 0.15 | Total Loss : 3.7938 | Gen Total Loss : 2.9444, Gen Ad Loss : 0.9318, Gen LL Loss : 2.0126  | Disc Total Loss : 0.8494, Disc True Loss : 0.3186, Disc Fake Loss : 0.5308 
+Epoch : 9 | Progress : 0.20 | Total Loss : 5.2902 | Gen Total Loss : 4.0193, Gen Ad Loss : 0.9126, Gen LL Loss : 3.1067  | Disc Total Loss : 1.2709, Disc True Loss : 0.6185, Disc Fake Loss : 0.6523 
+Epoch : 9 | Progress : 0.25 | Total Loss : 4.7049 | Gen Total Loss : 3.5839, Gen Ad Loss : 0.7927, Gen LL Loss : 2.7911  | Disc Total Loss : 1.1211, Disc True Loss : 0.5512, Disc Fake Loss : 0.5699 
+Epoch : 9 | Progress : 0.30 | Total Loss : 4.2291 | Gen Total Loss : 3.1639, Gen Ad Loss : 1.0538, Gen LL Loss : 2.1101  | Disc Total Loss : 1.0652, Disc True Loss : 0.4837, Disc Fake Loss : 0.5815 
+Resetting iterator for loader : train
+Epoch : 9 | Progress : 0.35 | Total Loss : 4.5465 | Gen Total Loss : 3.3827, Gen Ad Loss : 0.9255, Gen LL Loss : 2.4572  | Disc Total Loss : 1.1639, Disc True Loss : 0.5284, Disc Fake Loss : 0.6354 
+Epoch : 9 | Progress : 0.40 | Total Loss : 4.5710 | Gen Total Loss : 3.7081, Gen Ad Loss : 1.1945, Gen LL Loss : 2.5136  | Disc Total Loss : 0.8629, Disc True Loss : 0.4728, Disc Fake Loss : 0.3901 
+Epoch : 9 | Progress : 0.45 | Total Loss : 4.0680 | Gen Total Loss : 3.0681, Gen Ad Loss : 1.0078, Gen LL Loss : 2.0604  | Disc Total Loss : 0.9999, Disc True Loss : 0.5027, Disc Fake Loss : 0.4972 
+Epoch : 9 | Progress : 0.50 | Total Loss : 4.7847 | Gen Total Loss : 3.6187, Gen Ad Loss : 1.2911, Gen LL Loss : 2.3276  | Disc Total Loss : 1.1660, Disc True Loss : 0.4211, Disc Fake Loss : 0.7449 
+Epoch : 9 | Progress : 0.55 | Total Loss : 4.9701 | Gen Total Loss : 3.8755, Gen Ad Loss : 1.3611, Gen LL Loss : 2.5145  | Disc Total Loss : 1.0946, Disc True Loss : 0.5720, Disc Fake Loss : 0.5226 
+Epoch : 9 | Progress : 0.60 | Total Loss : 4.4422 | Gen Total Loss : 3.2885, Gen Ad Loss : 1.1931, Gen LL Loss : 2.0954  | Disc Total Loss : 1.1538, Disc True Loss : 0.6472, Disc Fake Loss : 0.5065 
+Epoch : 9 | Progress : 0.65 | Total Loss : 3.9573 | Gen Total Loss : 3.0532, Gen Ad Loss : 0.8932, Gen LL Loss : 2.1600  | Disc Total Loss : 0.9041, Disc True Loss : 0.5618, Disc Fake Loss : 0.3423 
+Resetting iterator for loader : train
+Epoch : 9 | Progress : 0.70 | Total Loss : 3.7162 | Gen Total Loss : 2.5987, Gen Ad Loss : 0.8535, Gen LL Loss : 1.7452  | Disc Total Loss : 1.1175, Disc True Loss : 0.6195, Disc Fake Loss : 0.4980 
+Epoch : 9 | Progress : 0.75 | Total Loss : 4.4771 | Gen Total Loss : 3.3241, Gen Ad Loss : 1.0298, Gen LL Loss : 2.2943  | Disc Total Loss : 1.1530, Disc True Loss : 0.6412, Disc Fake Loss : 0.5118 
+Epoch : 9 | Progress : 0.80 | Total Loss : 4.2738 | Gen Total Loss : 3.1888, Gen Ad Loss : 1.2869, Gen LL Loss : 1.9019  | Disc Total Loss : 1.0851, Disc True Loss : 0.4432, Disc Fake Loss : 0.6419 
+Epoch : 9 | Progress : 0.85 | Total Loss : 5.2825 | Gen Total Loss : 4.1916, Gen Ad Loss : 1.0604, Gen LL Loss : 3.1312  | Disc Total Loss : 1.0909, Disc True Loss : 0.4991, Disc Fake Loss : 0.5918 
+Epoch : 9 | Progress : 0.90 | Total Loss : 4.9671 | Gen Total Loss : 3.8095, Gen Ad Loss : 0.9578, Gen LL Loss : 2.8516  | Disc Total Loss : 1.1576, Disc True Loss : 0.5974, Disc Fake Loss : 0.5602 
+Epoch : 9 | Progress : 0.95 | Total Loss : 4.4610 | Gen Total Loss : 3.4110, Gen Ad Loss : 0.9891, Gen LL Loss : 2.4219  | Disc Total Loss : 1.0500, Disc True Loss : 0.6353, Disc Fake Loss : 0.4147 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 10 | Progress : 0.00 | Total Loss : 4.2603 | Gen Total Loss : 3.0967, Gen Ad Loss : 1.0187, Gen LL Loss : 2.0780  | Disc Total Loss : 1.1636, Disc True Loss : 0.5064, Disc Fake Loss : 0.6572 
+Epoch : 10 | Progress : 0.05 | Total Loss : 4.5570 | Gen Total Loss : 3.4043, Gen Ad Loss : 1.0293, Gen LL Loss : 2.3751  | Disc Total Loss : 1.1527, Disc True Loss : 0.5045, Disc Fake Loss : 0.6482 
+Epoch : 10 | Progress : 0.10 | Total Loss : 4.9878 | Gen Total Loss : 3.8020, Gen Ad Loss : 1.1603, Gen LL Loss : 2.6417  | Disc Total Loss : 1.1858, Disc True Loss : 0.7260, Disc Fake Loss : 0.4598 
+Epoch : 10 | Progress : 0.15 | Total Loss : 5.1830 | Gen Total Loss : 4.1506, Gen Ad Loss : 1.1825, Gen LL Loss : 2.9682  | Disc Total Loss : 1.0323, Disc True Loss : 0.5193, Disc Fake Loss : 0.5130 
+Epoch : 10 | Progress : 0.20 | Total Loss : 4.7543 | Gen Total Loss : 3.4909, Gen Ad Loss : 0.9797, Gen LL Loss : 2.5113  | Disc Total Loss : 1.2634, Disc True Loss : 0.5933, Disc Fake Loss : 0.6701 
+Epoch : 10 | Progress : 0.25 | Total Loss : 4.6998 | Gen Total Loss : 3.2725, Gen Ad Loss : 1.2190, Gen LL Loss : 2.0535  | Disc Total Loss : 1.4273, Disc True Loss : 0.9370, Disc Fake Loss : 0.4903 
+Epoch : 10 | Progress : 0.30 | Total Loss : 4.4431 | Gen Total Loss : 3.0378, Gen Ad Loss : 0.9965, Gen LL Loss : 2.0414  | Disc Total Loss : 1.4053, Disc True Loss : 0.7116, Disc Fake Loss : 0.6936 
+Resetting iterator for loader : train
+Epoch : 10 | Progress : 0.35 | Total Loss : 5.8968 | Gen Total Loss : 4.3294, Gen Ad Loss : 1.2130, Gen LL Loss : 3.1164  | Disc Total Loss : 1.5674, Disc True Loss : 0.7261, Disc Fake Loss : 0.8413 
+Epoch : 10 | Progress : 0.40 | Total Loss : 3.7429 | Gen Total Loss : 2.7185, Gen Ad Loss : 1.0067, Gen LL Loss : 1.7118  | Disc Total Loss : 1.0244, Disc True Loss : 0.4542, Disc Fake Loss : 0.5701 
+Epoch : 10 | Progress : 0.45 | Total Loss : 5.9293 | Gen Total Loss : 4.6358, Gen Ad Loss : 0.7373, Gen LL Loss : 3.8986  | Disc Total Loss : 1.2935, Disc True Loss : 0.6686, Disc Fake Loss : 0.6249 
+Epoch : 10 | Progress : 0.50 | Total Loss : 3.5255 | Gen Total Loss : 2.4000, Gen Ad Loss : 0.9238, Gen LL Loss : 1.4762  | Disc Total Loss : 1.1254, Disc True Loss : 0.5197, Disc Fake Loss : 0.6057 
+Epoch : 10 | Progress : 0.55 | Total Loss : 4.2971 | Gen Total Loss : 3.1094, Gen Ad Loss : 0.9590, Gen LL Loss : 2.1504  | Disc Total Loss : 1.1877, Disc True Loss : 0.5100, Disc Fake Loss : 0.6777 
+Epoch : 10 | Progress : 0.60 | Total Loss : 4.8057 | Gen Total Loss : 3.7712, Gen Ad Loss : 1.0487, Gen LL Loss : 2.7226  | Disc Total Loss : 1.0345, Disc True Loss : 0.5715, Disc Fake Loss : 0.4630 
+Epoch : 10 | Progress : 0.65 | Total Loss : 4.1496 | Gen Total Loss : 3.0432, Gen Ad Loss : 0.8462, Gen LL Loss : 2.1970  | Disc Total Loss : 1.1064, Disc True Loss : 0.4934, Disc Fake Loss : 0.6130 
+Resetting iterator for loader : train
+Epoch : 10 | Progress : 0.70 | Total Loss : 4.7174 | Gen Total Loss : 3.5769, Gen Ad Loss : 1.0417, Gen LL Loss : 2.5352  | Disc Total Loss : 1.1405, Disc True Loss : 0.6598, Disc Fake Loss : 0.4807 
+Epoch : 10 | Progress : 0.75 | Total Loss : 4.7686 | Gen Total Loss : 3.3960, Gen Ad Loss : 1.0211, Gen LL Loss : 2.3749  | Disc Total Loss : 1.3726, Disc True Loss : 0.7003, Disc Fake Loss : 0.6723 
+Epoch : 10 | Progress : 0.80 | Total Loss : 4.1093 | Gen Total Loss : 3.0937, Gen Ad Loss : 1.1697, Gen LL Loss : 1.9240  | Disc Total Loss : 1.0156, Disc True Loss : 0.5225, Disc Fake Loss : 0.4930 
+Epoch : 10 | Progress : 0.85 | Total Loss : 3.4921 | Gen Total Loss : 2.3820, Gen Ad Loss : 0.8404, Gen LL Loss : 1.5415  | Disc Total Loss : 1.1101, Disc True Loss : 0.6876, Disc Fake Loss : 0.4226 
+Epoch : 10 | Progress : 0.90 | Total Loss : 3.7138 | Gen Total Loss : 2.6026, Gen Ad Loss : 0.9711, Gen LL Loss : 1.6315  | Disc Total Loss : 1.1113, Disc True Loss : 0.6086, Disc Fake Loss : 0.5026 
+Epoch : 10 | Progress : 0.95 | Total Loss : 4.3507 | Gen Total Loss : 3.2468, Gen Ad Loss : 0.9693, Gen LL Loss : 2.2775  | Disc Total Loss : 1.1039, Disc True Loss : 0.5240, Disc Fake Loss : 0.5799 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 11 | Progress : 0.00 | Total Loss : 4.6355 | Gen Total Loss : 3.3551, Gen Ad Loss : 1.1095, Gen LL Loss : 2.2456  | Disc Total Loss : 1.2804, Disc True Loss : 0.6965, Disc Fake Loss : 0.5838 
+Epoch : 11 | Progress : 0.05 | Total Loss : 4.6669 | Gen Total Loss : 3.5163, Gen Ad Loss : 1.1674, Gen LL Loss : 2.3489  | Disc Total Loss : 1.1506, Disc True Loss : 0.4858, Disc Fake Loss : 0.6647 
+Epoch : 11 | Progress : 0.10 | Total Loss : 4.2915 | Gen Total Loss : 3.2849, Gen Ad Loss : 0.9160, Gen LL Loss : 2.3689  | Disc Total Loss : 1.0066, Disc True Loss : 0.5117, Disc Fake Loss : 0.4949 
+Epoch : 11 | Progress : 0.15 | Total Loss : 4.7734 | Gen Total Loss : 3.6215, Gen Ad Loss : 1.2544, Gen LL Loss : 2.3671  | Disc Total Loss : 1.1518, Disc True Loss : 0.6038, Disc Fake Loss : 0.5481 
+Epoch : 11 | Progress : 0.20 | Total Loss : 4.4583 | Gen Total Loss : 3.3717, Gen Ad Loss : 0.9531, Gen LL Loss : 2.4186  | Disc Total Loss : 1.0865, Disc True Loss : 0.4976, Disc Fake Loss : 0.5889 
+Epoch : 11 | Progress : 0.25 | Total Loss : 4.5691 | Gen Total Loss : 3.5290, Gen Ad Loss : 1.3363, Gen LL Loss : 2.1927  | Disc Total Loss : 1.0400, Disc True Loss : 0.4468, Disc Fake Loss : 0.5933 
+Epoch : 11 | Progress : 0.30 | Total Loss : 4.6151 | Gen Total Loss : 3.3256, Gen Ad Loss : 0.9643, Gen LL Loss : 2.3614  | Disc Total Loss : 1.2895, Disc True Loss : 0.7621, Disc Fake Loss : 0.5274 
+Resetting iterator for loader : train
+Epoch : 11 | Progress : 0.35 | Total Loss : 4.7836 | Gen Total Loss : 3.4436, Gen Ad Loss : 1.3394, Gen LL Loss : 2.1042  | Disc Total Loss : 1.3400, Disc True Loss : 0.7111, Disc Fake Loss : 0.6289 
+Epoch : 11 | Progress : 0.40 | Total Loss : 3.8016 | Gen Total Loss : 2.7323, Gen Ad Loss : 0.9371, Gen LL Loss : 1.7952  | Disc Total Loss : 1.0693, Disc True Loss : 0.4042, Disc Fake Loss : 0.6651 
+Epoch : 11 | Progress : 0.45 | Total Loss : 4.8350 | Gen Total Loss : 3.4776, Gen Ad Loss : 1.2697, Gen LL Loss : 2.2080  | Disc Total Loss : 1.3574, Disc True Loss : 0.7373, Disc Fake Loss : 0.6201 
+Epoch : 11 | Progress : 0.50 | Total Loss : 4.0138 | Gen Total Loss : 2.6187, Gen Ad Loss : 0.9279, Gen LL Loss : 1.6908  | Disc Total Loss : 1.3951, Disc True Loss : 0.7257, Disc Fake Loss : 0.6694 
+Epoch : 11 | Progress : 0.55 | Total Loss : 4.2895 | Gen Total Loss : 3.1674, Gen Ad Loss : 0.9479, Gen LL Loss : 2.2195  | Disc Total Loss : 1.1221, Disc True Loss : 0.7545, Disc Fake Loss : 0.3676 
+Epoch : 11 | Progress : 0.60 | Total Loss : 4.3352 | Gen Total Loss : 3.1874, Gen Ad Loss : 0.9620, Gen LL Loss : 2.2254  | Disc Total Loss : 1.1478, Disc True Loss : 0.6379, Disc Fake Loss : 0.5098 
+Epoch : 11 | Progress : 0.65 | Total Loss : 4.3688 | Gen Total Loss : 3.2281, Gen Ad Loss : 1.1486, Gen LL Loss : 2.0795  | Disc Total Loss : 1.1407, Disc True Loss : 0.5646, Disc Fake Loss : 0.5761 
+Resetting iterator for loader : train
+Epoch : 11 | Progress : 0.70 | Total Loss : 4.1741 | Gen Total Loss : 3.1000, Gen Ad Loss : 1.1253, Gen LL Loss : 1.9747  | Disc Total Loss : 1.0741, Disc True Loss : 0.5051, Disc Fake Loss : 0.5690 
+Epoch : 11 | Progress : 0.75 | Total Loss : 4.2187 | Gen Total Loss : 3.0872, Gen Ad Loss : 1.1630, Gen LL Loss : 1.9242  | Disc Total Loss : 1.1315, Disc True Loss : 0.5518, Disc Fake Loss : 0.5797 
+Epoch : 11 | Progress : 0.80 | Total Loss : 5.3695 | Gen Total Loss : 4.2135, Gen Ad Loss : 0.8101, Gen LL Loss : 3.4034  | Disc Total Loss : 1.1560, Disc True Loss : 0.5163, Disc Fake Loss : 0.6397 
+Epoch : 11 | Progress : 0.85 | Total Loss : 5.0308 | Gen Total Loss : 3.7489, Gen Ad Loss : 1.2336, Gen LL Loss : 2.5152  | Disc Total Loss : 1.2819, Disc True Loss : 0.6660, Disc Fake Loss : 0.6159 
+Epoch : 11 | Progress : 0.90 | Total Loss : 4.5915 | Gen Total Loss : 3.4609, Gen Ad Loss : 1.1658, Gen LL Loss : 2.2951  | Disc Total Loss : 1.1306, Disc True Loss : 0.4873, Disc Fake Loss : 0.6433 
+Epoch : 11 | Progress : 0.95 | Total Loss : 4.6677 | Gen Total Loss : 3.6003, Gen Ad Loss : 1.2244, Gen LL Loss : 2.3759  | Disc Total Loss : 1.0674, Disc True Loss : 0.5928, Disc Fake Loss : 0.4747 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 12 | Progress : 0.00 | Total Loss : 3.9832 | Gen Total Loss : 2.7713, Gen Ad Loss : 0.9233, Gen LL Loss : 1.8481  | Disc Total Loss : 1.2118, Disc True Loss : 0.6927, Disc Fake Loss : 0.5191 
+Epoch : 12 | Progress : 0.05 | Total Loss : 4.5704 | Gen Total Loss : 3.6388, Gen Ad Loss : 0.9672, Gen LL Loss : 2.6715  | Disc Total Loss : 0.9317, Disc True Loss : 0.4073, Disc Fake Loss : 0.5244 
+Epoch : 12 | Progress : 0.10 | Total Loss : 4.4110 | Gen Total Loss : 3.3158, Gen Ad Loss : 0.9856, Gen LL Loss : 2.3302  | Disc Total Loss : 1.0952, Disc True Loss : 0.4456, Disc Fake Loss : 0.6496 
+Epoch : 12 | Progress : 0.15 | Total Loss : 4.7351 | Gen Total Loss : 3.5382, Gen Ad Loss : 1.0393, Gen LL Loss : 2.4989  | Disc Total Loss : 1.1969, Disc True Loss : 0.6704, Disc Fake Loss : 0.5265 
+Epoch : 12 | Progress : 0.20 | Total Loss : 4.3407 | Gen Total Loss : 2.9943, Gen Ad Loss : 1.0569, Gen LL Loss : 1.9374  | Disc Total Loss : 1.3464, Disc True Loss : 0.6726, Disc Fake Loss : 0.6738 
+Epoch : 12 | Progress : 0.25 | Total Loss : 5.5817 | Gen Total Loss : 4.5315, Gen Ad Loss : 0.9257, Gen LL Loss : 3.6058  | Disc Total Loss : 1.0502, Disc True Loss : 0.5613, Disc Fake Loss : 0.4889 
+Epoch : 12 | Progress : 0.30 | Total Loss : 4.7993 | Gen Total Loss : 3.8233, Gen Ad Loss : 1.2106, Gen LL Loss : 2.6128  | Disc Total Loss : 0.9760, Disc True Loss : 0.4219, Disc Fake Loss : 0.5541 
+Resetting iterator for loader : train
+Epoch : 12 | Progress : 0.35 | Total Loss : 4.0747 | Gen Total Loss : 2.9726, Gen Ad Loss : 0.9508, Gen LL Loss : 2.0219  | Disc Total Loss : 1.1021, Disc True Loss : 0.6300, Disc Fake Loss : 0.4721 
+Epoch : 12 | Progress : 0.40 | Total Loss : 4.2384 | Gen Total Loss : 3.1722, Gen Ad Loss : 1.1012, Gen LL Loss : 2.0709  | Disc Total Loss : 1.0662, Disc True Loss : 0.4487, Disc Fake Loss : 0.6175 
+Epoch : 12 | Progress : 0.45 | Total Loss : 4.7576 | Gen Total Loss : 3.6145, Gen Ad Loss : 1.1738, Gen LL Loss : 2.4408  | Disc Total Loss : 1.1431, Disc True Loss : 0.4844, Disc Fake Loss : 0.6587 
+Epoch : 12 | Progress : 0.50 | Total Loss : 4.2528 | Gen Total Loss : 3.1174, Gen Ad Loss : 0.9418, Gen LL Loss : 2.1756  | Disc Total Loss : 1.1354, Disc True Loss : 0.6291, Disc Fake Loss : 0.5063 
+Epoch : 12 | Progress : 0.55 | Total Loss : 3.9514 | Gen Total Loss : 2.6672, Gen Ad Loss : 0.8418, Gen LL Loss : 1.8254  | Disc Total Loss : 1.2842, Disc True Loss : 0.7395, Disc Fake Loss : 0.5447 
+Epoch : 12 | Progress : 0.60 | Total Loss : 4.5839 | Gen Total Loss : 3.4924, Gen Ad Loss : 1.0950, Gen LL Loss : 2.3974  | Disc Total Loss : 1.0916, Disc True Loss : 0.5406, Disc Fake Loss : 0.5510 
+Epoch : 12 | Progress : 0.65 | Total Loss : 3.9013 | Gen Total Loss : 2.6690, Gen Ad Loss : 1.0136, Gen LL Loss : 1.6554  | Disc Total Loss : 1.2323, Disc True Loss : 0.5890, Disc Fake Loss : 0.6433 
+Resetting iterator for loader : train
+Epoch : 12 | Progress : 0.70 | Total Loss : 4.3299 | Gen Total Loss : 3.4157, Gen Ad Loss : 1.3179, Gen LL Loss : 2.0978  | Disc Total Loss : 0.9142, Disc True Loss : 0.4699, Disc Fake Loss : 0.4443 
+Epoch : 12 | Progress : 0.75 | Total Loss : 5.1974 | Gen Total Loss : 4.0140, Gen Ad Loss : 1.0535, Gen LL Loss : 2.9605  | Disc Total Loss : 1.1834, Disc True Loss : 0.6889, Disc Fake Loss : 0.4946 
+Epoch : 12 | Progress : 0.80 | Total Loss : 5.5283 | Gen Total Loss : 4.2940, Gen Ad Loss : 0.9630, Gen LL Loss : 3.3311  | Disc Total Loss : 1.2342, Disc True Loss : 0.6062, Disc Fake Loss : 0.6280 
+Epoch : 12 | Progress : 0.85 | Total Loss : 4.3744 | Gen Total Loss : 3.2568, Gen Ad Loss : 1.1727, Gen LL Loss : 2.0842  | Disc Total Loss : 1.1176, Disc True Loss : 0.5686, Disc Fake Loss : 0.5490 
+Epoch : 12 | Progress : 0.90 | Total Loss : 4.3464 | Gen Total Loss : 3.2539, Gen Ad Loss : 1.2154, Gen LL Loss : 2.0385  | Disc Total Loss : 1.0925, Disc True Loss : 0.5512, Disc Fake Loss : 0.5413 
+Epoch : 12 | Progress : 0.95 | Total Loss : 4.9537 | Gen Total Loss : 3.7243, Gen Ad Loss : 1.2992, Gen LL Loss : 2.4251  | Disc Total Loss : 1.2294, Disc True Loss : 0.4945, Disc Fake Loss : 0.7349 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 13 | Progress : 0.00 | Total Loss : 5.1846 | Gen Total Loss : 4.1967, Gen Ad Loss : 1.2759, Gen LL Loss : 2.9208  | Disc Total Loss : 0.9879, Disc True Loss : 0.4906, Disc Fake Loss : 0.4973 
+Epoch : 13 | Progress : 0.05 | Total Loss : 4.5235 | Gen Total Loss : 3.7141, Gen Ad Loss : 1.0813, Gen LL Loss : 2.6328  | Disc Total Loss : 0.8094, Disc True Loss : 0.3171, Disc Fake Loss : 0.4923 
+Epoch : 13 | Progress : 0.10 | Total Loss : 4.1912 | Gen Total Loss : 3.1422, Gen Ad Loss : 1.0613, Gen LL Loss : 2.0809  | Disc Total Loss : 1.0489, Disc True Loss : 0.5342, Disc Fake Loss : 0.5148 
+Epoch : 13 | Progress : 0.15 | Total Loss : 4.7095 | Gen Total Loss : 3.7310, Gen Ad Loss : 0.9477, Gen LL Loss : 2.7833  | Disc Total Loss : 0.9785, Disc True Loss : 0.4783, Disc Fake Loss : 0.5002 
+Epoch : 13 | Progress : 0.20 | Total Loss : 4.1873 | Gen Total Loss : 2.9490, Gen Ad Loss : 0.9807, Gen LL Loss : 1.9683  | Disc Total Loss : 1.2383, Disc True Loss : 0.6868, Disc Fake Loss : 0.5515 
+Epoch : 13 | Progress : 0.25 | Total Loss : 4.9573 | Gen Total Loss : 3.5918, Gen Ad Loss : 1.1305, Gen LL Loss : 2.4613  | Disc Total Loss : 1.3655, Disc True Loss : 0.7861, Disc Fake Loss : 0.5794 
+Epoch : 13 | Progress : 0.30 | Total Loss : 5.1427 | Gen Total Loss : 4.0756, Gen Ad Loss : 1.1407, Gen LL Loss : 2.9349  | Disc Total Loss : 1.0671, Disc True Loss : 0.5106, Disc Fake Loss : 0.5565 
+Resetting iterator for loader : train
+Epoch : 13 | Progress : 0.35 | Total Loss : 4.2802 | Gen Total Loss : 3.3929, Gen Ad Loss : 1.2837, Gen LL Loss : 2.1092  | Disc Total Loss : 0.8873, Disc True Loss : 0.3506, Disc Fake Loss : 0.5367 
+Epoch : 13 | Progress : 0.40 | Total Loss : 4.3080 | Gen Total Loss : 3.2139, Gen Ad Loss : 1.0586, Gen LL Loss : 2.1552  | Disc Total Loss : 1.0941, Disc True Loss : 0.4912, Disc Fake Loss : 0.6030 
+Epoch : 13 | Progress : 0.45 | Total Loss : 4.6157 | Gen Total Loss : 3.2981, Gen Ad Loss : 0.9494, Gen LL Loss : 2.3487  | Disc Total Loss : 1.3176, Disc True Loss : 0.6402, Disc Fake Loss : 0.6774 
+Epoch : 13 | Progress : 0.50 | Total Loss : 4.4714 | Gen Total Loss : 3.6451, Gen Ad Loss : 1.3049, Gen LL Loss : 2.3402  | Disc Total Loss : 0.8263, Disc True Loss : 0.2995, Disc Fake Loss : 0.5268 
+Epoch : 13 | Progress : 0.55 | Total Loss : 4.2776 | Gen Total Loss : 3.2031, Gen Ad Loss : 0.9868, Gen LL Loss : 2.2164  | Disc Total Loss : 1.0745, Disc True Loss : 0.6141, Disc Fake Loss : 0.4604 
+Epoch : 13 | Progress : 0.60 | Total Loss : 4.6736 | Gen Total Loss : 3.6153, Gen Ad Loss : 1.1224, Gen LL Loss : 2.4929  | Disc Total Loss : 1.0583, Disc True Loss : 0.5369, Disc Fake Loss : 0.5214 
+Epoch : 13 | Progress : 0.65 | Total Loss : 4.8253 | Gen Total Loss : 3.6652, Gen Ad Loss : 1.0833, Gen LL Loss : 2.5819  | Disc Total Loss : 1.1601, Disc True Loss : 0.5134, Disc Fake Loss : 0.6467 
+Resetting iterator for loader : train
+Epoch : 13 | Progress : 0.70 | Total Loss : 3.6073 | Gen Total Loss : 2.6379, Gen Ad Loss : 1.0240, Gen LL Loss : 1.6138  | Disc Total Loss : 0.9694, Disc True Loss : 0.5966, Disc Fake Loss : 0.3728 
+Epoch : 13 | Progress : 0.75 | Total Loss : 5.1592 | Gen Total Loss : 3.8608, Gen Ad Loss : 1.0967, Gen LL Loss : 2.7641  | Disc Total Loss : 1.2983, Disc True Loss : 0.6864, Disc Fake Loss : 0.6119 
+Epoch : 13 | Progress : 0.80 | Total Loss : 4.3801 | Gen Total Loss : 2.8467, Gen Ad Loss : 0.9218, Gen LL Loss : 1.9250  | Disc Total Loss : 1.5334, Disc True Loss : 0.7849, Disc Fake Loss : 0.7484 
+Epoch : 13 | Progress : 0.85 | Total Loss : 4.1384 | Gen Total Loss : 3.1234, Gen Ad Loss : 0.9054, Gen LL Loss : 2.2180  | Disc Total Loss : 1.0150, Disc True Loss : 0.4424, Disc Fake Loss : 0.5727 
+Epoch : 13 | Progress : 0.90 | Total Loss : 3.5333 | Gen Total Loss : 2.4946, Gen Ad Loss : 1.0620, Gen LL Loss : 1.4326  | Disc Total Loss : 1.0387, Disc True Loss : 0.4165, Disc Fake Loss : 0.6222 
+Epoch : 13 | Progress : 0.95 | Total Loss : 4.4480 | Gen Total Loss : 3.2499, Gen Ad Loss : 0.9058, Gen LL Loss : 2.3441  | Disc Total Loss : 1.1981, Disc True Loss : 0.7002, Disc Fake Loss : 0.4979 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 14 | Progress : 0.00 | Total Loss : 5.4472 | Gen Total Loss : 4.3348, Gen Ad Loss : 1.0106, Gen LL Loss : 3.3242  | Disc Total Loss : 1.1124, Disc True Loss : 0.4745, Disc Fake Loss : 0.6379 
+Epoch : 14 | Progress : 0.05 | Total Loss : 4.7126 | Gen Total Loss : 3.5157, Gen Ad Loss : 1.1322, Gen LL Loss : 2.3834  | Disc Total Loss : 1.1969, Disc True Loss : 0.5330, Disc Fake Loss : 0.6639 
+Epoch : 14 | Progress : 0.10 | Total Loss : 4.4179 | Gen Total Loss : 3.3723, Gen Ad Loss : 1.0223, Gen LL Loss : 2.3499  | Disc Total Loss : 1.0456, Disc True Loss : 0.5721, Disc Fake Loss : 0.4735 
+Epoch : 14 | Progress : 0.15 | Total Loss : 4.7782 | Gen Total Loss : 3.7908, Gen Ad Loss : 0.9315, Gen LL Loss : 2.8593  | Disc Total Loss : 0.9874, Disc True Loss : 0.4754, Disc Fake Loss : 0.5120 
+Epoch : 14 | Progress : 0.20 | Total Loss : 4.3902 | Gen Total Loss : 3.3625, Gen Ad Loss : 1.2410, Gen LL Loss : 2.1214  | Disc Total Loss : 1.0277, Disc True Loss : 0.5397, Disc Fake Loss : 0.4881 
+Epoch : 14 | Progress : 0.25 | Total Loss : 4.9937 | Gen Total Loss : 3.9078, Gen Ad Loss : 1.0476, Gen LL Loss : 2.8602  | Disc Total Loss : 1.0859, Disc True Loss : 0.6283, Disc Fake Loss : 0.4576 
+Epoch : 14 | Progress : 0.30 | Total Loss : 4.8613 | Gen Total Loss : 3.6438, Gen Ad Loss : 1.0585, Gen LL Loss : 2.5853  | Disc Total Loss : 1.2176, Disc True Loss : 0.7557, Disc Fake Loss : 0.4618 
+Resetting iterator for loader : train
+Epoch : 14 | Progress : 0.35 | Total Loss : 5.3714 | Gen Total Loss : 4.3694, Gen Ad Loss : 1.1674, Gen LL Loss : 3.2020  | Disc Total Loss : 1.0020, Disc True Loss : 0.4044, Disc Fake Loss : 0.5977 
+Epoch : 14 | Progress : 0.40 | Total Loss : 3.9916 | Gen Total Loss : 3.0091, Gen Ad Loss : 1.1583, Gen LL Loss : 1.8508  | Disc Total Loss : 0.9825, Disc True Loss : 0.6009, Disc Fake Loss : 0.3816 
+Epoch : 14 | Progress : 0.45 | Total Loss : 4.6197 | Gen Total Loss : 3.3570, Gen Ad Loss : 1.0877, Gen LL Loss : 2.2694  | Disc Total Loss : 1.2627, Disc True Loss : 0.4722, Disc Fake Loss : 0.7905 
+Epoch : 14 | Progress : 0.50 | Total Loss : 4.4475 | Gen Total Loss : 3.4063, Gen Ad Loss : 1.1635, Gen LL Loss : 2.2428  | Disc Total Loss : 1.0412, Disc True Loss : 0.5788, Disc Fake Loss : 0.4624 
+Epoch : 14 | Progress : 0.55 | Total Loss : 4.9574 | Gen Total Loss : 3.6233, Gen Ad Loss : 1.0418, Gen LL Loss : 2.5815  | Disc Total Loss : 1.3341, Disc True Loss : 0.6703, Disc Fake Loss : 0.6638 
+Epoch : 14 | Progress : 0.60 | Total Loss : 3.6148 | Gen Total Loss : 2.5817, Gen Ad Loss : 0.9750, Gen LL Loss : 1.6067  | Disc Total Loss : 1.0331, Disc True Loss : 0.5747, Disc Fake Loss : 0.4584 
+Epoch : 14 | Progress : 0.65 | Total Loss : 4.0941 | Gen Total Loss : 3.0728, Gen Ad Loss : 1.1017, Gen LL Loss : 1.9712  | Disc Total Loss : 1.0213, Disc True Loss : 0.6363, Disc Fake Loss : 0.3850 
+Resetting iterator for loader : train
+Epoch : 14 | Progress : 0.70 | Total Loss : 4.2549 | Gen Total Loss : 3.2304, Gen Ad Loss : 1.1061, Gen LL Loss : 2.1243  | Disc Total Loss : 1.0245, Disc True Loss : 0.6513, Disc Fake Loss : 0.3732 
+Epoch : 14 | Progress : 0.75 | Total Loss : 5.3334 | Gen Total Loss : 4.1824, Gen Ad Loss : 0.9514, Gen LL Loss : 3.2310  | Disc Total Loss : 1.1510, Disc True Loss : 0.6485, Disc Fake Loss : 0.5025 
+Epoch : 14 | Progress : 0.80 | Total Loss : 4.8431 | Gen Total Loss : 3.6391, Gen Ad Loss : 1.3314, Gen LL Loss : 2.3077  | Disc Total Loss : 1.2040, Disc True Loss : 0.6480, Disc Fake Loss : 0.5560 
+Epoch : 14 | Progress : 0.85 | Total Loss : 4.6947 | Gen Total Loss : 3.5316, Gen Ad Loss : 1.1341, Gen LL Loss : 2.3975  | Disc Total Loss : 1.1630, Disc True Loss : 0.5934, Disc Fake Loss : 0.5696 
+Epoch : 14 | Progress : 0.90 | Total Loss : 3.6120 | Gen Total Loss : 2.5712, Gen Ad Loss : 1.0880, Gen LL Loss : 1.4832  | Disc Total Loss : 1.0407, Disc True Loss : 0.5133, Disc Fake Loss : 0.5274 
+Epoch : 14 | Progress : 0.95 | Total Loss : 5.5270 | Gen Total Loss : 4.1543, Gen Ad Loss : 1.0747, Gen LL Loss : 3.0796  | Disc Total Loss : 1.3727, Disc True Loss : 0.7346, Disc Fake Loss : 0.6380 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 15 | Progress : 0.00 | Total Loss : 4.3288 | Gen Total Loss : 3.0678, Gen Ad Loss : 1.1502, Gen LL Loss : 1.9176  | Disc Total Loss : 1.2610, Disc True Loss : 0.7686, Disc Fake Loss : 0.4924 
+Epoch : 15 | Progress : 0.05 | Total Loss : 5.6894 | Gen Total Loss : 4.2110, Gen Ad Loss : 1.0435, Gen LL Loss : 3.1674  | Disc Total Loss : 1.4785, Disc True Loss : 0.9272, Disc Fake Loss : 0.5512 
+Epoch : 15 | Progress : 0.10 | Total Loss : 4.4476 | Gen Total Loss : 3.3177, Gen Ad Loss : 0.9884, Gen LL Loss : 2.3293  | Disc Total Loss : 1.1299, Disc True Loss : 0.6192, Disc Fake Loss : 0.5107 
+Epoch : 15 | Progress : 0.15 | Total Loss : 3.4171 | Gen Total Loss : 2.4525, Gen Ad Loss : 0.8380, Gen LL Loss : 1.6145  | Disc Total Loss : 0.9646, Disc True Loss : 0.5454, Disc Fake Loss : 0.4191 
+Epoch : 15 | Progress : 0.20 | Total Loss : 4.3893 | Gen Total Loss : 3.2356, Gen Ad Loss : 1.0395, Gen LL Loss : 2.1961  | Disc Total Loss : 1.1537, Disc True Loss : 0.5612, Disc Fake Loss : 0.5924 
+Epoch : 15 | Progress : 0.25 | Total Loss : 4.1336 | Gen Total Loss : 2.9790, Gen Ad Loss : 1.2360, Gen LL Loss : 1.7430  | Disc Total Loss : 1.1546, Disc True Loss : 0.6788, Disc Fake Loss : 0.4758 
+Epoch : 15 | Progress : 0.30 | Total Loss : 4.2347 | Gen Total Loss : 2.8285, Gen Ad Loss : 0.8759, Gen LL Loss : 1.9525  | Disc Total Loss : 1.4063, Disc True Loss : 0.7925, Disc Fake Loss : 0.6138 
+Resetting iterator for loader : train
+Epoch : 15 | Progress : 0.35 | Total Loss : 5.0068 | Gen Total Loss : 3.4921, Gen Ad Loss : 0.8771, Gen LL Loss : 2.6150  | Disc Total Loss : 1.5147, Disc True Loss : 0.9547, Disc Fake Loss : 0.5600 
+Epoch : 15 | Progress : 0.40 | Total Loss : 5.3777 | Gen Total Loss : 4.1034, Gen Ad Loss : 1.5987, Gen LL Loss : 2.5047  | Disc Total Loss : 1.2742, Disc True Loss : 0.5777, Disc Fake Loss : 0.6966 
+Epoch : 15 | Progress : 0.45 | Total Loss : 4.9620 | Gen Total Loss : 3.7826, Gen Ad Loss : 1.0646, Gen LL Loss : 2.7180  | Disc Total Loss : 1.1794, Disc True Loss : 0.4770, Disc Fake Loss : 0.7024 
+Epoch : 15 | Progress : 0.50 | Total Loss : 4.4539 | Gen Total Loss : 3.0985, Gen Ad Loss : 1.1398, Gen LL Loss : 1.9587  | Disc Total Loss : 1.3554, Disc True Loss : 0.4769, Disc Fake Loss : 0.8786 
+Epoch : 15 | Progress : 0.55 | Total Loss : 3.8678 | Gen Total Loss : 2.8406, Gen Ad Loss : 1.1708, Gen LL Loss : 1.6698  | Disc Total Loss : 1.0272, Disc True Loss : 0.4806, Disc Fake Loss : 0.5466 
+Epoch : 15 | Progress : 0.60 | Total Loss : 4.4787 | Gen Total Loss : 3.1522, Gen Ad Loss : 0.9738, Gen LL Loss : 2.1783  | Disc Total Loss : 1.3265, Disc True Loss : 0.5069, Disc Fake Loss : 0.8196 
+Epoch : 15 | Progress : 0.65 | Total Loss : 4.3527 | Gen Total Loss : 3.3172, Gen Ad Loss : 1.0202, Gen LL Loss : 2.2970  | Disc Total Loss : 1.0355, Disc True Loss : 0.4642, Disc Fake Loss : 0.5713 
+Resetting iterator for loader : train
+Epoch : 15 | Progress : 0.70 | Total Loss : 3.8340 | Gen Total Loss : 2.8111, Gen Ad Loss : 1.0576, Gen LL Loss : 1.7536  | Disc Total Loss : 1.0228, Disc True Loss : 0.4364, Disc Fake Loss : 0.5864 
+Epoch : 15 | Progress : 0.75 | Total Loss : 4.1780 | Gen Total Loss : 3.1099, Gen Ad Loss : 0.8540, Gen LL Loss : 2.2559  | Disc Total Loss : 1.0680, Disc True Loss : 0.6154, Disc Fake Loss : 0.4526 
+Epoch : 15 | Progress : 0.80 | Total Loss : 4.7854 | Gen Total Loss : 3.3340, Gen Ad Loss : 1.0519, Gen LL Loss : 2.2821  | Disc Total Loss : 1.4514, Disc True Loss : 0.7372, Disc Fake Loss : 0.7143 
+Epoch : 15 | Progress : 0.85 | Total Loss : 4.2404 | Gen Total Loss : 3.2723, Gen Ad Loss : 1.3528, Gen LL Loss : 1.9195  | Disc Total Loss : 0.9681, Disc True Loss : 0.5890, Disc Fake Loss : 0.3791 
+Epoch : 15 | Progress : 0.90 | Total Loss : 3.7604 | Gen Total Loss : 2.7536, Gen Ad Loss : 0.9396, Gen LL Loss : 1.8140  | Disc Total Loss : 1.0069, Disc True Loss : 0.5235, Disc Fake Loss : 0.4834 
+Epoch : 15 | Progress : 0.95 | Total Loss : 4.7693 | Gen Total Loss : 3.9734, Gen Ad Loss : 1.3730, Gen LL Loss : 2.6004  | Disc Total Loss : 0.7959, Disc True Loss : 0.3357, Disc Fake Loss : 0.4602 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 16 | Progress : 0.00 | Total Loss : 4.4642 | Gen Total Loss : 3.5390, Gen Ad Loss : 0.9295, Gen LL Loss : 2.6095  | Disc Total Loss : 0.9252, Disc True Loss : 0.3059, Disc Fake Loss : 0.6193 
+Epoch : 16 | Progress : 0.05 | Total Loss : 5.3984 | Gen Total Loss : 4.1757, Gen Ad Loss : 0.8214, Gen LL Loss : 3.3543  | Disc Total Loss : 1.2227, Disc True Loss : 0.7073, Disc Fake Loss : 0.5154 
+Epoch : 16 | Progress : 0.10 | Total Loss : 4.4513 | Gen Total Loss : 3.5569, Gen Ad Loss : 1.0606, Gen LL Loss : 2.4962  | Disc Total Loss : 0.8944, Disc True Loss : 0.4549, Disc Fake Loss : 0.4395 
+Epoch : 16 | Progress : 0.15 | Total Loss : 4.2593 | Gen Total Loss : 3.1422, Gen Ad Loss : 1.2298, Gen LL Loss : 1.9124  | Disc Total Loss : 1.1172, Disc True Loss : 0.6539, Disc Fake Loss : 0.4633 
+Epoch : 16 | Progress : 0.20 | Total Loss : 3.9439 | Gen Total Loss : 2.8328, Gen Ad Loss : 1.1977, Gen LL Loss : 1.6351  | Disc Total Loss : 1.1111, Disc True Loss : 0.5886, Disc Fake Loss : 0.5225 
+Epoch : 16 | Progress : 0.25 | Total Loss : 4.5628 | Gen Total Loss : 3.4104, Gen Ad Loss : 1.0994, Gen LL Loss : 2.3110  | Disc Total Loss : 1.1524, Disc True Loss : 0.5733, Disc Fake Loss : 0.5791 
+Epoch : 16 | Progress : 0.30 | Total Loss : 4.8392 | Gen Total Loss : 3.4168, Gen Ad Loss : 1.0900, Gen LL Loss : 2.3268  | Disc Total Loss : 1.4224, Disc True Loss : 0.9256, Disc Fake Loss : 0.4969 
+Resetting iterator for loader : train
+Epoch : 16 | Progress : 0.35 | Total Loss : 4.9279 | Gen Total Loss : 3.7802, Gen Ad Loss : 1.1292, Gen LL Loss : 2.6510  | Disc Total Loss : 1.1477, Disc True Loss : 0.4908, Disc Fake Loss : 0.6569 
+Epoch : 16 | Progress : 0.40 | Total Loss : 4.8152 | Gen Total Loss : 3.9040, Gen Ad Loss : 1.4445, Gen LL Loss : 2.4595  | Disc Total Loss : 0.9113, Disc True Loss : 0.3165, Disc Fake Loss : 0.5948 
+Epoch : 16 | Progress : 0.45 | Total Loss : 4.2477 | Gen Total Loss : 3.3123, Gen Ad Loss : 0.8567, Gen LL Loss : 2.4556  | Disc Total Loss : 0.9354, Disc True Loss : 0.5179, Disc Fake Loss : 0.4175 
+Epoch : 16 | Progress : 0.50 | Total Loss : 4.2358 | Gen Total Loss : 3.1464, Gen Ad Loss : 1.0966, Gen LL Loss : 2.0498  | Disc Total Loss : 1.0895, Disc True Loss : 0.5784, Disc Fake Loss : 0.5110 
+Epoch : 16 | Progress : 0.55 | Total Loss : 4.3641 | Gen Total Loss : 2.9857, Gen Ad Loss : 1.1305, Gen LL Loss : 1.8552  | Disc Total Loss : 1.3783, Disc True Loss : 0.8382, Disc Fake Loss : 0.5402 
+Epoch : 16 | Progress : 0.60 | Total Loss : 3.9212 | Gen Total Loss : 2.9366, Gen Ad Loss : 0.8937, Gen LL Loss : 2.0429  | Disc Total Loss : 0.9847, Disc True Loss : 0.4326, Disc Fake Loss : 0.5521 
+Epoch : 16 | Progress : 0.65 | Total Loss : 4.1452 | Gen Total Loss : 3.2144, Gen Ad Loss : 1.1289, Gen LL Loss : 2.0854  | Disc Total Loss : 0.9308, Disc True Loss : 0.5676, Disc Fake Loss : 0.3633 
+Resetting iterator for loader : train
+Epoch : 16 | Progress : 0.70 | Total Loss : 4.7756 | Gen Total Loss : 3.6340, Gen Ad Loss : 1.0618, Gen LL Loss : 2.5722  | Disc Total Loss : 1.1416, Disc True Loss : 0.5759, Disc Fake Loss : 0.5656 
+Epoch : 16 | Progress : 0.75 | Total Loss : 4.1015 | Gen Total Loss : 3.0128, Gen Ad Loss : 1.0947, Gen LL Loss : 1.9182  | Disc Total Loss : 1.0887, Disc True Loss : 0.4498, Disc Fake Loss : 0.6389 
+Epoch : 16 | Progress : 0.80 | Total Loss : 4.8217 | Gen Total Loss : 3.3278, Gen Ad Loss : 1.1798, Gen LL Loss : 2.1480  | Disc Total Loss : 1.4939, Disc True Loss : 0.7213, Disc Fake Loss : 0.7726 
+Epoch : 16 | Progress : 0.85 | Total Loss : 4.1560 | Gen Total Loss : 3.0289, Gen Ad Loss : 1.2177, Gen LL Loss : 1.8113  | Disc Total Loss : 1.1271, Disc True Loss : 0.5660, Disc Fake Loss : 0.5611 
+Epoch : 16 | Progress : 0.90 | Total Loss : 5.1988 | Gen Total Loss : 4.1554, Gen Ad Loss : 1.0529, Gen LL Loss : 3.1025  | Disc Total Loss : 1.0434, Disc True Loss : 0.4775, Disc Fake Loss : 0.5658 
+Epoch : 16 | Progress : 0.95 | Total Loss : 4.0382 | Gen Total Loss : 2.9077, Gen Ad Loss : 0.9730, Gen LL Loss : 1.9347  | Disc Total Loss : 1.1306, Disc True Loss : 0.5303, Disc Fake Loss : 0.6003 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 17 | Progress : 0.00 | Total Loss : 3.7755 | Gen Total Loss : 2.9154, Gen Ad Loss : 1.1170, Gen LL Loss : 1.7984  | Disc Total Loss : 0.8601, Disc True Loss : 0.3172, Disc Fake Loss : 0.5429 
+Epoch : 17 | Progress : 0.05 | Total Loss : 4.2235 | Gen Total Loss : 3.2163, Gen Ad Loss : 1.3792, Gen LL Loss : 1.8371  | Disc Total Loss : 1.0072, Disc True Loss : 0.4949, Disc Fake Loss : 0.5123 
+Epoch : 17 | Progress : 0.10 | Total Loss : 3.8633 | Gen Total Loss : 2.7050, Gen Ad Loss : 0.9215, Gen LL Loss : 1.7835  | Disc Total Loss : 1.1583, Disc True Loss : 0.5483, Disc Fake Loss : 0.6100 
+Epoch : 17 | Progress : 0.15 | Total Loss : 4.7947 | Gen Total Loss : 3.7321, Gen Ad Loss : 1.1647, Gen LL Loss : 2.5673  | Disc Total Loss : 1.0626, Disc True Loss : 0.5362, Disc Fake Loss : 0.5264 
+Epoch : 17 | Progress : 0.20 | Total Loss : 5.1397 | Gen Total Loss : 4.1550, Gen Ad Loss : 0.8946, Gen LL Loss : 3.2604  | Disc Total Loss : 0.9847, Disc True Loss : 0.4983, Disc Fake Loss : 0.4864 
+Epoch : 17 | Progress : 0.25 | Total Loss : 4.6584 | Gen Total Loss : 3.6009, Gen Ad Loss : 1.0891, Gen LL Loss : 2.5117  | Disc Total Loss : 1.0576, Disc True Loss : 0.5977, Disc Fake Loss : 0.4598 
+Epoch : 17 | Progress : 0.30 | Total Loss : 4.6062 | Gen Total Loss : 3.6119, Gen Ad Loss : 1.1405, Gen LL Loss : 2.4714  | Disc Total Loss : 0.9943, Disc True Loss : 0.5368, Disc Fake Loss : 0.4574 
+Resetting iterator for loader : train
+Epoch : 17 | Progress : 0.35 | Total Loss : 4.4618 | Gen Total Loss : 3.4406, Gen Ad Loss : 1.0828, Gen LL Loss : 2.3577  | Disc Total Loss : 1.0212, Disc True Loss : 0.6200, Disc Fake Loss : 0.4013 
+Epoch : 17 | Progress : 0.40 | Total Loss : 4.7509 | Gen Total Loss : 3.5709, Gen Ad Loss : 0.9414, Gen LL Loss : 2.6295  | Disc Total Loss : 1.1799, Disc True Loss : 0.4124, Disc Fake Loss : 0.7675 
+Epoch : 17 | Progress : 0.45 | Total Loss : 4.6913 | Gen Total Loss : 3.6906, Gen Ad Loss : 1.2429, Gen LL Loss : 2.4477  | Disc Total Loss : 1.0007, Disc True Loss : 0.4969, Disc Fake Loss : 0.5037 
+Epoch : 17 | Progress : 0.50 | Total Loss : 4.2056 | Gen Total Loss : 3.0778, Gen Ad Loss : 1.1620, Gen LL Loss : 1.9158  | Disc Total Loss : 1.1279, Disc True Loss : 0.4874, Disc Fake Loss : 0.6405 
+Epoch : 17 | Progress : 0.55 | Total Loss : 5.9331 | Gen Total Loss : 4.8681, Gen Ad Loss : 1.1518, Gen LL Loss : 3.7163  | Disc Total Loss : 1.0650, Disc True Loss : 0.5463, Disc Fake Loss : 0.5188 
+Epoch : 17 | Progress : 0.60 | Total Loss : 4.0125 | Gen Total Loss : 3.1771, Gen Ad Loss : 1.1302, Gen LL Loss : 2.0468  | Disc Total Loss : 0.8355, Disc True Loss : 0.3418, Disc Fake Loss : 0.4937 
+Epoch : 17 | Progress : 0.65 | Total Loss : 4.1157 | Gen Total Loss : 2.9462, Gen Ad Loss : 1.1779, Gen LL Loss : 1.7683  | Disc Total Loss : 1.1695, Disc True Loss : 0.5036, Disc Fake Loss : 0.6659 
+Resetting iterator for loader : train
+Epoch : 17 | Progress : 0.70 | Total Loss : 4.9311 | Gen Total Loss : 3.8976, Gen Ad Loss : 1.1357, Gen LL Loss : 2.7619  | Disc Total Loss : 1.0335, Disc True Loss : 0.4466, Disc Fake Loss : 0.5869 
+Epoch : 17 | Progress : 0.75 | Total Loss : 4.4720 | Gen Total Loss : 3.3260, Gen Ad Loss : 1.1081, Gen LL Loss : 2.2179  | Disc Total Loss : 1.1460, Disc True Loss : 0.6671, Disc Fake Loss : 0.4789 
+Epoch : 17 | Progress : 0.80 | Total Loss : 3.6386 | Gen Total Loss : 2.3964, Gen Ad Loss : 0.7349, Gen LL Loss : 1.6615  | Disc Total Loss : 1.2422, Disc True Loss : 0.6117, Disc Fake Loss : 0.6304 
+Epoch : 17 | Progress : 0.85 | Total Loss : 4.3125 | Gen Total Loss : 3.3035, Gen Ad Loss : 1.0079, Gen LL Loss : 2.2956  | Disc Total Loss : 1.0090, Disc True Loss : 0.3676, Disc Fake Loss : 0.6414 
+Epoch : 17 | Progress : 0.90 | Total Loss : 4.6606 | Gen Total Loss : 3.4950, Gen Ad Loss : 0.8928, Gen LL Loss : 2.6022  | Disc Total Loss : 1.1656, Disc True Loss : 0.5722, Disc Fake Loss : 0.5934 
+Epoch : 17 | Progress : 0.95 | Total Loss : 5.0807 | Gen Total Loss : 3.9688, Gen Ad Loss : 1.1653, Gen LL Loss : 2.8035  | Disc Total Loss : 1.1119, Disc True Loss : 0.6016, Disc Fake Loss : 0.5104 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 18 | Progress : 0.00 | Total Loss : 3.8378 | Gen Total Loss : 2.7437, Gen Ad Loss : 0.9542, Gen LL Loss : 1.7895  | Disc Total Loss : 1.0940, Disc True Loss : 0.5596, Disc Fake Loss : 0.5344 
+Epoch : 18 | Progress : 0.05 | Total Loss : 4.4112 | Gen Total Loss : 3.2968, Gen Ad Loss : 0.9007, Gen LL Loss : 2.3962  | Disc Total Loss : 1.1144, Disc True Loss : 0.6454, Disc Fake Loss : 0.4690 
+Epoch : 18 | Progress : 0.10 | Total Loss : 5.0107 | Gen Total Loss : 3.8728, Gen Ad Loss : 0.8318, Gen LL Loss : 3.0411  | Disc Total Loss : 1.1379, Disc True Loss : 0.6781, Disc Fake Loss : 0.4598 
+Epoch : 18 | Progress : 0.15 | Total Loss : 4.4054 | Gen Total Loss : 3.1080, Gen Ad Loss : 1.0702, Gen LL Loss : 2.0378  | Disc Total Loss : 1.2974, Disc True Loss : 0.8029, Disc Fake Loss : 0.4945 
+Epoch : 18 | Progress : 0.20 | Total Loss : 5.0545 | Gen Total Loss : 4.2138, Gen Ad Loss : 1.2250, Gen LL Loss : 2.9889  | Disc Total Loss : 0.8406, Disc True Loss : 0.3644, Disc Fake Loss : 0.4762 
+Epoch : 18 | Progress : 0.25 | Total Loss : 4.4758 | Gen Total Loss : 3.2588, Gen Ad Loss : 0.9782, Gen LL Loss : 2.2806  | Disc Total Loss : 1.2170, Disc True Loss : 0.7432, Disc Fake Loss : 0.4738 
+Epoch : 18 | Progress : 0.30 | Total Loss : 4.5464 | Gen Total Loss : 3.2933, Gen Ad Loss : 1.0771, Gen LL Loss : 2.2162  | Disc Total Loss : 1.2531, Disc True Loss : 0.6361, Disc Fake Loss : 0.6170 
+Resetting iterator for loader : train
+Epoch : 18 | Progress : 0.35 | Total Loss : 4.3789 | Gen Total Loss : 3.3690, Gen Ad Loss : 1.1725, Gen LL Loss : 2.1964  | Disc Total Loss : 1.0099, Disc True Loss : 0.5241, Disc Fake Loss : 0.4858 
+Epoch : 18 | Progress : 0.40 | Total Loss : 4.2867 | Gen Total Loss : 3.5981, Gen Ad Loss : 1.1858, Gen LL Loss : 2.4123  | Disc Total Loss : 0.6886, Disc True Loss : 0.3287, Disc Fake Loss : 0.3599 
+Epoch : 18 | Progress : 0.45 | Total Loss : 4.8239 | Gen Total Loss : 3.6736, Gen Ad Loss : 1.4293, Gen LL Loss : 2.2443  | Disc Total Loss : 1.1503, Disc True Loss : 0.6547, Disc Fake Loss : 0.4956 
+Epoch : 18 | Progress : 0.50 | Total Loss : 4.4291 | Gen Total Loss : 3.2851, Gen Ad Loss : 1.5076, Gen LL Loss : 1.7776  | Disc Total Loss : 1.1439, Disc True Loss : 0.6625, Disc Fake Loss : 0.4814 
+Epoch : 18 | Progress : 0.55 | Total Loss : 3.9619 | Gen Total Loss : 2.8707, Gen Ad Loss : 0.9759, Gen LL Loss : 1.8948  | Disc Total Loss : 1.0911, Disc True Loss : 0.6630, Disc Fake Loss : 0.4281 
+Epoch : 18 | Progress : 0.60 | Total Loss : 4.7412 | Gen Total Loss : 3.6825, Gen Ad Loss : 1.0821, Gen LL Loss : 2.6004  | Disc Total Loss : 1.0587, Disc True Loss : 0.5051, Disc Fake Loss : 0.5536 
+Epoch : 18 | Progress : 0.65 | Total Loss : 4.0278 | Gen Total Loss : 2.9979, Gen Ad Loss : 1.0438, Gen LL Loss : 1.9540  | Disc Total Loss : 1.0299, Disc True Loss : 0.5091, Disc Fake Loss : 0.5208 
+Resetting iterator for loader : train
+Epoch : 18 | Progress : 0.70 | Total Loss : 4.7530 | Gen Total Loss : 3.6063, Gen Ad Loss : 1.0953, Gen LL Loss : 2.5110  | Disc Total Loss : 1.1467, Disc True Loss : 0.4765, Disc Fake Loss : 0.6702 
+Epoch : 18 | Progress : 0.75 | Total Loss : 3.8662 | Gen Total Loss : 2.9690, Gen Ad Loss : 0.8961, Gen LL Loss : 2.0729  | Disc Total Loss : 0.8972, Disc True Loss : 0.4215, Disc Fake Loss : 0.4757 
+Epoch : 18 | Progress : 0.80 | Total Loss : 4.3802 | Gen Total Loss : 3.5306, Gen Ad Loss : 1.2415, Gen LL Loss : 2.2891  | Disc Total Loss : 0.8497, Disc True Loss : 0.3883, Disc Fake Loss : 0.4614 
+Epoch : 18 | Progress : 0.85 | Total Loss : 5.0138 | Gen Total Loss : 3.5730, Gen Ad Loss : 1.1565, Gen LL Loss : 2.4165  | Disc Total Loss : 1.4408, Disc True Loss : 0.8763, Disc Fake Loss : 0.5645 
+Epoch : 18 | Progress : 0.90 | Total Loss : 4.3525 | Gen Total Loss : 2.9512, Gen Ad Loss : 1.0455, Gen LL Loss : 1.9057  | Disc Total Loss : 1.4013, Disc True Loss : 0.7774, Disc Fake Loss : 0.6240 
+Epoch : 18 | Progress : 0.95 | Total Loss : 4.6157 | Gen Total Loss : 3.4858, Gen Ad Loss : 0.8825, Gen LL Loss : 2.6033  | Disc Total Loss : 1.1299, Disc True Loss : 0.6456, Disc Fake Loss : 0.4843 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 19 | Progress : 0.00 | Total Loss : 4.7148 | Gen Total Loss : 3.6659, Gen Ad Loss : 0.9519, Gen LL Loss : 2.7139  | Disc Total Loss : 1.0490, Disc True Loss : 0.6758, Disc Fake Loss : 0.3732 
+Epoch : 19 | Progress : 0.05 | Total Loss : 4.3395 | Gen Total Loss : 3.3132, Gen Ad Loss : 0.9867, Gen LL Loss : 2.3264  | Disc Total Loss : 1.0264, Disc True Loss : 0.5456, Disc Fake Loss : 0.4808 
+Epoch : 19 | Progress : 0.10 | Total Loss : 4.8795 | Gen Total Loss : 3.6686, Gen Ad Loss : 1.0638, Gen LL Loss : 2.6048  | Disc Total Loss : 1.2109, Disc True Loss : 0.7131, Disc Fake Loss : 0.4977 
+Epoch : 19 | Progress : 0.15 | Total Loss : 4.8974 | Gen Total Loss : 3.9661, Gen Ad Loss : 1.1248, Gen LL Loss : 2.8413  | Disc Total Loss : 0.9313, Disc True Loss : 0.4689, Disc Fake Loss : 0.4623 
+Epoch : 19 | Progress : 0.20 | Total Loss : 4.2645 | Gen Total Loss : 3.1341, Gen Ad Loss : 0.9113, Gen LL Loss : 2.2228  | Disc Total Loss : 1.1304, Disc True Loss : 0.6411, Disc Fake Loss : 0.4893 
+Epoch : 19 | Progress : 0.25 | Total Loss : 4.4771 | Gen Total Loss : 3.0677, Gen Ad Loss : 1.3220, Gen LL Loss : 1.7457  | Disc Total Loss : 1.4094, Disc True Loss : 0.7742, Disc Fake Loss : 0.6352 
+Epoch : 19 | Progress : 0.30 | Total Loss : 4.1635 | Gen Total Loss : 3.2538, Gen Ad Loss : 1.0931, Gen LL Loss : 2.1607  | Disc Total Loss : 0.9097, Disc True Loss : 0.4302, Disc Fake Loss : 0.4795 
+Resetting iterator for loader : train
+Epoch : 19 | Progress : 0.35 | Total Loss : 4.2060 | Gen Total Loss : 3.0765, Gen Ad Loss : 1.1089, Gen LL Loss : 1.9676  | Disc Total Loss : 1.1295, Disc True Loss : 0.5352, Disc Fake Loss : 0.5943 
+Epoch : 19 | Progress : 0.40 | Total Loss : 4.7597 | Gen Total Loss : 3.2332, Gen Ad Loss : 1.2032, Gen LL Loss : 2.0300  | Disc Total Loss : 1.5265, Disc True Loss : 0.9724, Disc Fake Loss : 0.5541 
+Epoch : 19 | Progress : 0.45 | Total Loss : 4.6701 | Gen Total Loss : 3.6305, Gen Ad Loss : 1.1493, Gen LL Loss : 2.4812  | Disc Total Loss : 1.0396, Disc True Loss : 0.3403, Disc Fake Loss : 0.6993 
+Epoch : 19 | Progress : 0.50 | Total Loss : 5.3309 | Gen Total Loss : 4.1212, Gen Ad Loss : 1.2303, Gen LL Loss : 2.8910  | Disc Total Loss : 1.2097, Disc True Loss : 0.6028, Disc Fake Loss : 0.6069 
+Epoch : 19 | Progress : 0.55 | Total Loss : 4.6454 | Gen Total Loss : 3.5110, Gen Ad Loss : 1.0801, Gen LL Loss : 2.4309  | Disc Total Loss : 1.1344, Disc True Loss : 0.6157, Disc Fake Loss : 0.5187 
+Epoch : 19 | Progress : 0.60 | Total Loss : 4.6047 | Gen Total Loss : 3.5143, Gen Ad Loss : 1.2220, Gen LL Loss : 2.2923  | Disc Total Loss : 1.0904, Disc True Loss : 0.5605, Disc Fake Loss : 0.5299 
+Epoch : 19 | Progress : 0.65 | Total Loss : 4.2745 | Gen Total Loss : 3.3758, Gen Ad Loss : 1.2837, Gen LL Loss : 2.0921  | Disc Total Loss : 0.8988, Disc True Loss : 0.2750, Disc Fake Loss : 0.6238 
+Resetting iterator for loader : train
+Epoch : 19 | Progress : 0.70 | Total Loss : 4.7111 | Gen Total Loss : 3.7348, Gen Ad Loss : 1.2073, Gen LL Loss : 2.5274  | Disc Total Loss : 0.9763, Disc True Loss : 0.4854, Disc Fake Loss : 0.4909 
+Epoch : 19 | Progress : 0.75 | Total Loss : 3.8977 | Gen Total Loss : 3.0811, Gen Ad Loss : 1.1991, Gen LL Loss : 1.8820  | Disc Total Loss : 0.8166, Disc True Loss : 0.2567, Disc Fake Loss : 0.5599 
+Epoch : 19 | Progress : 0.80 | Total Loss : 4.2286 | Gen Total Loss : 3.3643, Gen Ad Loss : 1.1230, Gen LL Loss : 2.2414  | Disc Total Loss : 0.8643, Disc True Loss : 0.3611, Disc Fake Loss : 0.5031 
+Epoch : 19 | Progress : 0.85 | Total Loss : 4.8438 | Gen Total Loss : 3.9569, Gen Ad Loss : 1.3085, Gen LL Loss : 2.6484  | Disc Total Loss : 0.8869, Disc True Loss : 0.4398, Disc Fake Loss : 0.4471 
+Epoch : 19 | Progress : 0.90 | Total Loss : 4.6855 | Gen Total Loss : 3.4302, Gen Ad Loss : 0.9864, Gen LL Loss : 2.4438  | Disc Total Loss : 1.2553, Disc True Loss : 0.6686, Disc Fake Loss : 0.5868 
+Epoch : 19 | Progress : 0.95 | Total Loss : 5.0830 | Gen Total Loss : 3.8598, Gen Ad Loss : 1.0973, Gen LL Loss : 2.7625  | Disc Total Loss : 1.2233, Disc True Loss : 0.6322, Disc Fake Loss : 0.5911 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 20 | Progress : 0.00 | Total Loss : 4.7809 | Gen Total Loss : 3.1992, Gen Ad Loss : 1.0312, Gen LL Loss : 2.1681  | Disc Total Loss : 1.5816, Disc True Loss : 0.9107, Disc Fake Loss : 0.6709 
+Epoch : 20 | Progress : 0.05 | Total Loss : 4.3372 | Gen Total Loss : 3.3354, Gen Ad Loss : 1.0580, Gen LL Loss : 2.2775  | Disc Total Loss : 1.0018, Disc True Loss : 0.5569, Disc Fake Loss : 0.4448 
+Epoch : 20 | Progress : 0.10 | Total Loss : 4.1086 | Gen Total Loss : 3.0643, Gen Ad Loss : 0.9802, Gen LL Loss : 2.0841  | Disc Total Loss : 1.0443, Disc True Loss : 0.4685, Disc Fake Loss : 0.5758 
+Epoch : 20 | Progress : 0.15 | Total Loss : 4.8763 | Gen Total Loss : 3.9357, Gen Ad Loss : 1.1658, Gen LL Loss : 2.7699  | Disc Total Loss : 0.9406, Disc True Loss : 0.3651, Disc Fake Loss : 0.5755 
+Epoch : 20 | Progress : 0.20 | Total Loss : 4.8280 | Gen Total Loss : 3.4113, Gen Ad Loss : 1.1040, Gen LL Loss : 2.3073  | Disc Total Loss : 1.4167, Disc True Loss : 0.7250, Disc Fake Loss : 0.6917 
+Epoch : 20 | Progress : 0.25 | Total Loss : 3.7788 | Gen Total Loss : 2.7857, Gen Ad Loss : 0.8790, Gen LL Loss : 1.9066  | Disc Total Loss : 0.9931, Disc True Loss : 0.5430, Disc Fake Loss : 0.4501 
+Epoch : 20 | Progress : 0.30 | Total Loss : 4.7444 | Gen Total Loss : 3.6766, Gen Ad Loss : 1.1324, Gen LL Loss : 2.5442  | Disc Total Loss : 1.0678, Disc True Loss : 0.4087, Disc Fake Loss : 0.6591 
+Resetting iterator for loader : train
+Epoch : 20 | Progress : 0.35 | Total Loss : 4.9160 | Gen Total Loss : 3.8099, Gen Ad Loss : 1.1638, Gen LL Loss : 2.6460  | Disc Total Loss : 1.1061, Disc True Loss : 0.6074, Disc Fake Loss : 0.4987 
+Epoch : 20 | Progress : 0.40 | Total Loss : 4.3697 | Gen Total Loss : 3.2509, Gen Ad Loss : 1.0487, Gen LL Loss : 2.2022  | Disc Total Loss : 1.1188, Disc True Loss : 0.7206, Disc Fake Loss : 0.3982 
+Epoch : 20 | Progress : 0.45 | Total Loss : 3.9814 | Gen Total Loss : 2.8700, Gen Ad Loss : 0.8788, Gen LL Loss : 1.9912  | Disc Total Loss : 1.1115, Disc True Loss : 0.6961, Disc Fake Loss : 0.4154 
+Epoch : 20 | Progress : 0.50 | Total Loss : 4.2679 | Gen Total Loss : 3.0523, Gen Ad Loss : 1.0113, Gen LL Loss : 2.0410  | Disc Total Loss : 1.2155, Disc True Loss : 0.7108, Disc Fake Loss : 0.5048 
+Epoch : 20 | Progress : 0.55 | Total Loss : 4.7649 | Gen Total Loss : 3.6799, Gen Ad Loss : 1.3018, Gen LL Loss : 2.3781  | Disc Total Loss : 1.0850, Disc True Loss : 0.4143, Disc Fake Loss : 0.6707 
+Epoch : 20 | Progress : 0.60 | Total Loss : 4.6557 | Gen Total Loss : 3.1946, Gen Ad Loss : 1.2497, Gen LL Loss : 1.9449  | Disc Total Loss : 1.4611, Disc True Loss : 0.6356, Disc Fake Loss : 0.8255 
+Epoch : 20 | Progress : 0.65 | Total Loss : 4.5253 | Gen Total Loss : 3.6031, Gen Ad Loss : 1.2546, Gen LL Loss : 2.3485  | Disc Total Loss : 0.9223, Disc True Loss : 0.5210, Disc Fake Loss : 0.4012 
+Resetting iterator for loader : train
+Epoch : 20 | Progress : 0.70 | Total Loss : 5.1139 | Gen Total Loss : 3.8555, Gen Ad Loss : 1.1428, Gen LL Loss : 2.7127  | Disc Total Loss : 1.2584, Disc True Loss : 0.7203, Disc Fake Loss : 0.5381 
+Epoch : 20 | Progress : 0.75 | Total Loss : 3.9780 | Gen Total Loss : 2.9916, Gen Ad Loss : 0.9391, Gen LL Loss : 2.0524  | Disc Total Loss : 0.9865, Disc True Loss : 0.4155, Disc Fake Loss : 0.5710 
+Epoch : 20 | Progress : 0.80 | Total Loss : 4.1273 | Gen Total Loss : 2.8453, Gen Ad Loss : 0.8040, Gen LL Loss : 2.0412  | Disc Total Loss : 1.2820, Disc True Loss : 0.6711, Disc Fake Loss : 0.6110 
+Epoch : 20 | Progress : 0.85 | Total Loss : 4.3893 | Gen Total Loss : 3.3036, Gen Ad Loss : 1.1994, Gen LL Loss : 2.1042  | Disc Total Loss : 1.0856, Disc True Loss : 0.5263, Disc Fake Loss : 0.5594 
+Epoch : 20 | Progress : 0.90 | Total Loss : 4.6333 | Gen Total Loss : 3.3818, Gen Ad Loss : 1.2072, Gen LL Loss : 2.1746  | Disc Total Loss : 1.2515, Disc True Loss : 0.6767, Disc Fake Loss : 0.5748 
+Epoch : 20 | Progress : 0.95 | Total Loss : 4.5746 | Gen Total Loss : 3.4820, Gen Ad Loss : 1.0405, Gen LL Loss : 2.4416  | Disc Total Loss : 1.0925, Disc True Loss : 0.6954, Disc Fake Loss : 0.3972 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 21 | Progress : 0.00 | Total Loss : 5.2157 | Gen Total Loss : 4.2897, Gen Ad Loss : 1.5902, Gen LL Loss : 2.6995  | Disc Total Loss : 0.9260, Disc True Loss : 0.3612, Disc Fake Loss : 0.5648 
+Epoch : 21 | Progress : 0.05 | Total Loss : 4.9360 | Gen Total Loss : 3.6812, Gen Ad Loss : 1.0519, Gen LL Loss : 2.6293  | Disc Total Loss : 1.2549, Disc True Loss : 0.7090, Disc Fake Loss : 0.5458 
+Epoch : 21 | Progress : 0.10 | Total Loss : 3.8105 | Gen Total Loss : 2.7509, Gen Ad Loss : 0.9807, Gen LL Loss : 1.7701  | Disc Total Loss : 1.0596, Disc True Loss : 0.5975, Disc Fake Loss : 0.4621 
+Epoch : 21 | Progress : 0.15 | Total Loss : 4.1152 | Gen Total Loss : 2.8659, Gen Ad Loss : 1.2897, Gen LL Loss : 1.5763  | Disc Total Loss : 1.2493, Disc True Loss : 0.5332, Disc Fake Loss : 0.7160 
+Epoch : 21 | Progress : 0.20 | Total Loss : 4.9402 | Gen Total Loss : 3.6472, Gen Ad Loss : 1.0448, Gen LL Loss : 2.6024  | Disc Total Loss : 1.2929, Disc True Loss : 0.7035, Disc Fake Loss : 0.5894 
+Epoch : 21 | Progress : 0.25 | Total Loss : 3.9986 | Gen Total Loss : 3.1211, Gen Ad Loss : 1.0361, Gen LL Loss : 2.0849  | Disc Total Loss : 0.8776, Disc True Loss : 0.4489, Disc Fake Loss : 0.4287 
+Epoch : 21 | Progress : 0.30 | Total Loss : 4.7143 | Gen Total Loss : 3.6788, Gen Ad Loss : 1.0855, Gen LL Loss : 2.5933  | Disc Total Loss : 1.0356, Disc True Loss : 0.5430, Disc Fake Loss : 0.4926 
+Resetting iterator for loader : train
+Epoch : 21 | Progress : 0.35 | Total Loss : 5.0023 | Gen Total Loss : 3.8168, Gen Ad Loss : 0.9327, Gen LL Loss : 2.8842  | Disc Total Loss : 1.1855, Disc True Loss : 0.6299, Disc Fake Loss : 0.5556 
+Epoch : 21 | Progress : 0.40 | Total Loss : 5.0400 | Gen Total Loss : 4.0659, Gen Ad Loss : 1.2202, Gen LL Loss : 2.8457  | Disc Total Loss : 0.9741, Disc True Loss : 0.3506, Disc Fake Loss : 0.6234 
+Epoch : 21 | Progress : 0.45 | Total Loss : 3.9915 | Gen Total Loss : 2.8112, Gen Ad Loss : 1.0876, Gen LL Loss : 1.7236  | Disc Total Loss : 1.1802, Disc True Loss : 0.5614, Disc Fake Loss : 0.6188 
+Epoch : 21 | Progress : 0.50 | Total Loss : 3.7729 | Gen Total Loss : 2.7567, Gen Ad Loss : 1.0002, Gen LL Loss : 1.7565  | Disc Total Loss : 1.0162, Disc True Loss : 0.4166, Disc Fake Loss : 0.5996 
+Epoch : 21 | Progress : 0.55 | Total Loss : 4.4675 | Gen Total Loss : 3.3752, Gen Ad Loss : 1.1276, Gen LL Loss : 2.2476  | Disc Total Loss : 1.0923, Disc True Loss : 0.5099, Disc Fake Loss : 0.5824 
+Epoch : 21 | Progress : 0.60 | Total Loss : 4.4739 | Gen Total Loss : 3.2988, Gen Ad Loss : 1.2324, Gen LL Loss : 2.0664  | Disc Total Loss : 1.1751, Disc True Loss : 0.5415, Disc Fake Loss : 0.6336 
+Epoch : 21 | Progress : 0.65 | Total Loss : 4.9063 | Gen Total Loss : 3.5816, Gen Ad Loss : 1.0689, Gen LL Loss : 2.5127  | Disc Total Loss : 1.3247, Disc True Loss : 0.5732, Disc Fake Loss : 0.7515 
+Resetting iterator for loader : train
+Epoch : 21 | Progress : 0.70 | Total Loss : 4.3834 | Gen Total Loss : 3.4290, Gen Ad Loss : 1.0855, Gen LL Loss : 2.3435  | Disc Total Loss : 0.9544, Disc True Loss : 0.3961, Disc Fake Loss : 0.5583 
+Epoch : 21 | Progress : 0.75 | Total Loss : 4.5728 | Gen Total Loss : 3.2909, Gen Ad Loss : 1.2307, Gen LL Loss : 2.0602  | Disc Total Loss : 1.2820, Disc True Loss : 0.7157, Disc Fake Loss : 0.5663 
+Epoch : 21 | Progress : 0.80 | Total Loss : 3.8978 | Gen Total Loss : 2.6830, Gen Ad Loss : 1.0266, Gen LL Loss : 1.6564  | Disc Total Loss : 1.2147, Disc True Loss : 0.6254, Disc Fake Loss : 0.5893 
+Epoch : 21 | Progress : 0.85 | Total Loss : 4.3391 | Gen Total Loss : 3.3001, Gen Ad Loss : 1.2652, Gen LL Loss : 2.0349  | Disc Total Loss : 1.0390, Disc True Loss : 0.5779, Disc Fake Loss : 0.4611 
+Epoch : 21 | Progress : 0.90 | Total Loss : 5.2797 | Gen Total Loss : 4.2160, Gen Ad Loss : 1.4326, Gen LL Loss : 2.7834  | Disc Total Loss : 1.0638, Disc True Loss : 0.5973, Disc Fake Loss : 0.4665 
+Epoch : 21 | Progress : 0.95 | Total Loss : 4.8108 | Gen Total Loss : 3.6687, Gen Ad Loss : 1.3681, Gen LL Loss : 2.3006  | Disc Total Loss : 1.1422, Disc True Loss : 0.6274, Disc Fake Loss : 0.5148 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 22 | Progress : 0.00 | Total Loss : 4.1839 | Gen Total Loss : 3.2265, Gen Ad Loss : 1.0946, Gen LL Loss : 2.1319  | Disc Total Loss : 0.9574, Disc True Loss : 0.5668, Disc Fake Loss : 0.3906 
+Epoch : 22 | Progress : 0.05 | Total Loss : 3.8585 | Gen Total Loss : 2.7708, Gen Ad Loss : 1.0299, Gen LL Loss : 1.7409  | Disc Total Loss : 1.0877, Disc True Loss : 0.4844, Disc Fake Loss : 0.6033 
+Epoch : 22 | Progress : 0.10 | Total Loss : 4.4496 | Gen Total Loss : 3.5744, Gen Ad Loss : 1.1326, Gen LL Loss : 2.4418  | Disc Total Loss : 0.8752, Disc True Loss : 0.3227, Disc Fake Loss : 0.5526 
+Epoch : 22 | Progress : 0.15 | Total Loss : 4.6823 | Gen Total Loss : 3.5126, Gen Ad Loss : 1.2125, Gen LL Loss : 2.3001  | Disc Total Loss : 1.1697, Disc True Loss : 0.6674, Disc Fake Loss : 0.5023 
+Epoch : 22 | Progress : 0.20 | Total Loss : 3.5927 | Gen Total Loss : 2.4078, Gen Ad Loss : 0.8644, Gen LL Loss : 1.5433  | Disc Total Loss : 1.1849, Disc True Loss : 0.6371, Disc Fake Loss : 0.5479 
+Epoch : 22 | Progress : 0.25 | Total Loss : 4.0584 | Gen Total Loss : 3.1365, Gen Ad Loss : 1.1714, Gen LL Loss : 1.9651  | Disc Total Loss : 0.9219, Disc True Loss : 0.4579, Disc Fake Loss : 0.4640 
+Epoch : 22 | Progress : 0.30 | Total Loss : 4.0797 | Gen Total Loss : 2.7360, Gen Ad Loss : 0.9922, Gen LL Loss : 1.7439  | Disc Total Loss : 1.3437, Disc True Loss : 0.7173, Disc Fake Loss : 0.6263 
+Resetting iterator for loader : train
+Epoch : 22 | Progress : 0.35 | Total Loss : 4.4050 | Gen Total Loss : 3.4582, Gen Ad Loss : 0.9695, Gen LL Loss : 2.4887  | Disc Total Loss : 0.9468, Disc True Loss : 0.4534, Disc Fake Loss : 0.4934 
+Epoch : 22 | Progress : 0.40 | Total Loss : 3.9934 | Gen Total Loss : 2.6757, Gen Ad Loss : 1.2444, Gen LL Loss : 1.4313  | Disc Total Loss : 1.3177, Disc True Loss : 0.6649, Disc Fake Loss : 0.6529 
+Epoch : 22 | Progress : 0.45 | Total Loss : 4.3746 | Gen Total Loss : 3.4875, Gen Ad Loss : 1.1338, Gen LL Loss : 2.3537  | Disc Total Loss : 0.8871, Disc True Loss : 0.4939, Disc Fake Loss : 0.3932 
+Epoch : 22 | Progress : 0.50 | Total Loss : 4.8736 | Gen Total Loss : 3.8959, Gen Ad Loss : 1.4339, Gen LL Loss : 2.4620  | Disc Total Loss : 0.9777, Disc True Loss : 0.3459, Disc Fake Loss : 0.6318 
+Epoch : 22 | Progress : 0.55 | Total Loss : 4.7363 | Gen Total Loss : 3.7405, Gen Ad Loss : 1.4688, Gen LL Loss : 2.2717  | Disc Total Loss : 0.9958, Disc True Loss : 0.5995, Disc Fake Loss : 0.3963 
+Epoch : 22 | Progress : 0.60 | Total Loss : 4.6488 | Gen Total Loss : 3.3392, Gen Ad Loss : 1.2230, Gen LL Loss : 2.1162  | Disc Total Loss : 1.3096, Disc True Loss : 0.8110, Disc Fake Loss : 0.4986 
+Epoch : 22 | Progress : 0.65 | Total Loss : 4.2675 | Gen Total Loss : 3.2539, Gen Ad Loss : 1.3164, Gen LL Loss : 1.9375  | Disc Total Loss : 1.0136, Disc True Loss : 0.4285, Disc Fake Loss : 0.5851 
+Resetting iterator for loader : train
+Epoch : 22 | Progress : 0.70 | Total Loss : 3.9584 | Gen Total Loss : 2.6084, Gen Ad Loss : 1.1111, Gen LL Loss : 1.4973  | Disc Total Loss : 1.3500, Disc True Loss : 0.4753, Disc Fake Loss : 0.8748 
+Epoch : 22 | Progress : 0.75 | Total Loss : 3.7327 | Gen Total Loss : 2.6467, Gen Ad Loss : 1.0761, Gen LL Loss : 1.5706  | Disc Total Loss : 1.0861, Disc True Loss : 0.5572, Disc Fake Loss : 0.5288 
+Epoch : 22 | Progress : 0.80 | Total Loss : 4.4498 | Gen Total Loss : 3.3410, Gen Ad Loss : 0.9739, Gen LL Loss : 2.3671  | Disc Total Loss : 1.1089, Disc True Loss : 0.5909, Disc Fake Loss : 0.5180 
+Epoch : 22 | Progress : 0.85 | Total Loss : 3.8440 | Gen Total Loss : 2.6427, Gen Ad Loss : 0.9442, Gen LL Loss : 1.6985  | Disc Total Loss : 1.2013, Disc True Loss : 0.6009, Disc Fake Loss : 0.6004 
+Epoch : 22 | Progress : 0.90 | Total Loss : 4.4771 | Gen Total Loss : 3.5223, Gen Ad Loss : 1.4233, Gen LL Loss : 2.0990  | Disc Total Loss : 0.9548, Disc True Loss : 0.4436, Disc Fake Loss : 0.5112 
+Epoch : 22 | Progress : 0.95 | Total Loss : 4.4410 | Gen Total Loss : 3.3000, Gen Ad Loss : 1.1041, Gen LL Loss : 2.1958  | Disc Total Loss : 1.1410, Disc True Loss : 0.6505, Disc Fake Loss : 0.4905 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 23 | Progress : 0.00 | Total Loss : 4.5939 | Gen Total Loss : 3.5813, Gen Ad Loss : 1.2623, Gen LL Loss : 2.3190  | Disc Total Loss : 1.0127, Disc True Loss : 0.3413, Disc Fake Loss : 0.6714 
+Epoch : 23 | Progress : 0.05 | Total Loss : 4.1792 | Gen Total Loss : 3.0528, Gen Ad Loss : 1.0665, Gen LL Loss : 1.9863  | Disc Total Loss : 1.1264, Disc True Loss : 0.5629, Disc Fake Loss : 0.5635 
+Epoch : 23 | Progress : 0.10 | Total Loss : 3.9388 | Gen Total Loss : 2.9333, Gen Ad Loss : 1.0262, Gen LL Loss : 1.9071  | Disc Total Loss : 1.0055, Disc True Loss : 0.5657, Disc Fake Loss : 0.4399 
+Epoch : 23 | Progress : 0.15 | Total Loss : 3.9464 | Gen Total Loss : 2.9377, Gen Ad Loss : 0.9987, Gen LL Loss : 1.9390  | Disc Total Loss : 1.0086, Disc True Loss : 0.4999, Disc Fake Loss : 0.5088 
+Epoch : 23 | Progress : 0.20 | Total Loss : 5.5942 | Gen Total Loss : 4.5764, Gen Ad Loss : 1.2655, Gen LL Loss : 3.3109  | Disc Total Loss : 1.0178, Disc True Loss : 0.5320, Disc Fake Loss : 0.4858 
+Epoch : 23 | Progress : 0.25 | Total Loss : 4.6781 | Gen Total Loss : 3.7538, Gen Ad Loss : 1.1781, Gen LL Loss : 2.5757  | Disc Total Loss : 0.9243, Disc True Loss : 0.3285, Disc Fake Loss : 0.5958 
+Epoch : 23 | Progress : 0.30 | Total Loss : 4.4686 | Gen Total Loss : 3.4513, Gen Ad Loss : 1.2375, Gen LL Loss : 2.2138  | Disc Total Loss : 1.0173, Disc True Loss : 0.3975, Disc Fake Loss : 0.6198 
+Resetting iterator for loader : train
+Epoch : 23 | Progress : 0.35 | Total Loss : 5.4333 | Gen Total Loss : 4.4778, Gen Ad Loss : 1.3200, Gen LL Loss : 3.1578  | Disc Total Loss : 0.9555, Disc True Loss : 0.4899, Disc Fake Loss : 0.4655 
+Epoch : 23 | Progress : 0.40 | Total Loss : 4.6101 | Gen Total Loss : 3.2617, Gen Ad Loss : 0.9073, Gen LL Loss : 2.3543  | Disc Total Loss : 1.3485, Disc True Loss : 0.8604, Disc Fake Loss : 0.4881 
+Epoch : 23 | Progress : 0.45 | Total Loss : 4.5953 | Gen Total Loss : 3.4740, Gen Ad Loss : 1.0531, Gen LL Loss : 2.4209  | Disc Total Loss : 1.1213, Disc True Loss : 0.6585, Disc Fake Loss : 0.4628 
+Epoch : 23 | Progress : 0.50 | Total Loss : 4.5741 | Gen Total Loss : 3.2876, Gen Ad Loss : 1.0038, Gen LL Loss : 2.2838  | Disc Total Loss : 1.2864, Disc True Loss : 0.6645, Disc Fake Loss : 0.6219 
+Epoch : 23 | Progress : 0.55 | Total Loss : 4.9812 | Gen Total Loss : 3.6983, Gen Ad Loss : 1.1631, Gen LL Loss : 2.5352  | Disc Total Loss : 1.2829, Disc True Loss : 0.4897, Disc Fake Loss : 0.7932 
+Epoch : 23 | Progress : 0.60 | Total Loss : 3.7178 | Gen Total Loss : 2.6255, Gen Ad Loss : 0.9955, Gen LL Loss : 1.6300  | Disc Total Loss : 1.0923, Disc True Loss : 0.6311, Disc Fake Loss : 0.4612 
+Epoch : 23 | Progress : 0.65 | Total Loss : 5.4829 | Gen Total Loss : 4.4835, Gen Ad Loss : 0.9829, Gen LL Loss : 3.5005  | Disc Total Loss : 0.9994, Disc True Loss : 0.4671, Disc Fake Loss : 0.5323 
+Resetting iterator for loader : train
+Epoch : 23 | Progress : 0.70 | Total Loss : 4.5320 | Gen Total Loss : 3.3952, Gen Ad Loss : 1.2356, Gen LL Loss : 2.1596  | Disc Total Loss : 1.1368, Disc True Loss : 0.5671, Disc Fake Loss : 0.5697 
+Epoch : 23 | Progress : 0.75 | Total Loss : 4.3415 | Gen Total Loss : 3.1517, Gen Ad Loss : 0.9696, Gen LL Loss : 2.1821  | Disc Total Loss : 1.1898, Disc True Loss : 0.6383, Disc Fake Loss : 0.5516 
+Epoch : 23 | Progress : 0.80 | Total Loss : 4.4518 | Gen Total Loss : 3.2854, Gen Ad Loss : 1.1401, Gen LL Loss : 2.1453  | Disc Total Loss : 1.1664, Disc True Loss : 0.5363, Disc Fake Loss : 0.6301 
+Epoch : 23 | Progress : 0.85 | Total Loss : 4.9722 | Gen Total Loss : 3.7731, Gen Ad Loss : 1.0301, Gen LL Loss : 2.7431  | Disc Total Loss : 1.1991, Disc True Loss : 0.7449, Disc Fake Loss : 0.4542 
+Epoch : 23 | Progress : 0.90 | Total Loss : 5.2178 | Gen Total Loss : 4.2090, Gen Ad Loss : 1.1650, Gen LL Loss : 3.0439  | Disc Total Loss : 1.0088, Disc True Loss : 0.3777, Disc Fake Loss : 0.6311 
+Epoch : 23 | Progress : 0.95 | Total Loss : 5.4902 | Gen Total Loss : 4.3331, Gen Ad Loss : 1.2293, Gen LL Loss : 3.1038  | Disc Total Loss : 1.1571, Disc True Loss : 0.6405, Disc Fake Loss : 0.5166 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 24 | Progress : 0.00 | Total Loss : 4.4533 | Gen Total Loss : 3.3112, Gen Ad Loss : 1.2124, Gen LL Loss : 2.0987  | Disc Total Loss : 1.1422, Disc True Loss : 0.6548, Disc Fake Loss : 0.4873 
+Epoch : 24 | Progress : 0.05 | Total Loss : 3.7286 | Gen Total Loss : 2.6263, Gen Ad Loss : 1.0133, Gen LL Loss : 1.6130  | Disc Total Loss : 1.1023, Disc True Loss : 0.3639, Disc Fake Loss : 0.7384 
+Epoch : 24 | Progress : 0.10 | Total Loss : 4.5999 | Gen Total Loss : 3.3069, Gen Ad Loss : 0.9414, Gen LL Loss : 2.3655  | Disc Total Loss : 1.2930, Disc True Loss : 0.6704, Disc Fake Loss : 0.6226 
+Epoch : 24 | Progress : 0.15 | Total Loss : 4.7870 | Gen Total Loss : 3.6004, Gen Ad Loss : 1.3945, Gen LL Loss : 2.2059  | Disc Total Loss : 1.1866, Disc True Loss : 0.6978, Disc Fake Loss : 0.4888 
+Epoch : 24 | Progress : 0.20 | Total Loss : 4.9431 | Gen Total Loss : 3.6753, Gen Ad Loss : 0.9250, Gen LL Loss : 2.7503  | Disc Total Loss : 1.2678, Disc True Loss : 0.5751, Disc Fake Loss : 0.6926 
+Epoch : 24 | Progress : 0.25 | Total Loss : 5.5089 | Gen Total Loss : 4.1930, Gen Ad Loss : 1.1194, Gen LL Loss : 3.0736  | Disc Total Loss : 1.3159, Disc True Loss : 0.7107, Disc Fake Loss : 0.6052 
+Epoch : 24 | Progress : 0.30 | Total Loss : 3.9946 | Gen Total Loss : 2.8263, Gen Ad Loss : 0.8392, Gen LL Loss : 1.9871  | Disc Total Loss : 1.1683, Disc True Loss : 0.7013, Disc Fake Loss : 0.4670 
+Resetting iterator for loader : train
+Epoch : 24 | Progress : 0.35 | Total Loss : 5.2136 | Gen Total Loss : 3.8249, Gen Ad Loss : 1.2273, Gen LL Loss : 2.5976  | Disc Total Loss : 1.3887, Disc True Loss : 0.6573, Disc Fake Loss : 0.7314 
+Epoch : 24 | Progress : 0.40 | Total Loss : 4.8804 | Gen Total Loss : 3.7222, Gen Ad Loss : 1.1302, Gen LL Loss : 2.5920  | Disc Total Loss : 1.1582, Disc True Loss : 0.8474, Disc Fake Loss : 0.3108 
+Epoch : 24 | Progress : 0.45 | Total Loss : 5.0627 | Gen Total Loss : 3.7918, Gen Ad Loss : 1.3715, Gen LL Loss : 2.4204  | Disc Total Loss : 1.2708, Disc True Loss : 0.7371, Disc Fake Loss : 0.5338 
+Epoch : 24 | Progress : 0.50 | Total Loss : 4.1400 | Gen Total Loss : 3.0429, Gen Ad Loss : 1.1566, Gen LL Loss : 1.8863  | Disc Total Loss : 1.0971, Disc True Loss : 0.4893, Disc Fake Loss : 0.6078 
+Epoch : 24 | Progress : 0.55 | Total Loss : 5.3203 | Gen Total Loss : 4.0108, Gen Ad Loss : 1.9333, Gen LL Loss : 2.0776  | Disc Total Loss : 1.3095, Disc True Loss : 0.6072, Disc Fake Loss : 0.7023 
+Epoch : 24 | Progress : 0.60 | Total Loss : 4.9043 | Gen Total Loss : 3.9058, Gen Ad Loss : 1.0776, Gen LL Loss : 2.8282  | Disc Total Loss : 0.9985, Disc True Loss : 0.4892, Disc Fake Loss : 0.5093 
+Epoch : 24 | Progress : 0.65 | Total Loss : 4.4401 | Gen Total Loss : 3.2710, Gen Ad Loss : 1.0374, Gen LL Loss : 2.2335  | Disc Total Loss : 1.1692, Disc True Loss : 0.7743, Disc Fake Loss : 0.3949 
+Resetting iterator for loader : train
+Epoch : 24 | Progress : 0.70 | Total Loss : 4.0643 | Gen Total Loss : 3.0098, Gen Ad Loss : 0.8865, Gen LL Loss : 2.1234  | Disc Total Loss : 1.0545, Disc True Loss : 0.5791, Disc Fake Loss : 0.4754 
+Epoch : 24 | Progress : 0.75 | Total Loss : 4.8980 | Gen Total Loss : 3.8598, Gen Ad Loss : 1.0154, Gen LL Loss : 2.8444  | Disc Total Loss : 1.0382, Disc True Loss : 0.5281, Disc Fake Loss : 0.5101 
+Epoch : 24 | Progress : 0.80 | Total Loss : 4.9285 | Gen Total Loss : 3.5660, Gen Ad Loss : 1.2406, Gen LL Loss : 2.3254  | Disc Total Loss : 1.3625, Disc True Loss : 0.7015, Disc Fake Loss : 0.6610 
+Epoch : 24 | Progress : 0.85 | Total Loss : 4.8157 | Gen Total Loss : 3.6573, Gen Ad Loss : 1.3754, Gen LL Loss : 2.2819  | Disc Total Loss : 1.1584, Disc True Loss : 0.4456, Disc Fake Loss : 0.7128 
+Epoch : 24 | Progress : 0.90 | Total Loss : 5.0905 | Gen Total Loss : 3.9048, Gen Ad Loss : 1.3126, Gen LL Loss : 2.5922  | Disc Total Loss : 1.1857, Disc True Loss : 0.7937, Disc Fake Loss : 0.3920 
+Epoch : 24 | Progress : 0.95 | Total Loss : 4.6474 | Gen Total Loss : 3.2169, Gen Ad Loss : 1.2236, Gen LL Loss : 1.9933  | Disc Total Loss : 1.4305, Disc True Loss : 0.6229, Disc Fake Loss : 0.8076 
+Num iterations :  1000
+Resetting iterator for loader : train
+Epoch : 25 | Progress : 0.00 | Total Loss : 4.0799 | Gen Total Loss : 3.1371, Gen Ad Loss : 1.0899, Gen LL Loss : 2.0472  | Disc Total Loss : 0.9428, Disc True Loss : 0.5333, Disc Fake Loss : 0.4094 
+Epoch : 25 | Progress : 0.05 | Total Loss : 3.5732 | Gen Total Loss : 2.5101, Gen Ad Loss : 0.9777, Gen LL Loss : 1.5324  | Disc Total Loss : 1.0632, Disc True Loss : 0.5555, Disc Fake Loss : 0.5076 
+Epoch : 25 | Progress : 0.10 | Total Loss : 3.7681 | Gen Total Loss : 2.8344, Gen Ad Loss : 0.7716, Gen LL Loss : 2.0627  | Disc Total Loss : 0.9337, Disc True Loss : 0.5572, Disc Fake Loss : 0.3766 
+Epoch : 25 | Progress : 0.15 | Total Loss : 4.0230 | Gen Total Loss : 2.9039, Gen Ad Loss : 1.0185, Gen LL Loss : 1.8854  | Disc Total Loss : 1.1191, Disc True Loss : 0.5222, Disc Fake Loss : 0.5969 
+Epoch : 25 | Progress : 0.20 | Total Loss : 4.2081 | Gen Total Loss : 3.0603, Gen Ad Loss : 1.0069, Gen LL Loss : 2.0534  | Disc Total Loss : 1.1477, Disc True Loss : 0.4722, Disc Fake Loss : 0.6756 
+Epoch : 25 | Progress : 0.25 | Total Loss : 5.3926 | Gen Total Loss : 4.1928, Gen Ad Loss : 1.3599, Gen LL Loss : 2.8329  | Disc Total Loss : 1.1998, Disc True Loss : 0.6381, Disc Fake Loss : 0.5617 
+Epoch : 25 | Progress : 0.30 | Total Loss : 4.4114 | Gen Total Loss : 3.4502, Gen Ad Loss : 1.1648, Gen LL Loss : 2.2854  | Disc Total Loss : 0.9612, Disc True Loss : 0.5153, Disc Fake Loss : 0.4459 
+Resetting iterator for loader : train
+Epoch : 25 | Progress : 0.35 | Total Loss : 4.6609 | Gen Total Loss : 3.4800, Gen Ad Loss : 1.1853, Gen LL Loss : 2.2947  | Disc Total Loss : 1.1809, Disc True Loss : 0.5939, Disc Fake Loss : 0.5869 
+Epoch : 25 | Progress : 0.40 | Total Loss : 3.9807 | Gen Total Loss : 3.0401, Gen Ad Loss : 1.0898, Gen LL Loss : 1.9503  | Disc Total Loss : 0.9405, Disc True Loss : 0.4418, Disc Fake Loss : 0.4987 
+Epoch : 25 | Progress : 0.45 | Total Loss : 4.5218 | Gen Total Loss : 3.4206, Gen Ad Loss : 1.3155, Gen LL Loss : 2.1051  | Disc Total Loss : 1.1011, Disc True Loss : 0.6141, Disc Fake Loss : 0.4871 
+Epoch : 25 | Progress : 0.50 | Total Loss : 5.9193 | Gen Total Loss : 4.1320, Gen Ad Loss : 1.3267, Gen LL Loss : 2.8054  | Disc Total Loss : 1.7872, Disc True Loss : 0.6388, Disc Fake Loss : 1.1484 
+Epoch : 25 | Progress : 0.55 | Total Loss : 4.7280 | Gen Total Loss : 3.6437, Gen Ad Loss : 1.3179, Gen LL Loss : 2.3258  | Disc Total Loss : 1.0843, Disc True Loss : 0.5124, Disc Fake Loss : 0.5720 
+Epoch : 25 | Progress : 0.60 | Total Loss : 4.5116 | Gen Total Loss : 3.3757, Gen Ad Loss : 0.9501, Gen LL Loss : 2.4256  | Disc Total Loss : 1.1359, Disc True Loss : 0.6125, Disc Fake Loss : 0.5234 
+Epoch : 25 | Progress : 0.65 | Total Loss : 3.5740 | Gen Total Loss : 2.6706, Gen Ad Loss : 1.0811, Gen LL Loss : 1.5896  | Disc Total Loss : 0.9033, Disc True Loss : 0.5106, Disc Fake Loss : 0.3927 
+Resetting iterator for loader : train
+Epoch : 25 | Progress : 0.70 | Total Loss : 4.0703 | Gen Total Loss : 3.0480, Gen Ad Loss : 1.0077, Gen LL Loss : 2.0403  | Disc Total Loss : 1.0223, Disc True Loss : 0.5947, Disc Fake Loss : 0.4276 

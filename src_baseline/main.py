@@ -63,7 +63,7 @@ def main():
       shuffle=True,
   )
 
-  model = Pose_GAN(opt)
+  model = Pose_GAN(opt).cuda()
   start_epoch = 1
   if(opt.resume==1):
       start_epoch = model.resume(opt.checkpoints_dir)
@@ -74,6 +74,7 @@ def main():
   loader_test_iter = loader_test.__iter__()
   for epoch in range(start_epoch, opt.number_of_epochs + 1):
       # num_iter = len(gen_loader_train)
+      gen_losses, disc_losses = [],[]
       num_iterations = opt.iters_per_epoch
       print("Num iterations : ", num_iterations)
       # for it, input in enumerate(gen_loader_train):
@@ -81,14 +82,19 @@ def main():
           for _ in range(opt.training_ratio):
               input, target, interpol_pose, loader_train_iter = load_sample(loader_train_iter, loader_train, 'train')
               real_inp, real_target, interpol_pose, loader_train_iter = load_sample(loader_train_iter, loader_train, 'train')
-              model.dis_update(Variable(input.cuda()),Variable(target.cuda()), Variable(interpol_pose.cuda()), Variable(real_inp.cuda()), Variable(real_target.cuda()), vars(opt))
+              disc_loss = model.dis_update(Variable(input.cuda()),Variable(target.cuda()), Variable(interpol_pose.cuda()), Variable(real_inp.cuda()), Variable(real_target.cuda()), vars(opt))
+              disc_losses.append(disc_loss)
           input, target, interpol_pose, loader_train_iter = load_sample(loader_train_iter, loader_train, 'train')
-          out, outputs = model.gen_update(Variable(input.cuda()), Variable(target.cuda()), Variable(interpol_pose.cuda()), vars(opt))
+          out, outputs, gen_loss = model.gen_update(Variable(input.cuda()), Variable(target.cuda()), Variable(interpol_pose.cuda()), vars(opt))
+          gen_losses.append(gen_loss)
 
           if(it%opt.display_ratio==0):
 
               # print losses
-              gen_total_loss, gen_ll_loss, gen_ad_loss, disc_total_loss, disc_true_loss, disc_fake_loss = model.gen_total_loss, model.gen_ll_loss, model.gen_ad_loss, model.dis_total_loss, model.dis_true_loss, model.dis_fake_loss
+              # gen_total_loss, gen_ll_loss, gen_ad_loss, disc_total_loss, disc_true_loss, disc_fake_loss = model.gen_total_loss, model.gen_ll_loss, model.gen_ad_loss, model.dis_total_loss, model.dis_true_loss, model.dis_fake_loss
+              # averaging loss over all iterations in this epoch
+              gen_total_loss, gen_ll_loss, gen_ad_loss = np.mean(np.array(gen_losses), axis=0)
+              disc_total_loss, disc_true_loss, disc_fake_loss = np.mean(np.array(disc_losses), axis=0)
               total_loss = gen_total_loss + disc_total_loss
               print("Epoch : {8:d} | Progress : {0:.2f} | Total Loss : {1:.4f} | Gen Total Loss : {2:.4f}, Gen Ad Loss : {3:.4f}, Gen LL Loss : {4:.4f}  | Disc Total Loss : {5:.4f}, Disc True Loss : {6:.4f}, Disc Fake Loss : {7:.4f} ".format(it / num_iterations, total_loss, gen_total_loss, gen_ad_loss, gen_ll_loss, disc_total_loss, disc_true_loss, disc_fake_loss, epoch))
               sys.stdout.flush()

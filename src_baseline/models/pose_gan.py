@@ -13,8 +13,12 @@ class Pose_GAN(nn.Module):
 
     # load generator and discriminator models
     # adding extra layers for larger image size
-    nfilters_decoder = (512, 512, 512, 256, 128, 3) if max(opt.image_size) < 256 else (512, 512, 512, 512, 256, 128, 3)
-    nfilters_encoder = (64, 128, 256, 512, 512, 512) if max(opt.image_size) < 256 else (64, 128, 256, 512, 512, 512, 512)
+    if(opt.checkMode == 0):
+      nfilters_decoder = (512, 512, 512, 256, 128, 3) if max(opt.image_size) < 256 else (512, 512, 512, 512, 256, 128, 3)
+      nfilters_encoder = (64, 128, 256, 512, 512, 512) if max(opt.image_size) < 256 else (64, 128, 256, 512, 512, 512, 512)
+    else:
+      nfilters_decoder = (128, 3) if max(opt.image_size) < 256 else (256, 128, 3)
+      nfilters_encoder = (64, 128) if max(opt.image_size) < 256 else (64, 128, 256)
 
     if (opt.use_input_pose):
       input_nc = 3 + 2*opt.pose_dim
@@ -31,15 +35,15 @@ class Pose_GAN(nn.Module):
     else:
       raise Exception('Invalid gen_type')
     # discriminator also sees the output image for the target pose
-    self.disc = Discriminator(input_nc + 3, use_input_pose=opt.use_input_pose)
+    self.disc = Discriminator(input_nc + 3, use_input_pose=opt.use_input_pose, checkMode=opt.checkMode)
     print('---------- Networks initialized -------------')
     print_network(self.gen)
     print_network(self.disc)
     print('-----------------------------------------------')
     # Setup the optimizers
     lr = opt.learning_rate
-    self.disc_opt = torch.optim.Adam(self.disc.parameters(), lr=lr, betas=(0.5, 0.999), weight_decay=0.0001)
-    self.gen_opt = torch.optim.Adam(self.gen.parameters(), lr=lr, betas=(0.5, 0.999), weight_decay=0.0001)
+    self.disc_opt = torch.optim.Adam(self.disc.parameters(), lr=lr, betas=(0.5, 0.999))
+    self.gen_opt = torch.optim.Adam(self.gen.parameters(), lr=lr, betas=(0.5, 0.999))
 
     # Network weight initialization
     self.gen.cuda()
@@ -86,7 +90,7 @@ class Pose_GAN(nn.Module):
     self.gen_ll_loss = ll_loss.item()
     self.gen_ad_loss = ad_loss.item()
     self.gen_total_loss = total_loss.item()
-    return out_gen, outputs_gen
+    return out_gen, outputs_gen, [self.gen_total_loss, self.gen_ll_loss, self.gen_ad_loss ]
 
   def dis_update(self, input, target, interpol_pose, real_inp, real_target, opt):
     self.disc.zero_grad()
@@ -122,7 +126,6 @@ class Pose_GAN(nn.Module):
         # fake inputs should be 0, appear after batch_size iters
         # all0 = Variable(torch.zeros((out_fake_n)).cuda())
         if it == opt['batch_size']:
-          # ad_true_loss = -torch.mean(torch.log(out + 1e-7))= nn.functional.binary_cross_entropy(out, all0)
           ad_fake_loss = -torch.mean(torch.log(1- out + 1e-7))
         else:
           ad_fake_loss += -torch.mean(torch.log(1 - out + 1e-7))
@@ -136,7 +139,7 @@ class Pose_GAN(nn.Module):
     self.dis_total_loss = loss.item()
     self.dis_true_loss = ad_true_loss.item()
     self.dis_fake_loss = ad_fake_loss.item()
-    return
+    return [self.dis_total_loss , self.dis_true_loss , self.dis_fake_loss ]
 
   def resume(self, save_dir):
     last_model_name = pose_utils.get_model_list(save_dir,"gen")
@@ -158,11 +161,6 @@ class Pose_GAN(nn.Module):
     disc_filename = os.path.join(save_dir, 'disc_{0:03d}.pkl'.format(epoch))
     torch.save(self.gen.state_dict(), gen_filename)
     torch.save(self.disc.state_dict(), disc_filename)
-
-  def cuda(self, gpu):
-    self.gpu = gpu
-    self.dis.cuda(gpu)
-    self.gen.cuda(gpu)
 
   def normalize_image(self, x):
     return x[:,0:3,:,:]

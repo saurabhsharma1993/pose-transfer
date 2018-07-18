@@ -13,53 +13,6 @@ import itertools
 
 # write in pyTorch after testing baseline model
 
-# no learnable parameters in the layer .. simply
-# applies the given projective transform to the image
-# and returns image of same size
-# doesn't work because of numpy operations applied to torch tensors converted to numpy
-class AffineLayer_Numpy(nn.Module):
-    def __init__(self):
-        super(AffineLayer_Numpy, self).__init__()
-
-    def forward(self, input, transforms):
-        num_transforms = transforms.shape[1]
-        output = -1*torch.ones([num_transforms] + list(input.shape), requires_grad=True).cuda()
-
-        def compute_mapping(x,y,transform):
-            k = x*transform[6] + y*transform[7] + 1
-            map_x = (x*transform[0] + y*transform[1] + transform[2])/k
-            map_y = (x*transform[3] + y*transform[3] + transform[4])/k
-            return round(map_x), round(map_y)
-
-        batch_size = input.shape[0]
-
-        for index in range(batch_size):
-            image = input[index]
-            for n in range(num_transforms):
-                transform = transforms[index, n]
-                # for _,(x,y) in enumerate(itertools.product(np.arange(image.shape[-2]),np.arange(image.shape[-1]))):
-                #     inp_x, inp_y = compute_mapping(x,y,transform)
-                #     # if valid input mapping
-                #     if(inp_x>=0 and inp_x<image.shape[-2] and inp_y>=0 and inp_y<image.shape[-1]):
-                #         output[n,index,:,x,y] = image[:,inp_x,inp_y]
-
-
-                import cv2
-                M = np.reshape(transform.cpu().numpy()[:6], [2, 3])
-                inp_img = np.transpose(image.detach().data.cpu().numpy(),[1,2,0])
-                rows,cols,ch = inp_img.shape
-                warped_map = cv2.warpAffine(inp_img,M,(cols,rows))
-                warped_map = np.transpose(warped_map, [2,0,1])
-                if (np.min(warped_map) == 0 and np.max(warped_map) == 0):
-                    warped_map[...] = -1
-                output[n,index] = torch.from_numpy(warped_map)
-
-        # batch x transform x channel x h x w
-        output = output.permute(1,0,2,3,4)
-        # output[output==0] = -1
-        return Variable(output)
-
-
 class AffineLayer(nn.Module):
     def __init__(self):
         super(AffineLayer, self).__init__()
@@ -116,7 +69,6 @@ class AffineTransformLayer(nn.Module):
     def forward(self, input, warps, masks):
         # height and width
         self.image_size = input.shape[2:]
-        # self.scale = torch.nn.Upsample(size=self.image_size)
         self.affine_mul = torch.Tensor([1, 1, self.init_image_size[0] / self.image_size[0],
                            1, 1, self.init_image_size[1] / self.image_size[1],
                            1, 1]).cuda()
@@ -128,7 +80,8 @@ class AffineTransformLayer(nn.Module):
         #     # if(self.init_image_size!=self.image_size):
         #     #     masks = self.scale(masks)
             import cv2
-            masks = torch.from_numpy(np.array([cv2.resize(np.transpose(mask,[1,2,0]), self.image_size) for mask in masks.data.cpu().numpy()])).cuda()
+            # pass new size as W x H, cv2 semantics
+            masks = torch.from_numpy(np.array([cv2.resize(np.transpose(mask,[1,2,0]), (self.image_size[1], self.image_size[0])) for mask in masks.data.cpu().numpy()])).cuda()
             masks = masks.permute(0,3,1,2)
             # batch x transform x 1 x height x width
             masks = torch.unsqueeze(masks,dim=2).float()
@@ -137,64 +90,6 @@ class AffineTransformLayer(nn.Module):
         # res[res==0] = -1
 
         return res
-# class AffineTransformLayer(Layer):
-#     def __init__(self, number_of_transforms, aggregation_fn, init_image_size, **kwargs):
-#         assert aggregation_fn in ['none', 'max', 'avg']
-#         self.aggregation_fn = aggregation_fn
-#         self.number_of_transforms = number_of_transforms
-#         self.init_image_size = init_image_size
-#         super(AffineTransformLayer, self).__init__(**kwargs)
-#
-#     def build(self, input_shape):
-#         self.image_size = list(input_shape[0][1:])
-#         self.affine_mul = [1, 1, self.init_image_size[0] / self.image_size[0],
-#                            1, 1, self.init_image_size[1] / self.image_size[1],
-#                            1, 1]
-#         self.affine_mul = np.array(self.affine_mul).reshape((1, 1, 8))
-#
-#     def call(self, inputs):
-#         expanded_tensor = ktf.expand_dims(inputs[0], -1)
-#         multiples = [1, self.number_of_transforms, 1, 1, 1]
-#         tiled_tensor = ktf.tile(expanded_tensor, multiples=multiples)
-#         repeated_tensor = ktf.reshape(tiled_tensor, ktf.shape(inputs[0]) * np.array([self.number_of_transforms, 1, 1, 1]))
-#
-#         affine_transforms = inputs[1] / self.affine_mul
-#
-#         affine_transforms = ktf.reshape(affine_transforms, (-1, 8))
-#         tranformed = tf_affine_transform(repeated_tensor, affine_transforms)
-#         res = ktf.reshape(tranformed, [-1, self.number_of_transforms] + self.image_size)
-#         res = ktf.transpose(res, [0, 2, 3, 1, 4])
-#
-#         #Use masks
-#         if len(inputs) == 3:
-#             mask = ktf.transpose(inputs[2], [0, 2, 3, 1])
-#             mask = ktf.image.resize_images(mask, self.image_size[:2], method=ktf.image.ResizeMethod.NEAREST_NEIGHBOR)
-#             res = res * ktf.expand_dims(mask, axis=-1)
-#
-#
-#         if self.aggregation_fn == 'none':
-#             res = ktf.reshape(res, [-1] + self.image_size[:2] + [self.image_size[2] * self.number_of_transforms])
-#         elif self.aggregation_fn == 'max':
-#             res = ktf.reduce_max(res, reduction_indices=[-2])
-#         elif self.aggregation_fn == 'avg':
-#             counts = ktf.reduce_sum(mask, reduction_indices=[-1])
-#             counts = ktf.expand_dims(counts, axis=-1)
-#             res = ktf.reduce_sum(res, reduction_indices=[-2])
-#             res /= counts
-#             res = ktf.where(ktf.is_nan(res), ktf.zeros_like(res), res)
-#         return res
-#
-#     def compute_output_shape(self, input_shape):
-#         if self.aggregation_fn == 'none':
-#             return tuple([input_shape[0][0]] + self.image_size[:2] + [self.image_size[2] * self.number_of_transforms])
-#         else:
-#             return input_shape[0]
-#
-#     def get_config(self):
-#         config = {"number_of_transforms": self.number_of_transforms,
-#                   "aggregation_fn": self.aggregation_fn}
-#         base_config = super(AffineTransformLayer, self).get_config()
-#         return dict(list(base_config.items()) + list(config.items()))
 
 def give_name_to_keypoints(array, pose_dim):
     res = {}

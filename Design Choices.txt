@@ -30,3 +30,15 @@ Issues
 -> deformable skip connections not working in pytorch due to incomplete backprop through affine layer
    set requires_grad = True for all tensors, inspect computational graph for unit testing
    Note - Variable is deprecated in Pytorch 0.4.0
+
+ToDO
+
+-> Stacked variant of Deformable GAN
+-> Verify nn loss and ad losses for defo GAN before proceeding.
+-> Use shg for intermediate supervision on Stacked experiment.
+-> Fit model in memory by lowering resolution, precomputation etc.
+-> Use pretrained models to initialzie rnn weights .. should increase performance drastically
+
+Issues
+
+-> Market dataset goes to nan very soon when using stacked deformable architecture. This is model divergence :/

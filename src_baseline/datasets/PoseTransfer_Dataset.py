@@ -144,11 +144,19 @@ class PoseTransfer_Dataset(data.Dataset):
         self._images_dir_train = opt['images_dir_train']
         self._images_dir_test = opt['images_dir_test']
 
-        # self._pairs_file_train = pd.read_csv(opt['pairs_file_train'])
-        # self._pairs_file_test = pd.read_csv(opt['pairs_file_test'])
+        if(opt['checkMode'] == 0):
+            self._pairs_file_train = pd.read_csv(opt['pairs_file_train'])
+            self._pairs_file_test = pd.read_csv(opt['pairs_file_test'])
+        else:
+            self._pairs_file_train = pd.read_csv(opt['pairs_file_train_check'])
+            self._pairs_file_test = pd.read_csv(opt['pairs_file_test_check'])
 
-        self.pairs_file_test_interpol = pd.read_csv(opt['pairs_file_test_interpol'])
-        self.pairs_file_train_interpol = pd.read_csv(opt['pairs_file_train_interpol'])
+        if (opt['checkMode'] == 0):
+            self.pairs_file_test_interpol = pd.read_csv(opt['pairs_file_test_interpol'])
+            self.pairs_file_train_interpol = pd.read_csv(opt['pairs_file_train_interpol'])
+        else:
+            self.pairs_file_test_interpol = pd.read_csv(opt['pairs_file_test_check'])
+            self.pairs_file_train_interpol = pd.read_csv(opt['pairs_file_train_check'])
 
         self._annotations_file_test = pd.read_csv(opt['annotations_file_train'], sep=':')
         self._annotations_file_train = pd.read_csv(opt['annotations_file_test'], sep=':')
@@ -172,16 +180,17 @@ class PoseTransfer_Dataset(data.Dataset):
         self._tmp_pose = opt['tmp_pose_dir']
         # self.frame_diff = opt['frame_diff']
 
-        if not os.path.exists(self._tmp_pose):
-            os.makedirs(self._tmp_pose)
+        # use this if enough space available
+        # if not os.path.exists(self._tmp_pose):
+        #     os.makedirs(self._tmp_pose)
 
-        print ("Statistics for loaded dataset : Human 3.6")
+        print ("Statistics for loaded dataset : {}".format(opt['dataset']))
         print ("Number of images: %s" % len(self._annotations_file))
         # print ("Number of pairs train: %s" % len(self._pairs_file_train_iterative))
         # print ("Number of pairs test: %s" % len(self._pairs_file_test_iterative))
 
-        print ("Number of pairs train interpol: %s" % len(self.pairs_file_train_interpol))
-        print ("Number of pairs test interpol: %s" % len(self.pairs_file_test_interpol))
+        print ("Number of pairs train : %s" % len(self.pairs_file_train_interpol))
+        print ("Number of pairs test : %s" % len(self.pairs_file_test_interpol))
 
     # pair is now a pandas series
     def compute_pose_map(self, pair, direction):

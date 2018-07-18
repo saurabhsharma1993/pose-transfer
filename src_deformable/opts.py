@@ -82,6 +82,7 @@ class opts():
         self.opt.saveDir = os.path.join("../exp/", self.opt.expID)
         self.opt.output_dir = os.path.join("../exp/", self.opt.expID, "results")
         self.opt.checkpoints_dir = os.path.join("../exp/", self.opt.expID, 'models')
+        self.opt.generated_images_dir = os.path.join("../exp/", self.opt.expID, 'results', 'generated')
 
         args = dict((name, getattr(self.opt, name)) for name in dir(self.opt)
                     if not name.startswith('_'))
@@ -95,8 +96,7 @@ class opts():
         else:
             self.opt.image_size = (128, 64)
 
-        self.opt.generated_images_dir = 'output/generated_images/' + self.opt.dataset + "-restricted"
-        
+
         self.opt.images_dir_train = self.opt.data_Dir + self.opt.dataset + '-dataset/train'
         self.opt.images_dir_test = self.opt.data_Dir + self.opt.dataset + '-dataset/test'
 
@@ -112,6 +112,7 @@ class opts():
 
         self.opt.pairs_file_train = self.opt.data_Dir + self.opt.dataset + '-pairs-train.csv'
         self.opt.pairs_file_test = self.opt.data_Dir + self.opt.dataset + '-pairs-test.csv'
+
         self.opt.pairs_file_train_iterative = self.opt.data_Dir + self.opt.dataset + '-pairs-train-iterative.csv'
         self.opt.pairs_file_test_iterative = self.opt.data_Dir + self.opt.dataset + '-pairs-test-iterative.csv'
 
@@ -127,6 +128,7 @@ class opts():
             os.makedirs(self.opt.output_dir)
             os.makedirs(os.path.join(self.opt.output_dir, 'train'))
             os.makedirs(os.path.join(self.opt.output_dir, 'test'))
+            os.makedirs(self.opt.generated_images_dir)
 
         if not os.path.exists(self.opt.checkpoints_dir):
             os.makedirs(self.opt.checkpoints_dir)

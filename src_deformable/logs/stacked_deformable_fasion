@@ -1,0 +1,504 @@
+nohup: ignoring input
+Model options . .
+  annotations_file_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-annotation-test.csv
+  annotations_file_test_paf: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-annotation-paf-test0.csv
+  annotations_file_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-annotation-train.csv
+  annotations_file_train_paf: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-annotation-paf-train0.csv
+  batch_size: 2
+  checkpoint_ratio: 5
+  checkpoints_dir: ../exp/stacked_deformable_fasion/models
+  compute_h36m_paf_split: 0
+  content_loss_layer: none
+  data_Dir: ../../pose-gan-clean/pose-gan-h36m-fg/data/
+  dataset: fasion
+  disc_type: call
+  discriminator_checkpoint: None
+  display_ratio: 50
+  expID: stacked_deformable_fasion
+  frame_diff: 10
+  gan_penalty_weight: 1
+  gen_type: stacked
+  generated_images_dir: ../exp/stacked_deformable_fasion/results/generated
+  generator_checkpoint: None
+  image_size: (256, 256)
+  images_dir_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-dataset/test
+  images_dir_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-dataset/train
+  images_for_test: 12000
+  iters_per_epoch: 1000
+  l1_penalty_weight: 10.0
+  learning_rate: 0.0002
+  load_generated_images: 0
+  log_file: output/full/fasion/log
+  lstruct_penalty_weight: 0
+  nn_loss_area_size: 1
+  num_stacks: 2
+  number_of_epochs: 90
+  output_dir: ../exp/stacked_deformable_fasion/results
+  pairs_file_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-test.csv
+  pairs_file_test_interpol: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-test-interpol.csv
+  pairs_file_test_iterative: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-test-iterative.csv
+  pairs_file_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-train.csv
+  pairs_file_train_interpol: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-train-interpol.csv
+  pairs_file_train_iterative: ../../pose-gan-clean/pose-gan-h36m-fg/data/fasion-pairs-train-iterative.csv
+  pose_dim: 18
+  pose_estimator: pose_estimator.h5
+  resume: 0
+  saveDir: ../exp/stacked_deformable_fasion
+  start_epoch: 0
+  tmp_pose_dir: tmp/fasion/
+  training_ratio: 1
+  tv_penalty_weight: 0
+  use_dropout_test: 0
+  use_input_pose: True
+  warp_agg: max
+  warp_skip: mask
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train: 101268
+Number of pairs test: 8670
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train: 101268
+Number of pairs test: 8670
+---------- Networks initialized -------------
+Stacked_Generator(
+  (generator): Deformable_Generator(
+    (encoder_app): encoder(
+      (net): ModuleList(
+        (0): Conv2d(21, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (6): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          )
+        )
+      )
+    )
+    (encoder_pose): encoder(
+      (net): ModuleList(
+        (0): Conv2d(18, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (6): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          )
+        )
+      )
+    )
+    (decoder): decoder(
+      (net): ModuleList(
+        (0): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (1): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 256, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(512, 128, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (6): ReLU()
+        (7): Conv2d(256, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (8): Tanh()
+      )
+    )
+  )
+)
+Total number of parameters: 82080611
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(42, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (2): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (3): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (4): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(512, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+    )
+    (5): Sigmoid()
+    (6): Flatten()
+  )
+)
+Total number of parameters: 2803782
+-----------------------------------------------
+Num iterations :  1000
+Epoch : 1 | Progress : 0.00 | Total Loss : 11.3783 | Gen Total Loss : 10.1682, Gen Ad Loss : 2.6603, Gen LL Loss : 7.5079  | Disc Total Loss : 1.2101, Disc True Loss : 0.6401, Disc Fake Loss : 0.5700 
+Epoch : 1 | Progress : 0.05 | Total Loss : 5.3192 | Gen Total Loss : 3.8567, Gen Ad Loss : 0.9019, Gen LL Loss : 2.9548  | Disc Total Loss : 1.4625, Disc True Loss : 0.7569, Disc Fake Loss : 0.7056 
+Epoch : 1 | Progress : 0.10 | Total Loss : 4.8711 | Gen Total Loss : 3.4592, Gen Ad Loss : 0.8213, Gen LL Loss : 2.6380  | Disc Total Loss : 1.4118, Disc True Loss : 0.7185, Disc Fake Loss : 0.6933 
+Epoch : 1 | Progress : 0.15 | Total Loss : 4.7407 | Gen Total Loss : 3.3402, Gen Ad Loss : 0.8020, Gen LL Loss : 2.5383  | Disc Total Loss : 1.4004, Disc True Loss : 0.7076, Disc Fake Loss : 0.6929 
+Epoch : 1 | Progress : 0.20 | Total Loss : 4.6561 | Gen Total Loss : 3.2661, Gen Ad Loss : 0.7901, Gen LL Loss : 2.4760  | Disc Total Loss : 1.3900, Disc True Loss : 0.7029, Disc Fake Loss : 0.6870 
+Epoch : 1 | Progress : 0.25 | Total Loss : 4.5938 | Gen Total Loss : 3.2134, Gen Ad Loss : 0.8005, Gen LL Loss : 2.4129  | Disc Total Loss : 1.3803, Disc True Loss : 0.6994, Disc Fake Loss : 0.6810 
+Epoch : 1 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 1 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 2 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 2 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 3 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 3 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 4 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 4 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 5 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 5 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 6 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 6 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 7 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 7 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 8 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 8 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 9 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 9 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 10 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 10 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 11 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.90 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 11 | Progress : 0.95 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Num iterations :  1000
+Epoch : 12 | Progress : 0.00 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.05 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.10 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.15 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.20 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.25 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.30 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.35 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.40 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.45 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.50 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.55 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.60 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.65 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.70 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.75 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.80 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 
+Epoch : 12 | Progress : 0.85 | Total Loss : nan | Gen Total Loss : nan, Gen Ad Loss : nan, Gen LL Loss : nan  | Disc Total Loss : nan, Disc True Loss : nan, Disc Fake Loss : nan 

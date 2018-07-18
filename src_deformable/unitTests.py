@@ -18,23 +18,28 @@ from opts import opts
 # import tqdm
 from datasets.PoseTransfer_Dataset import PoseTransfer_Dataset
 from utils import pose_utils
-from models.networks import Deformable_Generator, Discriminator
+from models.networks import Deformable_Generator, Discriminator, torch_summarize, keras_to_pytorch
 from models.pose_gan import DeformablePose_GAN
-from utils.pose_transform import AffineTransformLayer
+# from utils.pose_transform import AffineTransformLayer
 import sys
 
-opt = opts().parse()
+# <--------------------------------------------------->
+# <--------------------------------------------------->
+# daata loader, used everywhere in number of unit tests
 
-disc_loader = torch.utils.data.DataLoader(
-    PoseTransfer_Dataset(vars(opt), 'train'),
-    batch_size=4,
-    shuffle=False,
-)
+# opt = opts().parse()
+#
+# disc_loader = torch.utils.data.DataLoader(
+#     PoseTransfer_Dataset(vars(opt), 'train'),
+#     batch_size=4,
+#     shuffle=False,
+# )
+#
+# disc_iter = disc_loader.__iter__()
 
-disc_iter = disc_loader.__iter__()
+# <--------------------------------------------------->
+# <--------------------------------------------------->
 # unit tests for visualization and Affine layer
-
-# unit test for visualization
 
 # input, target, interpol_pose = disc_iter.next()
 # # print(batch.shape)
@@ -57,7 +62,10 @@ disc_iter = disc_loader.__iter__()
 # warps = warps[:,:,:-1].float()
 # masks = masks.float()
 
+# <------------------------------------------------------>
+# <--------------------------------------------------->
 # test 1 for affinetransform layer
+
 #
 # index = 10
 # for _ in range(index):
@@ -88,6 +96,8 @@ from torch.autograd import gradcheck
 # def _deprocess_image(image):
 #     return (255 * (image + 1) / 2).astype(np.uint8)
 
+# <------------------------------------------------------>
+# <--------------------------------------------------->
 # test 2 for cv2 warp affine and skimage affine
 
 # import cv2
@@ -116,6 +126,8 @@ from torch.autograd import gradcheck
 # res = np.concatenate([_deprocess_image(image),_deprocess_image(warp_img_sk), _deprocess_image(target_image.numpy())], axis=0)
 # plt.imsave('test_warp_sk.png', res , cmap=plt.cm.gray)
 
+# <------------------------------------------------------>
+# <--------------------------------------------------->
 # check for autograd backprop through affine layer
 
 # opt = opts().parse()
@@ -153,23 +165,96 @@ from torch.autograd import gradcheck
 
 # pose_utils.Feature_Extractor()
 
+# <------------------------------------------------------>
+# <--------------------------------------------------->
+# test for pose estimator
 
-index = 10
-for _ in range(index):
-    input, target, warps, masks = disc_iter.next()
-inp_img, inp_pose, tg_pose = pose_utils.get_imgpose(input, True, 16)
-print(inp_img[0].shape)
-warp_skip = 'mask'
-warps = warps.float()
-masks = masks.float()
-input.requires_grad = True
-image_size = input.shape[2:]
+# index = 10
+# for _ in range(index):
+#     input, target, warps, masks = disc_iter.next()
+# inp_img, inp_pose, tg_pose = pose_utils.get_imgpose(input, True, 16)
+# print(inp_img[0].shape)
+# warp_skip = 'mask'
+# warps = warps.float()
+# masks = masks.float()
+# input.requires_grad = True
+# image_size = input.shape[2:]
+#
+# # pose_model = torch.load('pose_model.pth')
+# # out_pose = pose_model(inp_img)
+#
+# inp_img = pose_utils.postProcess(pose_utils._deprocess_image(inp_img))
+# target = pose_utils.postProcess(pose_utils._deprocess_image(target))
+# out_pose = pose_utils.postProcess(pose_utils._deprocess_image(out.data.cpu()))
+# img = pose_utils.make_grid(torch.cat([inp_img, out_pose, target], dim=0), None, row=opt.batch_size, col=3, order=0)
+# plt.imsave('test_warp.png', img , cmap=plt.cm.gray)
 
-pose_model = torch.load('pose_model.pth')
-out_pose = pose_model(inp_img)
+# <------------------------------------------------------>
+# <--------------------------------------------------->
+# load images at particular index and initialzie model
 
-inp_img = pose_utils.postProcess(pose_utils._deprocess_image(inp_img))
-target = pose_utils.postProcess(pose_utils._deprocess_image(target))
-out_pose = pose_utils.postProcess(pose_utils._deprocess_image(out.data.cpu()))
-img = pose_utils.make_grid(torch.cat([inp_img, out_pose, target], dim=0), None, row=opt.batch_size, col=3, order=0)
-plt.imsave('test_warp.png', img , cmap=plt.cm.gray)
+# index = 2
+# for _ in range(index):
+#      input, target, warps, masks = disc_iter.next()
+#
+# model = DeformablePose_GAN(opt).cuda()
+# print(torch_summarize(model))
+
+# <------------------------------------------------------>
+# <--------------------------------------------------->
+# covnert mdoel from keras and save the model
+
+# from keras.models import load_model
+# import sys
+# sys.path.append('../../pose-gan-clean/pose-gan-h36m-fg/')
+# from conditional_gan import CGAN
+# from pose_transform_dummy import AffineTransformLayer
+# appending sys path to load keras model luibratries
+
+# config = --dataset fasion --pose_dim 18 --data_Dir ../../pose-gan-clean/pose-gan/data/
+
+# keras_gen = load_model('../../pose-gan-clean/pose-gan-h36m-fg/output/full/h36m-fg-dsc/epoch_089_generator.h5',  custom_objects={'AffineTransformLayer': AffineTransformLayer})
+#
+#
+# keras_weights = []
+# for layer in keras_gen.layers:
+#     keras_weights.append(layer.get_weights())
+#
+# model_layers = keras_gen.layers[4:]
+# del keras_gen
+#
+# # 48 for fasion, 40 for h36m
+# model_layers_app = [model_layers[2*index] for index in range(20)]
+# model_layers_pose = [model_layers[2*index+1] for index in range(20)]
+# model_layers[:20] = model_layers_app
+# model_layers[20:40] = model_layers_pose
+#
+# pytorch_gen = model.gen
+# pytorch_gen, _ = keras_to_pytorch(pytorch_gen, model_layers, 0)
+#
+# print(torch_summarize(pytorch_gen))
+# torch.save(pytorch_gen.state_dict(), "gen.pkl")
+
+# <------------------------------------------------------>
+# <--------------------------------------------------->
+# load gen model and evalautte qualitatively
+
+
+# pytorch_gen = model.gen
+# pytorch_gen.load_state_dict(torch.load('gen.pkl'))
+# pytorch_gen.eval()
+#
+# out = pytorch_gen(input.cuda(), warps.float().cuda(), masks.cuda())
+# images = pose_utils.display(input, target, out.data.cpu(), opt.use_input_pose, opt.pose_dim)
+# plt.imsave('test_defo_pytorch_model.png', images, cmap=plt.cm.gray)
+
+
+# <------------------------------------------------------>
+# <--------------------------------------------------->
+# convert disc model
+
+
+# keras_disc = load_model('../../pose-gan-clean/pose-gan-h36m-fg/output/full/h36m-fg-dsc/epoch_089_discriminator.h5',  custom_objects={'AffineTransformLayer': AffineTransformLayer})
+# pytorch_disc = model.disc
+# pytorch_disc, _ = keras_to_pytorch(pytorch_disc, keras_disc.layers, 0)
+# torch.save(pytorch_disc.state_dict(), "disc.pkl")

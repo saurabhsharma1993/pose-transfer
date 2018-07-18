@@ -1,0 +1,241 @@
+Statistics for loaded dataset : h36m
+Number of images: 92586
+Number of pairs train: 77412
+Number of pairs test: 12000
+---------- Networks initialized -------------
+Deformable_Generator(
+  (encoder_app): encoder(
+    (net): ModuleList(
+      (0): Conv2d(19, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (2): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (3): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (4): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (5): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (encoder_pose): encoder(
+    (net): ModuleList(
+      (0): Conv2d(16, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (2): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (3): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (4): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (5): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (decoder): decoder(
+    (net): ModuleList(
+      (0): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (1): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (2): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (3): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1024, 256, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (4): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(512, 128, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (5): ReLU()
+      (6): Conv2d(256, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (7): Tanh()
+    )
+  )
+)
+Total number of parameters: 61106781
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(38, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (2): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (3): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (4): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(512, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+    )
+    (5): Sigmoid()
+    (6): Flatten()
+  )
+)
+Total number of parameters: 2799686
+-----------------------------------------------
+Resume gen from epoch 90
+Resume disc from epoch 90
+0.0
+0.016666666666666666
+0.03333333333333333
+0.05
+0.06666666666666667
+0.08333333333333333
+0.1
+0.11666666666666667
+0.13333333333333333
+0.15
+0.16666666666666666
+0.18333333333333332
+0.2
+0.21666666666666667
+0.23333333333333334
+0.25
+0.26666666666666666
+0.2833333333333333
+0.3
+0.31666666666666665
+0.3333333333333333
+0.35
+0.36666666666666664
+0.38333333333333336
+0.4
+0.4166666666666667
+0.43333333333333335
+0.45
+0.4666666666666667
+0.48333333333333334
+0.5
+0.5166666666666667
+0.5333333333333333
+0.55
+0.5666666666666667
+0.5833333333333334
+0.6
+0.6166666666666667
+0.6333333333333333
+0.65
+0.6666666666666666
+0.6833333333333333
+0.7
+0.7166666666666667
+0.7333333333333333
+0.75
+0.7666666666666667
+0.7833333333333333
+0.8
+0.8166666666666667
+0.8333333333333334
+0.85
+0.8666666666666667
+0.8833333333333333
+0.9
+0.9166666666666666
+0.9333333333333333
+0.95
+0.9666666666666667
+/home/project/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+/home/project/anaconda3/lib/python3.6/importlib/_bootstrap.py:219: RuntimeWarning: compiletime version 3.5 of module 'tensorflow.python.framework.fast_tensor_util' does not match runtime version 3.6
+  return f(*args, **kwds)
+/home/project/saurabh/pose-transfer/src_deformable/models/networks.py:29: UserWarning: nn.init.xavier_uniform is now deprecated in favor of nn.init.xavier_uniform_.
+  init.xavier_uniform(m.weight.data)
+0.9833333333333333

@@ -26,16 +26,24 @@ class DeformablePose_GAN(nn.Module):
     self.num_stacks = opt.num_stacks
     self.pose_dim = opt.pose_dim
     if(opt.gen_type=='stacked'):
-      self.gen = Stacked_Generator(input_nc, opt.num_stacks, opt.pose_dim, nfilters_encoder, nfilters_decoder, use_input_pose=opt.use_input_pose)
+      self.gen = Stacked_Generator(input_nc, opt.num_stacks, opt.image_size, opt.pose_dim, nfilters_encoder, nfilters_decoder, opt.warp_skip, use_input_pose=opt.use_input_pose)
+      # hack to get better results
+      pretrained_gen_path = '../exp/' + 'full_' + opt.dataset + '/models/gen_090.pkl'
+      self.gen.generator.load_state_dict(torch.load(pretrained_gen_path))
+      print("Loaded generator from pretrained model ")
     elif(opt.gen_type=='baseline'):
       self.gen = Deformable_Generator(input_nc, self.pose_dim, opt.image_size, nfilters_encoder, nfilters_decoder, opt.warp_skip, use_input_pose=opt.use_input_pose)
     else:
       raise Exception('Invalid gen_type')
     # discriminator also sees the output image for the target pose
     self.disc = Discriminator(input_nc + 3, use_input_pose=opt.use_input_pose)
+    pretrained_disc_path = '../exp/' + 'full_' + opt.dataset + '/models/disc_090.pkl'
+    print("Loaded discriminator from pretrained model ")
+    self.disc.load_state_dict(torch.load(pretrained_disc_path))
+
     print('---------- Networks initialized -------------')
-    print_network(self.gen)
-    print_network(self.disc)
+    # print_network(self.gen)
+    # print_network(self.disc)
     print('-----------------------------------------------')
     # Setup the optimizers
     lr = opt.learning_rate
@@ -52,17 +60,24 @@ class DeformablePose_GAN(nn.Module):
     self.disc.cuda()
     self._nn_loss_area_size = opt.nn_loss_area_size
     # applying xavier_uniform, equivalent to glorot unigorm, as in Keras Defo GAN
-    self.disc.apply(xavier_weights_init)
-    self.gen.apply(xavier_weights_init)
+    # skipping as models are pretrained
+    # self.disc.apply(xavier_weights_init)
+    # self.gen.apply(xavier_weights_init)
+    self.ll_loss_criterion = torch.nn.L1Loss()
 
   # add code for intermediate supervision for the interpolated poses using pretrained pose-estimator
-  def gen_update(self, input, target, warps, masks, opt):
+  def gen_update(self, input, target, other_inputs, opt):
     self.gen.zero_grad()
 
     if(opt['gen_type']=='stacked'):
-      outputs_gen = self.gen(input) #, warps, masks)
+      interpol_pose = other_inputs['interpol_pose']
+      interpol_warps = other_inputs['interpol_warps']
+      interpol_masks = other_inputs['interpol_masks']
+      outputs_gen = self.gen(input, interpol_pose, interpol_warps, interpol_masks)
       out_gen = outputs_gen[-1]
     else:
+      warps = other_inputs['warps']
+      masks = other_inputs['masks']
       out_gen = self.gen(input,  warps, masks)
       outputs_gen = []
 
@@ -94,19 +109,24 @@ class DeformablePose_GAN(nn.Module):
     total_loss = ad_loss + ll_loss
     total_loss.backward()
     self.gen_opt.step()
-    self.gen_ll_loss = ll_loss.data.cpu().numpy()
-    self.gen_ad_loss = ad_loss.data.cpu().numpy()
-    self.gen_total_loss = total_loss.data.cpu().numpy()
-    return out_gen, outputs_gen
+    self.gen_ll_loss = ll_loss.item()
+    self.gen_ad_loss = ad_loss.item()
+    self.gen_total_loss = total_loss.item()
+    return out_gen, outputs_gen, [self.gen_total_loss, self.gen_ll_loss, self.gen_ad_loss]
 
-  def dis_update(self, input, target, warps, masks, real_inp, real_target, opt):
+  def dis_update(self, input, target, other_inputs, real_inp, real_target, opt):
     self.disc.zero_grad()
 
     if (opt['gen_type'] == 'stacked'):
-      out_gen = self.gen(input, warps, masks,)
+      interpol_pose = other_inputs['interpol_pose']
+      interpol_warps = other_inputs['interpol_warps']
+      interpol_masks = other_inputs['interpol_masks']
+      out_gen = self.gen(input, interpol_pose, interpol_warps, interpol_masks)
       out_gen = out_gen[-1]
     else:
-      out_gen = self.gen(input, warps, masks,)
+      warps = other_inputs['warps']
+      masks = other_inputs['masks']
+      out_gen = self.gen(input, warps, masks)
 
     inp_img, inp_pose, out_pose = pose_utils.get_imgpose(input, opt['use_input_pose'], opt['pose_dim'])
 
@@ -145,10 +165,10 @@ class DeformablePose_GAN(nn.Module):
     loss = ad_loss
     loss.backward()
     self.disc_opt.step()
-    self.dis_total_loss = loss.data.cpu().numpy()
-    self.dis_true_loss = ad_true_loss.data.cpu().numpy()
-    self.dis_fake_loss = ad_fake_loss.data.cpu().numpy()
-    return
+    self.dis_total_loss = loss.item()
+    self.dis_true_loss = ad_true_loss.item()
+    self.dis_fake_loss = ad_fake_loss.item()
+    return [self.dis_total_loss, self.dis_true_loss, self.dis_fake_loss]
 
   def nn_loss(self, predicted, ground_truth, nh=3, nw=3):
     v_pad = nh // 2
@@ -198,11 +218,6 @@ class DeformablePose_GAN(nn.Module):
     disc_filename = os.path.join(save_dir, 'disc_{0:03d}.pkl'.format(epoch))
     torch.save(self.gen.state_dict(), gen_filename)
     torch.save(self.disc.state_dict(), disc_filename)
-
-  def cuda(self, gpu):
-    self.gpu = gpu
-    self.dis.cuda(gpu)
-    self.gen.cuda(gpu)
 
   def normalize_image(self, x):
     return x[:,0:3,:,:]

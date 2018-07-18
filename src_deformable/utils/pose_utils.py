@@ -26,7 +26,7 @@ COLORS = [[255, 0, 0], [255, 85, 0], [255, 170, 0], [255, 255, 0], [170, 255, 0]
           [170, 0, 255], [255, 0, 255], [255, 0, 170], [255, 0, 85]]
 
 
-LABELS = [ 'Rank' , 'Rknee' , 'Rhip' , 'Lhip' , 'Lknee' , 'Lank' , 'pelv' ,  'spine' , 'neck' , 'head' , 'Rwri' , 'Relb' , 'Rsho' , 'Lsho' , 'Lelb' , 'Lelb'  ]
+LABELS = [ 'Rank' , 'Rknee' , 'Rhip' , 'Lhip' , 'Lknee' , 'Lank' , 'pelv' ,  'spine' , 'neck' , 'head' , 'Rwri' , 'Relb' , 'Rsho' , 'Lsho' , 'Lelb' , 'Lwri'  ]
 
 
 LIMB_SEQ_PAF = [[1,2], [1,5], [2,3], [3,4], [5,6], [6,7], [1,8], [8,9],

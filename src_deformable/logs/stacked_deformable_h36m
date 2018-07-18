@@ -1,0 +1,234 @@
+nohup: ignoring input
+Model options . .
+  annotations_file_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-test.csv
+  annotations_file_test_paf: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-paf-test0.csv
+  annotations_file_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-train.csv
+  annotations_file_train_paf: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-annotation-paf-train0.csv
+  batch_size: 2
+  checkpoint_ratio: 5
+  checkpoints_dir: ../exp/stacked_deformable_h36m/models
+  compute_h36m_paf_split: 0
+  content_loss_layer: none
+  data_Dir: ../../pose-gan-clean/pose-gan-h36m-fg/data/
+  dataset: h36m
+  disc_type: call
+  discriminator_checkpoint: None
+  display_ratio: 50
+  expID: stacked_deformable_h36m
+  frame_diff: 10
+  gan_penalty_weight: 1
+  gen_type: stacked
+  generated_images_dir: ../exp/stacked_deformable_h36m/results/generated
+  generator_checkpoint: None
+  image_size: (224, 224)
+  images_dir_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-dataset/test
+  images_dir_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-dataset/train
+  images_for_test: 12000
+  iters_per_epoch: 1000
+  l1_penalty_weight: 10.0
+  learning_rate: 0.0002
+  load_generated_images: 0
+  log_file: output/full/fasion/log
+  lstruct_penalty_weight: 0
+  nn_loss_area_size: 1
+  num_stacks: 2
+  number_of_epochs: 90
+  output_dir: ../exp/stacked_deformable_h36m/results
+  pairs_file_test: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test.csv
+  pairs_file_test_interpol: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test-interpol.csv
+  pairs_file_test_iterative: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-test-iterative.csv
+  pairs_file_train: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train.csv
+  pairs_file_train_interpol: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train-interpol.csv
+  pairs_file_train_iterative: ../../pose-gan-clean/pose-gan-h36m-fg/data/h36m-pairs-train-iterative.csv
+  pose_dim: 16
+  pose_estimator: pose_estimator.h5
+  resume: 0
+  saveDir: ../exp/stacked_deformable_h36m
+  start_epoch: 0
+  tmp_pose_dir: tmp/h36m/
+  training_ratio: 1
+  tv_penalty_weight: 0
+  use_dropout_test: 0
+  use_input_pose: True
+  warp_agg: max
+  warp_skip: mask
+Statistics for loaded dataset : h36m
+Number of images: 92586
+Number of pairs train: 73812
+Number of pairs test: 12000
+Statistics for loaded dataset : h36m
+Number of images: 92586
+Number of pairs train: 73812
+Number of pairs test: 12000
+---------- Networks initialized -------------
+Stacked_Generator(
+  (generator): Deformable_Generator(
+    (encoder_app): encoder(
+      (net): ModuleList(
+        (0): Conv2d(19, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          )
+        )
+      )
+    )
+    (encoder_pose): encoder(
+      (net): ModuleList(
+        (0): Conv2d(16, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+            (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): Block(
+          (net): ModuleList(
+            (0): LeakyReLU(negative_slope=0.2)
+            (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          )
+        )
+      )
+    )
+    (decoder): decoder(
+      (net): ModuleList(
+        (0): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (1): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (2): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1536, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+            (4): Dropout2d(p=0.5)
+          )
+        )
+        (3): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(1024, 256, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (4): Block(
+          (net): ModuleList(
+            (0): ReLU()
+            (1): ConvTranspose2d(512, 128, kernel_size=(4, 4), stride=(2, 2), bias=False)
+            (2): Cropping2D()
+            (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          )
+        )
+        (5): ReLU()
+        (6): Conv2d(256, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (7): Tanh()
+      )
+    )
+  )
+)
+Total number of parameters: 61106781
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(38, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (2): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (3): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (4): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(512, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+    )
+    (5): Sigmoid()
+    (6): Flatten()
+  )
+)
+Total number of parameters: 2799686
+-----------------------------------------------
+Num iterations :  1000
+Epoch : 1 | Progress : 0.00 | Total Loss : 12.1988 | Gen Total Loss : 10.6425, Gen Ad Loss : 1.5654, Gen LL Loss : 9.0771  | Disc Total Loss : 1.5563, Disc True Loss : 0.8132, Disc Fake Loss : 0.7432 

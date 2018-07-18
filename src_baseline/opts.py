@@ -49,11 +49,13 @@ class opts():
         self.parser.add_argument('--compute_h36m_paf_split', default=0, type=int,
                             help='which split to compute annot for')
 
+        self.parser.add_argument("--checkMode", default=0, type=int,  help='Run model with reduced number of layers and datset size and overfit')
         self.parser.add_argument("--display_ratio", default=50, type=int,  help='Number of epochs between ploting')
         self.parser.add_argument("--start_epoch", default=0, type=int, help='Start epoch for starting from checkpoint')
         self.parser.add_argument("--pose_estimator", default='pose_estimator.h5',
                                 help='Pretrained model for cao pose estimator')
 
+        self.parser.add_argument("--images_for_train", default=100000, type=int, help="Number of images for training")
         self.parser.add_argument("--images_for_test", default=12000, type=int, help="Number of images for testing")
 
         self.parser.add_argument("--use_input_pose", default=True, type=int, help='Feed to generator input pose')
@@ -112,6 +114,10 @@ class opts():
 
         self.opt.pairs_file_train = self.opt.data_Dir + self.opt.dataset + '-pairs-train.csv'
         self.opt.pairs_file_test = self.opt.data_Dir + self.opt.dataset + '-pairs-test.csv'
+
+        self.opt.pairs_file_train_check = self.opt.data_Dir + self.opt.dataset + '-pairs-train-check.csv'
+        self.opt.pairs_file_test_check = self.opt.data_Dir + self.opt.dataset + '-pairs-test-check.csv'
+
         self.opt.pairs_file_train_iterative = self.opt.data_Dir + self.opt.dataset + '-pairs-train-iterative.csv'
         self.opt.pairs_file_test_iterative = self.opt.data_Dir + self.opt.dataset + '-pairs-test-iterative.csv'
 

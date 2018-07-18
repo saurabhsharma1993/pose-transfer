@@ -1,0 +1,243 @@
+nohup: ignoring input
+Model options . .
+  annotations_file_test: ../../pose-gan-clean/pose-gan/data/fasion-annotation-test.csv
+  annotations_file_test_paf: ../../pose-gan-clean/pose-gan/data/fasion-annotation-paf-test0.csv
+  annotations_file_train: ../../pose-gan-clean/pose-gan/data/fasion-annotation-train.csv
+  annotations_file_train_paf: ../../pose-gan-clean/pose-gan/data/fasion-annotation-paf-train0.csv
+  batch_size: 4
+  checkMode: 0
+  checkpoint_ratio: 5
+  checkpoints_dir: ../exp/baseline_fasion_unitTest/models
+  compute_h36m_paf_split: 0
+  content_loss_layer: none
+  data_Dir: ../../pose-gan-clean/pose-gan/data/
+  dataset: fasion
+  disc_type: call
+  discriminator_checkpoint: None
+  display_ratio: 50
+  expID: baseline_fasion_unitTest
+  frame_diff: 10
+  gan_penalty_weight: 1
+  gen_type: baseline
+  generated_images_dir: output/generated_images/fasion-restricted
+  generator_checkpoint: None
+  image_size: (256, 256)
+  images_dir_test: ../../pose-gan-clean/pose-gan/data/fasion-dataset/test
+  images_dir_train: ../../pose-gan-clean/pose-gan/data/fasion-dataset/train
+  images_for_test: 12000
+  images_for_train: 100000
+  iters_per_epoch: 1000
+  l1_penalty_weight: 10.0
+  learning_rate: 0.0002
+  load_generated_images: 0
+  log_file: output/full/fasion/log
+  lstruct_penalty_weight: 0
+  nn_loss_area_size: 1
+  num_stacks: 4
+  number_of_epochs: 90
+  output_dir: ../exp/baseline_fasion_unitTest/results
+  pairs_file_test: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test.csv
+  pairs_file_test_check: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-check.csv
+  pairs_file_test_interpol: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-interpol.csv
+  pairs_file_test_iterative: ../../pose-gan-clean/pose-gan/data/fasion-pairs-test-iterative.csv
+  pairs_file_train: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train.csv
+  pairs_file_train_check: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-check.csv
+  pairs_file_train_interpol: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-interpol.csv
+  pairs_file_train_iterative: ../../pose-gan-clean/pose-gan/data/fasion-pairs-train-iterative.csv
+  pose_dim: 18
+  pose_estimator: pose_estimator.h5
+  resume: 1
+  saveDir: ../exp/baseline_fasion_unitTest
+  start_epoch: 0
+  tmp_pose_dir: tmp/fasion/
+  training_ratio: 1
+  tv_penalty_weight: 0
+  use_dropout_test: 0
+  use_input_pose: True
+  warp_agg: max
+  warp_skip: none
+(256, 256)
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train : 101268
+Number of pairs test : 8670
+Statistics for loaded dataset : fasion
+Number of images: 52712
+Number of pairs train : 101268
+Number of pairs test : 8670
+---------- Networks initialized -------------
+Generator(
+  (encoder): encoder(
+    (net): ModuleList(
+      (0): Conv2d(39, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (2): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (3): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (4): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (5): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+          (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (6): Block(
+        (net): ModuleList(
+          (0): LeakyReLU(negative_slope=0.2)
+          (1): Conv2d(512, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        )
+      )
+    )
+  )
+  (decoder): decoder(
+    (net): ModuleList(
+      (0): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(512, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (1): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (2): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+          (4): Dropout2d(p=0.5)
+        )
+      )
+      (3): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(1024, 512, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (4): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(768, 256, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (5): Block(
+        (net): ModuleList(
+          (0): ReLU()
+          (1): ConvTranspose2d(384, 128, kernel_size=(4, 4), stride=(2, 2), bias=False)
+          (2): Cropping2D()
+          (3): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+        )
+      )
+      (6): ReLU()
+      (7): Conv2d(192, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (8): Tanh()
+    )
+  )
+)
+Total number of parameters: 48655449
+Discriminator(
+  (net): Sequential(
+    (0): Conv2d(42, 64, kernel_size=(4, 4), stride=(2, 2))
+    (1): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (2): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(128, 256, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (3): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(256, 512, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+        (2): InstanceNorm3d(1, eps=0.001, momentum=0.1, affine=True, track_running_stats=False)
+      )
+    )
+    (4): Block(
+      (net): ModuleList(
+        (0): LeakyReLU(negative_slope=0.2)
+        (1): Conv2d(512, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+      )
+    )
+    (5): Sigmoid()
+    (6): Flatten()
+  )
+)
+Total number of parameters: 2803782
+-----------------------------------------------
+Resume gen from epoch 40
+Resume disc from epoch 40
+Num iterations :  1000
+Epoch : 40 | Progress : 0.00 | Total Loss : 2.9425 | Gen Total Loss : 1.8008, Gen Ad Loss : 0.6480, Gen LL Loss : 1.1529  | Disc Total Loss : 1.1417, Disc True Loss : 0.6422, Disc Fake Loss : 0.4994 
+Epoch : 40 | Progress : 0.05 | Total Loss : 3.4708 | Gen Total Loss : 2.1628, Gen Ad Loss : 0.7972, Gen LL Loss : 1.3656  | Disc Total Loss : 1.3080, Disc True Loss : 0.6574, Disc Fake Loss : 0.6505 
+Epoch : 40 | Progress : 0.10 | Total Loss : 3.4905 | Gen Total Loss : 2.1786, Gen Ad Loss : 0.8102, Gen LL Loss : 1.3684  | Disc Total Loss : 1.3119, Disc True Loss : 0.6583, Disc Fake Loss : 0.6535 
+Epoch : 40 | Progress : 0.15 | Total Loss : 3.4860 | Gen Total Loss : 2.1700, Gen Ad Loss : 0.8074, Gen LL Loss : 1.3627  | Disc Total Loss : 1.3160, Disc True Loss : 0.6602, Disc Fake Loss : 0.6558 
+Epoch : 40 | Progress : 0.20 | Total Loss : 3.4856 | Gen Total Loss : 2.1663, Gen Ad Loss : 0.8142, Gen LL Loss : 1.3521  | Disc Total Loss : 1.3193, Disc True Loss : 0.6583, Disc Fake Loss : 0.6610 
+Epoch : 40 | Progress : 0.25 | Total Loss : 3.4843 | Gen Total Loss : 2.1612, Gen Ad Loss : 0.8062, Gen LL Loss : 1.3550  | Disc Total Loss : 1.3231, Disc True Loss : 0.6624, Disc Fake Loss : 0.6606 
+Epoch : 40 | Progress : 0.30 | Total Loss : 3.4742 | Gen Total Loss : 2.1558, Gen Ad Loss : 0.8054, Gen LL Loss : 1.3504  | Disc Total Loss : 1.3185, Disc True Loss : 0.6611, Disc Fake Loss : 0.6573 
+Epoch : 40 | Progress : 0.35 | Total Loss : 3.4773 | Gen Total Loss : 2.1548, Gen Ad Loss : 0.8014, Gen LL Loss : 1.3534  | Disc Total Loss : 1.3225, Disc True Loss : 0.6620, Disc Fake Loss : 0.6605 
+Epoch : 40 | Progress : 0.40 | Total Loss : 3.4780 | Gen Total Loss : 2.1536, Gen Ad Loss : 0.7990, Gen LL Loss : 1.3546  | Disc Total Loss : 1.3245, Disc True Loss : 0.6631, Disc Fake Loss : 0.6614 
+Epoch : 40 | Progress : 0.45 | Total Loss : 3.4772 | Gen Total Loss : 2.1530, Gen Ad Loss : 0.7999, Gen LL Loss : 1.3530  | Disc Total Loss : 1.3243, Disc True Loss : 0.6632, Disc Fake Loss : 0.6610 
+Epoch : 40 | Progress : 0.50 | Total Loss : 3.4789 | Gen Total Loss : 2.1564, Gen Ad Loss : 0.8022, Gen LL Loss : 1.3542  | Disc Total Loss : 1.3224, Disc True Loss : 0.6629, Disc Fake Loss : 0.6595 
+Epoch : 40 | Progress : 0.55 | Total Loss : 3.4869 | Gen Total Loss : 2.1646, Gen Ad Loss : 0.8086, Gen LL Loss : 1.3560  | Disc Total Loss : 1.3223, Disc True Loss : 0.6632, Disc Fake Loss : 0.6591 
+Epoch : 40 | Progress : 0.60 | Total Loss : 3.4864 | Gen Total Loss : 2.1659, Gen Ad Loss : 0.8119, Gen LL Loss : 1.3540  | Disc Total Loss : 1.3206, Disc True Loss : 0.6623, Disc Fake Loss : 0.6582 
+Epoch : 40 | Progress : 0.65 | Total Loss : 3.4898 | Gen Total Loss : 2.1700, Gen Ad Loss : 0.8129, Gen LL Loss : 1.3571  | Disc Total Loss : 1.3198, Disc True Loss : 0.6622, Disc Fake Loss : 0.6576 
+Epoch : 40 | Progress : 0.70 | Total Loss : 3.4901 | Gen Total Loss : 2.1701, Gen Ad Loss : 0.8128, Gen LL Loss : 1.3572  | Disc Total Loss : 1.3200, Disc True Loss : 0.6631, Disc Fake Loss : 0.6569 
+Epoch : 40 | Progress : 0.75 | Total Loss : 3.4883 | Gen Total Loss : 2.1688, Gen Ad Loss : 0.8120, Gen LL Loss : 1.3568  | Disc Total Loss : 1.3194, Disc True Loss : 0.6625, Disc Fake Loss : 0.6569 
+Epoch : 40 | Progress : 0.80 | Total Loss : 3.4917 | Gen Total Loss : 2.1738, Gen Ad Loss : 0.8127, Gen LL Loss : 1.3610  | Disc Total Loss : 1.3179, Disc True Loss : 0.6618, Disc Fake Loss : 0.6562 
+Epoch : 40 | Progress : 0.85 | Total Loss : 3.4944 | Gen Total Loss : 2.1751, Gen Ad Loss : 0.8122, Gen LL Loss : 1.3630  | Disc Total Loss : 1.3192, Disc True Loss : 0.6623, Disc Fake Loss : 0.6569 
+Epoch : 40 | Progress : 0.90 | Total Loss : 3.4919 | Gen Total Loss : 2.1732, Gen Ad Loss : 0.8113, Gen LL Loss : 1.3620  | Disc Total Loss : 1.3186, Disc True Loss : 0.6623, Disc Fake Loss : 0.6564 
+Epoch : 40 | Progress : 0.95 | Total Loss : 3.4886 | Gen Total Loss : 2.1690, Gen Ad Loss : 0.8091, Gen LL Loss : 1.3599  | Disc Total Loss : 1.3196, Disc True Loss : 0.6630, Disc Fake Loss : 0.6566 
+Num iterations :  1000
+Epoch : 41 | Progress : 0.00 | Total Loss : 4.0188 | Gen Total Loss : 2.5464, Gen Ad Loss : 1.0590, Gen LL Loss : 1.4874  | Disc Total Loss : 1.4724, Disc True Loss : 0.8964, Disc Fake Loss : 0.5760 
+Epoch : 41 | Progress : 0.05 | Total Loss : 3.4549 | Gen Total Loss : 2.1286, Gen Ad Loss : 0.8069, Gen LL Loss : 1.3217  | Disc Total Loss : 1.3263, Disc True Loss : 0.6725, Disc Fake Loss : 0.6538 
+Epoch : 41 | Progress : 0.10 | Total Loss : 3.4395 | Gen Total Loss : 2.1226, Gen Ad Loss : 0.8134, Gen LL Loss : 1.3092  | Disc Total Loss : 1.3168, Disc True Loss : 0.6667, Disc Fake Loss : 0.6501 
+Epoch : 41 | Progress : 0.15 | Total Loss : 3.4390 | Gen Total Loss : 2.1230, Gen Ad Loss : 0.8164, Gen LL Loss : 1.3066  | Disc Total Loss : 1.3159, Disc True Loss : 0.6638, Disc Fake Loss : 0.6521 
+Epoch : 41 | Progress : 0.20 | Total Loss : 3.4537 | Gen Total Loss : 2.1403, Gen Ad Loss : 0.8202, Gen LL Loss : 1.3200  | Disc Total Loss : 1.3135, Disc True Loss : 0.6625, Disc Fake Loss : 0.6509 
+Epoch : 41 | Progress : 0.25 | Total Loss : 3.4725 | Gen Total Loss : 2.1572, Gen Ad Loss : 0.8174, Gen LL Loss : 1.3398  | Disc Total Loss : 1.3153, Disc True Loss : 0.6635, Disc Fake Loss : 0.6518 
+Epoch : 41 | Progress : 0.30 | Total Loss : 3.4733 | Gen Total Loss : 2.1576, Gen Ad Loss : 0.8179, Gen LL Loss : 1.3397  | Disc Total Loss : 1.3157, Disc True Loss : 0.6647, Disc Fake Loss : 0.6510 
+Epoch : 41 | Progress : 0.35 | Total Loss : 3.4699 | Gen Total Loss : 2.1542, Gen Ad Loss : 0.8166, Gen LL Loss : 1.3376  | Disc Total Loss : 1.3156, Disc True Loss : 0.6635, Disc Fake Loss : 0.6521 
