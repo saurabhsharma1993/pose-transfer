@@ -14,7 +14,7 @@ CUDA_VISIBLE_DEVICES=1 python main.py --l1_penalty_weight 10 --batch_size 4 --nu
 
 ### Human 3.6 :
 
-CUDA_VISIBLE_DEVICES=0 python main.py --l1_penalty_weight 10 --batch_size 4 --number_of_epochs 90 --gen_type baseline --expID baseline_h36m 
+CUDA_VISIBLE_DEVICES=0 python main.py --l1_penalty_weight 10 --batch_size 4 --number_of_epochs 90 --gen_type baseline --expID baseline_h36m --dataset h36m
 
 ## Deformable Model ( run in src_deformable )
 
@@ -24,7 +24,7 @@ CUDA_VISIBLE_DEVICES=1 python main.py --warp_skip mask --l1_penalty_weight 0.01 
 
 ### Human 3.6 :
 
-CUDA_VISIBLE_DEVICES=1 python main.py --warp_skip mask --l1_penalty_weight 0.01 --batch_size 2 --number_of_epochs 90 --gen_type baseline --expID full_fasion --dataset fasion --nn_loss_area_size 5 --batch_size 2 --content_loss_layer block1_conv2
+CUDA_VISIBLE_DEVICES=1 python main.py --warp_skip mask --l1_penalty_weight 0.01 --batch_size 2 --number_of_epochs 90 --gen_type baseline --expID full_h36m --dataset h36m --nn_loss_area_size 5 --batch_size 2 --content_loss_layer block1_conv2
 
 Specify data directory by passing data_Dir option.
 
